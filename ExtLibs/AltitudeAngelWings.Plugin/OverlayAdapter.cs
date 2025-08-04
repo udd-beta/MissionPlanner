@@ -6,6 +6,11 @@ using System.Windows.Forms;
 using GMap.NET;
 using GMap.NET.WindowsForms;
 
+using GMapOverlay = GMap.NET.WindowsForms.GMapOverlay;
+using GMapRoute = GMap.NET.WindowsForms.GMapRoute;
+using GMapPolygon = GMap.NET.WindowsForms.GMapPolygon;
+using PointLatLng = GMap.NET.Core.PointLatLng;
+
 namespace AltitudeAngelWings.Plugin
 {
     internal class OverlayAdapter : IOverlay
@@ -23,7 +28,7 @@ namespace AltitudeAngelWings.Plugin
         {
             _context.Send(_ =>
             {
-                var existing = _overlay.Polygons.Union(_overlay.Routes.Cast<MapRoute>()).ToDictionary(i => i.Name, i => i);
+                var existing = _overlay.Polygons.Union(_overlay.Routes.Cast<GMapRoute>()).ToDictionary(i => i.Name, i => i);
                 var index = features.ToDictionary(f => f.Name, f => f);
 
                 // Remove polygons and routes not in features

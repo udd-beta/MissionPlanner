@@ -5,9 +5,12 @@ using System.Data;
 using System.Drawing;
 using System.IO.Ports;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static MAVLink;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace SimpleExample
 {
@@ -25,6 +28,11 @@ namespace SimpleExample
         public simpleexample()
         {
             InitializeComponent();
+            CMB_comport.DataSource = SerialPort.GetPortNames();
+            if (CMB_comport.Items.Count > 0)
+                CMB_comport.Text = CMB_comport.Items[0].ToString();
+            if (cmb_baudrate.Items.Count > 0)
+                cmb_baudrate.Text = cmb_baudrate.Items[0].ToString();
         }
 
         private void but_connect_Click(object sender, EventArgs e)
@@ -47,9 +55,9 @@ namespace SimpleExample
             serialPort1.ReadTimeout = 2000;
 
             BackgroundWorker bgw = new BackgroundWorker();
-
+            bgw.WorkerReportsProgress = true;
             bgw.DoWork += bgw_DoWork;
-
+            bgw.ProgressChanged += bgw_ProgressChanged;
             bgw.RunWorkerAsync();
         }
 
@@ -69,7 +77,15 @@ namespace SimpleExample
                         if (packet == null || packet.data == null)
                             continue;
                     }
-
+                    
+                    if (packet.data.GetType() == typeof(MAVLink.mavlink_global_position_int_t))
+                    {
+                        var data = (MAVLink.mavlink_global_position_int_t)packet.data;
+                        Console.WriteLine("X is " + data.vx + " Y is " + data.vy + " Z is " + data.vz);
+                        BackgroundWorker worker = sender as BackgroundWorker;
+                        worker.ReportProgress(0, data);
+                    }
+                    
                     // check to see if its a hb packet from the comport
                     if (packet.data.GetType() == typeof(MAVLink.mavlink_heartbeat_t))
                     {
@@ -117,6 +133,18 @@ namespace SimpleExample
                 }
 
                 System.Threading.Thread.Sleep(1);
+            }
+        }
+
+        private void bgw_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            var userData = e.UserState;
+            if (userData.GetType() == typeof(MAVLink.mavlink_global_position_int_t))
+            {
+                var data = (MAVLink.mavlink_global_position_int_t)userData;
+                xTextBox.Text = data.vx.ToString();
+                yTextBox.Text = data.vy.ToString();
+                zTextBox.Text = data.vz.ToString();
             }
         }
 
