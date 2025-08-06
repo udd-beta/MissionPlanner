@@ -138,13 +138,15 @@ namespace SimpleExample
 
         private void bgw_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
+            const double msToS = 0.001;
+            const double cmToM = 0.01;
             var userData = e.UserState;
             if (userData.GetType() == typeof(MAVLink.mavlink_global_position_int_t))
             {
                 var data = (MAVLink.mavlink_global_position_int_t)userData;
-                vxTextBox.Text = data.vx.ToString();
-                vyTextBox.Text = data.vy.ToString();
-                vzTextBox.Text = data.vz.ToString();
+                vxTextBox.Text = (data.vx * cmToM).ToString();
+                vyTextBox.Text = (data.vy * cmToM).ToString();
+                vzTextBox.Text = (data.vz * cmToM).ToString();
                 if (z0TextBox.Text.Length == 0)
                 {
                     x0TextBox.Text = x1TextBox.Text = data.lon.ToString();
@@ -153,12 +155,12 @@ namespace SimpleExample
                 }
                 else
                 {
-                    double time = data.time_boot_ms * 0.001 - double.Parse(timeTextBox.Text);
+                    double time = (data.time_boot_ms * msToS - double.Parse(timeTextBox.Text)) * cmToM;
                     x1TextBox.Text = (double.Parse(x1TextBox.Text) + data.vx * time).ToString();
                     y1TextBox.Text = (double.Parse(y1TextBox.Text) + data.vy * time).ToString();
                     z1TextBox.Text = (double.Parse(z1TextBox.Text) + data.vz * time).ToString();
                 }
-                timeTextBox.Text = (data.time_boot_ms * 0.001).ToString();
+                timeTextBox.Text = (data.time_boot_ms * msToS).ToString();
             }
         }
 
