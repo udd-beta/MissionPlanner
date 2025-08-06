@@ -142,9 +142,23 @@ namespace SimpleExample
             if (userData.GetType() == typeof(MAVLink.mavlink_global_position_int_t))
             {
                 var data = (MAVLink.mavlink_global_position_int_t)userData;
-                xTextBox.Text = data.vx.ToString();
-                yTextBox.Text = data.vy.ToString();
-                zTextBox.Text = data.vz.ToString();
+                vxTextBox.Text = data.vx.ToString();
+                vyTextBox.Text = data.vy.ToString();
+                vzTextBox.Text = data.vz.ToString();
+                if (z0TextBox.Text.Length == 0)
+                {
+                    x0TextBox.Text = x1TextBox.Text = data.lon.ToString();
+                    y0TextBox.Text = y1TextBox.Text = data.lat.ToString();
+                    z0TextBox.Text = z1TextBox.Text = data.alt.ToString();
+                }
+                else
+                {
+                    double time = data.time_boot_ms * 0.001 - double.Parse(timeTextBox.Text);
+                    x1TextBox.Text = (double.Parse(x1TextBox.Text) + data.vx * time).ToString();
+                    y1TextBox.Text = (double.Parse(y1TextBox.Text) + data.vy * time).ToString();
+                    z1TextBox.Text = (double.Parse(z1TextBox.Text) + data.vz * time).ToString();
+                }
+                timeTextBox.Text = (data.time_boot_ms * 0.001).ToString();
             }
         }
 

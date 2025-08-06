@@ -35,12 +35,29 @@
             this.but_armdisarm = new System.Windows.Forms.Button();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.but_mission = new System.Windows.Forms.Button();
-            this.zLabel = new System.Windows.Forms.Label();
-            this.zTextBox = new System.Windows.Forms.TextBox();
-            this.yLabel = new System.Windows.Forms.Label();
-            this.xLabel = new System.Windows.Forms.Label();
-            this.yTextBox = new System.Windows.Forms.TextBox();
-            this.xTextBox = new System.Windows.Forms.TextBox();
+            this.z0Label = new System.Windows.Forms.Label();
+            this.y0Label = new System.Windows.Forms.Label();
+            this.x0Label = new System.Windows.Forms.Label();
+            this.y0TextBox = new System.Windows.Forms.TextBox();
+            this.x0TextBox = new System.Windows.Forms.TextBox();
+            this.x1TextBox = new System.Windows.Forms.TextBox();
+            this.y1TextBox = new System.Windows.Forms.TextBox();
+            this.x1Label = new System.Windows.Forms.Label();
+            this.y2Label = new System.Windows.Forms.Label();
+            this.z1TextBox = new System.Windows.Forms.TextBox();
+            this.z1Label = new System.Windows.Forms.Label();
+            this.vxTextBox = new System.Windows.Forms.TextBox();
+            this.vyTextBox = new System.Windows.Forms.TextBox();
+            this.vxLabel = new System.Windows.Forms.Label();
+            this.vyLabel = new System.Windows.Forms.Label();
+            this.vzTextBox = new System.Windows.Forms.TextBox();
+            this.vzLabel = new System.Windows.Forms.Label();
+            this.velocityLabel = new System.Windows.Forms.Label();
+            this.position1Label = new System.Windows.Forms.Label();
+            this.position0Label = new System.Windows.Forms.Label();
+            this.z0TextBox = new System.Windows.Forms.TextBox();
+            this.timeTextBox = new System.Windows.Forms.TextBox();
+            this.timeLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // CMB_comport
@@ -103,65 +120,221 @@
             this.but_mission.UseVisualStyleBackColor = true;
             this.but_mission.Click += new System.EventHandler(this.but_mission_Click);
             // 
-            // zLabel
+            // z0Label
             // 
-            this.zLabel.AutoSize = true;
-            this.zLabel.Location = new System.Drawing.Point(14, 61);
-            this.zLabel.Name = "zLabel";
-            this.zLabel.Size = new System.Drawing.Size(72, 16);
-            this.zLabel.TabIndex = 5;
-            this.zLabel.Text = "Висота, м.";
+            this.z0Label.AutoSize = true;
+            this.z0Label.Location = new System.Drawing.Point(184, 65);
+            this.z0Label.Name = "z0Label";
+            this.z0Label.Size = new System.Drawing.Size(72, 16);
+            this.z0Label.TabIndex = 5;
+            this.z0Label.Text = "Висота, м.";
             // 
-            // zTextBox
+            // y0Label
             // 
-            this.zTextBox.Location = new System.Drawing.Point(92, 58);
-            this.zTextBox.Name = "zTextBox";
-            this.zTextBox.Size = new System.Drawing.Size(54, 22);
-            this.zTextBox.TabIndex = 6;
+            this.y0Label.AutoSize = true;
+            this.y0Label.Location = new System.Drawing.Point(354, 65);
+            this.y0Label.Name = "y0Label";
+            this.y0Label.Size = new System.Drawing.Size(75, 16);
+            this.y0Label.TabIndex = 7;
+            this.y0Label.Text = "Широта, м.";
             // 
-            // yLabel
+            // x0Label
             // 
-            this.yLabel.AutoSize = true;
-            this.yLabel.Location = new System.Drawing.Point(184, 61);
-            this.yLabel.Name = "yLabel";
-            this.yLabel.Size = new System.Drawing.Size(75, 16);
-            this.yLabel.TabIndex = 7;
-            this.yLabel.Text = "Широта, м.";
+            this.x0Label.AutoSize = true;
+            this.x0Label.Location = new System.Drawing.Point(555, 65);
+            this.x0Label.Name = "x0Label";
+            this.x0Label.Size = new System.Drawing.Size(79, 16);
+            this.x0Label.TabIndex = 9;
+            this.x0Label.Text = "Довгота, м.";
             // 
-            // xLabel
+            // y0TextBox
             // 
-            this.xLabel.AutoSize = true;
-            this.xLabel.Location = new System.Drawing.Point(385, 61);
-            this.xLabel.Name = "xLabel";
-            this.xLabel.Size = new System.Drawing.Size(79, 16);
-            this.xLabel.TabIndex = 9;
-            this.xLabel.Text = "Довгота, м.";
+            this.y0TextBox.Location = new System.Drawing.Point(463, 62);
+            this.y0TextBox.Name = "y0TextBox";
+            this.y0TextBox.Size = new System.Drawing.Size(54, 22);
+            this.y0TextBox.TabIndex = 10;
             // 
-            // yTextBox
+            // x0TextBox
             // 
-            this.yTextBox.Location = new System.Drawing.Point(293, 58);
-            this.yTextBox.Name = "yTextBox";
-            this.yTextBox.Size = new System.Drawing.Size(54, 22);
-            this.yTextBox.TabIndex = 10;
+            this.x0TextBox.Location = new System.Drawing.Point(635, 62);
+            this.x0TextBox.Name = "x0TextBox";
+            this.x0TextBox.Size = new System.Drawing.Size(54, 22);
+            this.x0TextBox.TabIndex = 11;
             // 
-            // xTextBox
+            // x1TextBox
             // 
-            this.xTextBox.Location = new System.Drawing.Point(465, 58);
-            this.xTextBox.Name = "xTextBox";
-            this.xTextBox.Size = new System.Drawing.Size(54, 22);
-            this.xTextBox.TabIndex = 11;
+            this.x1TextBox.Location = new System.Drawing.Point(635, 90);
+            this.x1TextBox.Name = "x1TextBox";
+            this.x1TextBox.Size = new System.Drawing.Size(54, 22);
+            this.x1TextBox.TabIndex = 17;
+            // 
+            // y1TextBox
+            // 
+            this.y1TextBox.Location = new System.Drawing.Point(463, 90);
+            this.y1TextBox.Name = "y1TextBox";
+            this.y1TextBox.Size = new System.Drawing.Size(54, 22);
+            this.y1TextBox.TabIndex = 16;
+            // 
+            // x1Label
+            // 
+            this.x1Label.AutoSize = true;
+            this.x1Label.Location = new System.Drawing.Point(555, 93);
+            this.x1Label.Name = "x1Label";
+            this.x1Label.Size = new System.Drawing.Size(79, 16);
+            this.x1Label.TabIndex = 15;
+            this.x1Label.Text = "Довгота, м.";
+            // 
+            // y2Label
+            // 
+            this.y2Label.AutoSize = true;
+            this.y2Label.Location = new System.Drawing.Point(354, 93);
+            this.y2Label.Name = "y2Label";
+            this.y2Label.Size = new System.Drawing.Size(75, 16);
+            this.y2Label.TabIndex = 14;
+            this.y2Label.Text = "Широта, м.";
+            // 
+            // z1TextBox
+            // 
+            this.z1TextBox.Location = new System.Drawing.Point(262, 90);
+            this.z1TextBox.Name = "z1TextBox";
+            this.z1TextBox.Size = new System.Drawing.Size(54, 22);
+            this.z1TextBox.TabIndex = 13;
+            // 
+            // z1Label
+            // 
+            this.z1Label.AutoSize = true;
+            this.z1Label.Location = new System.Drawing.Point(184, 93);
+            this.z1Label.Name = "z1Label";
+            this.z1Label.Size = new System.Drawing.Size(72, 16);
+            this.z1Label.TabIndex = 12;
+            this.z1Label.Text = "Висота, м.";
+            // 
+            // vxTextBox
+            // 
+            this.vxTextBox.Location = new System.Drawing.Point(635, 126);
+            this.vxTextBox.Name = "vxTextBox";
+            this.vxTextBox.Size = new System.Drawing.Size(54, 22);
+            this.vxTextBox.TabIndex = 23;
+            // 
+            // vyTextBox
+            // 
+            this.vyTextBox.Location = new System.Drawing.Point(463, 126);
+            this.vyTextBox.Name = "vyTextBox";
+            this.vyTextBox.Size = new System.Drawing.Size(54, 22);
+            this.vyTextBox.TabIndex = 22;
+            // 
+            // vxLabel
+            // 
+            this.vxLabel.AutoSize = true;
+            this.vxLabel.Location = new System.Drawing.Point(555, 129);
+            this.vxLabel.Name = "vxLabel";
+            this.vxLabel.Size = new System.Drawing.Size(76, 16);
+            this.vxLabel.TabIndex = 21;
+            this.vxLabel.Text = "По довготі";
+            // 
+            // vyLabel
+            // 
+            this.vyLabel.AutoSize = true;
+            this.vyLabel.Location = new System.Drawing.Point(354, 129);
+            this.vyLabel.Name = "vyLabel";
+            this.vyLabel.Size = new System.Drawing.Size(71, 16);
+            this.vyLabel.TabIndex = 20;
+            this.vyLabel.Text = "По широті";
+            // 
+            // vzTextBox
+            // 
+            this.vzTextBox.Location = new System.Drawing.Point(262, 126);
+            this.vzTextBox.Name = "vzTextBox";
+            this.vzTextBox.Size = new System.Drawing.Size(54, 22);
+            this.vzTextBox.TabIndex = 19;
+            // 
+            // vzLabel
+            // 
+            this.vzLabel.AutoSize = true;
+            this.vzLabel.Location = new System.Drawing.Point(184, 129);
+            this.vzLabel.Name = "vzLabel";
+            this.vzLabel.Size = new System.Drawing.Size(65, 16);
+            this.vzLabel.TabIndex = 18;
+            this.vzLabel.Text = "У висоту";
+            // 
+            // velocityLabel
+            // 
+            this.velocityLabel.AutoSize = true;
+            this.velocityLabel.Location = new System.Drawing.Point(28, 126);
+            this.velocityLabel.Name = "velocityLabel";
+            this.velocityLabel.Size = new System.Drawing.Size(76, 16);
+            this.velocityLabel.TabIndex = 26;
+            this.velocityLabel.Text = "Швидкість:";
+            // 
+            // position1Label
+            // 
+            this.position1Label.AutoSize = true;
+            this.position1Label.Location = new System.Drawing.Point(28, 90);
+            this.position1Label.Name = "position1Label";
+            this.position1Label.Size = new System.Drawing.Size(120, 16);
+            this.position1Label.TabIndex = 25;
+            this.position1Label.Text = "Поточна позиція:";
+            // 
+            // position0Label
+            // 
+            this.position0Label.AutoSize = true;
+            this.position0Label.Location = new System.Drawing.Point(28, 62);
+            this.position0Label.Name = "position0Label";
+            this.position0Label.Size = new System.Drawing.Size(135, 16);
+            this.position0Label.TabIndex = 24;
+            this.position0Label.Text = "Початкова позиція:";
+            // 
+            // z0TextBox
+            // 
+            this.z0TextBox.Location = new System.Drawing.Point(262, 62);
+            this.z0TextBox.Name = "z0TextBox";
+            this.z0TextBox.Size = new System.Drawing.Size(54, 22);
+            this.z0TextBox.TabIndex = 6;
+            // 
+            // timeTextBox
+            // 
+            this.timeTextBox.Location = new System.Drawing.Point(592, 168);
+            this.timeTextBox.Name = "timeTextBox";
+            this.timeTextBox.Size = new System.Drawing.Size(97, 22);
+            this.timeTextBox.TabIndex = 28;
+            // 
+            // timeLabel
+            // 
+            this.timeLabel.AutoSize = true;
+            this.timeLabel.Location = new System.Drawing.Point(555, 168);
+            this.timeLabel.Name = "timeLabel";
+            this.timeLabel.Size = new System.Drawing.Size(31, 16);
+            this.timeLabel.TabIndex = 27;
+            this.timeLabel.Text = "Час";
             // 
             // simpleexample
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(729, 119);
-            this.Controls.Add(this.xTextBox);
-            this.Controls.Add(this.yTextBox);
-            this.Controls.Add(this.xLabel);
-            this.Controls.Add(this.yLabel);
-            this.Controls.Add(this.zTextBox);
-            this.Controls.Add(this.zLabel);
+            this.ClientSize = new System.Drawing.Size(729, 237);
+            this.Controls.Add(this.timeTextBox);
+            this.Controls.Add(this.timeLabel);
+            this.Controls.Add(this.velocityLabel);
+            this.Controls.Add(this.position1Label);
+            this.Controls.Add(this.position0Label);
+            this.Controls.Add(this.vxTextBox);
+            this.Controls.Add(this.vyTextBox);
+            this.Controls.Add(this.vxLabel);
+            this.Controls.Add(this.vyLabel);
+            this.Controls.Add(this.vzTextBox);
+            this.Controls.Add(this.vzLabel);
+            this.Controls.Add(this.x1TextBox);
+            this.Controls.Add(this.y1TextBox);
+            this.Controls.Add(this.x1Label);
+            this.Controls.Add(this.y2Label);
+            this.Controls.Add(this.z1TextBox);
+            this.Controls.Add(this.z1Label);
+            this.Controls.Add(this.x0TextBox);
+            this.Controls.Add(this.y0TextBox);
+            this.Controls.Add(this.x0Label);
+            this.Controls.Add(this.y0Label);
+            this.Controls.Add(this.z0TextBox);
+            this.Controls.Add(this.z0Label);
             this.Controls.Add(this.but_mission);
             this.Controls.Add(this.but_armdisarm);
             this.Controls.Add(this.but_connect);
@@ -169,7 +342,7 @@
             this.Controls.Add(this.CMB_comport);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "simpleexample";
-            this.Text = "Form1";
+            this.Text = "Дані з польотного контролера";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -183,12 +356,29 @@
         private System.Windows.Forms.Button but_armdisarm;
         private System.IO.Ports.SerialPort serialPort1;
         private System.Windows.Forms.Button but_mission;
-        private System.Windows.Forms.Label zLabel;
-        private System.Windows.Forms.TextBox zTextBox;
-        private System.Windows.Forms.Label yLabel;
-        private System.Windows.Forms.Label xLabel;
-        private System.Windows.Forms.TextBox yTextBox;
-        private System.Windows.Forms.TextBox xTextBox;
+        private System.Windows.Forms.Label z0Label;
+        private System.Windows.Forms.Label y0Label;
+        private System.Windows.Forms.Label x0Label;
+        private System.Windows.Forms.TextBox y0TextBox;
+        private System.Windows.Forms.TextBox x0TextBox;
+        private System.Windows.Forms.TextBox x1TextBox;
+        private System.Windows.Forms.TextBox y1TextBox;
+        private System.Windows.Forms.Label x1Label;
+        private System.Windows.Forms.Label y2Label;
+        private System.Windows.Forms.TextBox z1TextBox;
+        private System.Windows.Forms.Label z1Label;
+        private System.Windows.Forms.TextBox vxTextBox;
+        private System.Windows.Forms.TextBox vyTextBox;
+        private System.Windows.Forms.Label vxLabel;
+        private System.Windows.Forms.Label vyLabel;
+        private System.Windows.Forms.TextBox vzTextBox;
+        private System.Windows.Forms.Label vzLabel;
+        private System.Windows.Forms.Label velocityLabel;
+        private System.Windows.Forms.Label position1Label;
+        private System.Windows.Forms.Label position0Label;
+        private System.Windows.Forms.TextBox z0TextBox;
+        private System.Windows.Forms.TextBox timeTextBox;
+        private System.Windows.Forms.Label timeLabel;
     }
 }
 
