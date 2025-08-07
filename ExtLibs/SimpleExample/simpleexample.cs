@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO.Ports;
 using System.Linq;
 using System.Net.Sockets;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -85,7 +86,13 @@ namespace SimpleExample
                         BackgroundWorker worker = sender as BackgroundWorker;
                         worker.ReportProgress(0, data);
                     }
-                    
+                    else if (packet.data.GetType() == typeof(MAVLink.mavlink_vfr_hud_t))
+                    {
+                        var data = (MAVLink.mavlink_vfr_hud_t)packet.data;
+                        BackgroundWorker worker = sender as BackgroundWorker;
+                        worker.ReportProgress(0, data);
+                    }
+
                     // check to see if its a hb packet from the comport
                     if (packet.data.GetType() == typeof(MAVLink.mavlink_heartbeat_t))
                     {
@@ -139,6 +146,7 @@ namespace SimpleExample
         private void bgw_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             const double msToS = 0.001;
+            const double mmToM = 0.001;
             const double cmToM = 0.01;
             var userData = e.UserState;
             if (userData.GetType() == typeof(MAVLink.mavlink_global_position_int_t))
@@ -149,18 +157,28 @@ namespace SimpleExample
                 vzTextBox.Text = (data.vz * cmToM).ToString();
                 if (z0TextBox.Text.Length == 0)
                 {
-                    x0TextBox.Text = x1TextBox.Text = data.lon.ToString();
-                    y0TextBox.Text = y1TextBox.Text = data.lat.ToString();
-                    z0TextBox.Text = z1TextBox.Text = data.alt.ToString();
+                    x0TextBox.Text = x1TextBox.Text = (data.lon * mmToM).ToString();
+                    y0TextBox.Text = y1TextBox.Text = (data.lat * mmToM).ToString();
+                    z0TextBox.Text = z1TextBox.Text = (data.alt * mmToM).ToString();
                 }
                 else
                 {
                     double time = (data.time_boot_ms * msToS - double.Parse(timeTextBox.Text)) * cmToM;
-                    x1TextBox.Text = (double.Parse(x1TextBox.Text) + data.vx * time).ToString();
-                    y1TextBox.Text = (double.Parse(y1TextBox.Text) + data.vy * time).ToString();
-                    z1TextBox.Text = (double.Parse(z1TextBox.Text) + data.vz * time).ToString();
+                    x1TextBox.Text = Math.Round(double.Parse(x1TextBox.Text) + data.vx * time, 2).ToString();
+                    y1TextBox.Text = Math.Round(double.Parse(y1TextBox.Text) + data.vy * time, 2).ToString();
+                    z1TextBox.Text = Math.Round(double.Parse(z1TextBox.Text) + data.vz * time, 2).ToString();
                 }
                 timeTextBox.Text = (data.time_boot_ms * msToS).ToString();
+            }
+            else if(userData.GetType() == typeof(MAVLink.mavlink_vfr_hud_t))
+            {
+                var data = (MAVLink.mavlink_vfr_hud_t)userData;
+                headingTextBox.Text = data.heading.ToString();
+                vAirSpeedTextBox.Text = data.airspeed.ToString();
+                vGroundSpeedTextBox.Text = Math.Round(data.groundspeed, 1).ToString();
+                altTextBox.Text = data.alt.ToString();
+                climbTextBox.Text = Math.Round(data.climb, 2).ToString();
+                throttleTextBox.Text = data.throttle.ToString();
             }
         }
 
