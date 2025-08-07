@@ -71,6 +71,15 @@
             this.climbTextBox = new System.Windows.Forms.TextBox();
             this.throttleLabel = new System.Windows.Forms.Label();
             this.climbLabel = new System.Windows.Forms.Label();
+            this.dxTextBox = new System.Windows.Forms.TextBox();
+            this.dyTextBox = new System.Windows.Forms.TextBox();
+            this.dxLabel = new System.Windows.Forms.Label();
+            this.dyLabel = new System.Windows.Forms.Label();
+            this.dzTextBox = new System.Windows.Forms.TextBox();
+            this.dzLabel = new System.Windows.Forms.Label();
+            this.dLabel = new System.Windows.Forms.Label();
+            this.orientTextBox = new System.Windows.Forms.TextBox();
+            this.orientLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // CMB_comport
@@ -337,20 +346,20 @@
             // vGroundLabel
             // 
             this.vGroundLabel.AutoSize = true;
-            this.vGroundLabel.Location = new System.Drawing.Point(345, 213);
+            this.vGroundLabel.Location = new System.Drawing.Point(333, 213);
             this.vGroundLabel.Name = "vGroundLabel";
-            this.vGroundLabel.Size = new System.Drawing.Size(112, 16);
+            this.vGroundLabel.Size = new System.Drawing.Size(130, 16);
             this.vGroundLabel.TabIndex = 32;
-            this.vGroundLabel.Text = "Швидкість землі";
+            this.vGroundLabel.Text = "Шляхова швидкість";
             // 
             // vAirLabel
             // 
             this.vAirLabel.AutoSize = true;
-            this.vAirLabel.Location = new System.Drawing.Point(332, 253);
+            this.vAirLabel.Location = new System.Drawing.Point(322, 253);
             this.vAirLabel.Name = "vAirLabel";
-            this.vAirLabel.Size = new System.Drawing.Size(125, 16);
+            this.vAirLabel.Size = new System.Drawing.Size(141, 16);
             this.vAirLabel.TabIndex = 31;
-            this.vAirLabel.Text = "Швидкість повітря";
+            this.vAirLabel.Text = "Повітряна швидкість";
             // 
             // headingTextBox
             // 
@@ -425,11 +434,93 @@
             this.climbLabel.TabIndex = 38;
             this.climbLabel.Text = "Підйом";
             // 
+            // dxTextBox
+            // 
+            this.dxTextBox.Location = new System.Drawing.Point(644, 290);
+            this.dxTextBox.Name = "dxTextBox";
+            this.dxTextBox.Size = new System.Drawing.Size(54, 22);
+            this.dxTextBox.TabIndex = 47;
+            // 
+            // dyTextBox
+            // 
+            this.dyTextBox.Location = new System.Drawing.Point(464, 290);
+            this.dyTextBox.Name = "dyTextBox";
+            this.dyTextBox.Size = new System.Drawing.Size(54, 22);
+            this.dyTextBox.TabIndex = 46;
+            // 
+            // dxLabel
+            // 
+            this.dxLabel.AutoSize = true;
+            this.dxLabel.Location = new System.Drawing.Point(556, 293);
+            this.dxLabel.Name = "dxLabel";
+            this.dxLabel.Size = new System.Drawing.Size(79, 16);
+            this.dxLabel.TabIndex = 45;
+            this.dxLabel.Text = "Довгота, м.";
+            // 
+            // dyLabel
+            // 
+            this.dyLabel.AutoSize = true;
+            this.dyLabel.Location = new System.Drawing.Point(355, 293);
+            this.dyLabel.Name = "dyLabel";
+            this.dyLabel.Size = new System.Drawing.Size(75, 16);
+            this.dyLabel.TabIndex = 44;
+            this.dyLabel.Text = "Широта, м.";
+            // 
+            // dzTextBox
+            // 
+            this.dzTextBox.Location = new System.Drawing.Point(263, 290);
+            this.dzTextBox.Name = "dzTextBox";
+            this.dzTextBox.Size = new System.Drawing.Size(54, 22);
+            this.dzTextBox.TabIndex = 43;
+            // 
+            // dzLabel
+            // 
+            this.dzLabel.AutoSize = true;
+            this.dzLabel.Location = new System.Drawing.Point(185, 293);
+            this.dzLabel.Name = "dzLabel";
+            this.dzLabel.Size = new System.Drawing.Size(72, 16);
+            this.dzLabel.TabIndex = 42;
+            this.dzLabel.Text = "Висота, м.";
+            // 
+            // dLabel
+            // 
+            this.dLabel.AutoSize = true;
+            this.dLabel.Location = new System.Drawing.Point(14, 293);
+            this.dLabel.Name = "dLabel";
+            this.dLabel.Size = new System.Drawing.Size(160, 16);
+            this.dLabel.TabIndex = 48;
+            this.dLabel.Text = "Розраховане зміщення:";
+            // 
+            // orientTextBox
+            // 
+            this.orientTextBox.Location = new System.Drawing.Point(262, 162);
+            this.orientTextBox.Name = "orientTextBox";
+            this.orientTextBox.Size = new System.Drawing.Size(54, 22);
+            this.orientTextBox.TabIndex = 50;
+            // 
+            // orientLabel
+            // 
+            this.orientLabel.AutoSize = true;
+            this.orientLabel.Location = new System.Drawing.Point(170, 165);
+            this.orientLabel.Name = "orientLabel";
+            this.orientLabel.Size = new System.Drawing.Size(87, 16);
+            this.orientLabel.TabIndex = 49;
+            this.orientLabel.Text = "Орієнтація, °";
+            // 
             // simpleexample
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(729, 307);
+            this.ClientSize = new System.Drawing.Size(729, 377);
+            this.Controls.Add(this.orientTextBox);
+            this.Controls.Add(this.orientLabel);
+            this.Controls.Add(this.dLabel);
+            this.Controls.Add(this.dxTextBox);
+            this.Controls.Add(this.dyTextBox);
+            this.Controls.Add(this.dxLabel);
+            this.Controls.Add(this.dyLabel);
+            this.Controls.Add(this.dzTextBox);
+            this.Controls.Add(this.dzLabel);
             this.Controls.Add(this.throttleTextBox);
             this.Controls.Add(this.climbTextBox);
             this.Controls.Add(this.throttleLabel);
@@ -523,6 +614,15 @@
         private System.Windows.Forms.TextBox climbTextBox;
         private System.Windows.Forms.Label throttleLabel;
         private System.Windows.Forms.Label climbLabel;
+        private System.Windows.Forms.TextBox dxTextBox;
+        private System.Windows.Forms.TextBox dyTextBox;
+        private System.Windows.Forms.Label dxLabel;
+        private System.Windows.Forms.Label dyLabel;
+        private System.Windows.Forms.TextBox dzTextBox;
+        private System.Windows.Forms.Label dzLabel;
+        private System.Windows.Forms.Label dLabel;
+        private System.Windows.Forms.TextBox orientTextBox;
+        private System.Windows.Forms.Label orientLabel;
     }
 }
 

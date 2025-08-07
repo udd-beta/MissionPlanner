@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static MAVLink;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace SimpleExample
 {
@@ -25,6 +26,9 @@ namespace SimpleExample
         byte sysid;
         // our target compid
         byte compid;
+        double time;
+        (double, double, double) positionViaGPS;
+        (double, double, double) positionViaHUD;
 
         public simpleexample()
         {
@@ -155,22 +159,29 @@ namespace SimpleExample
                 vxTextBox.Text = (data.vx * cmToM).ToString();
                 vyTextBox.Text = (data.vy * cmToM).ToString();
                 vzTextBox.Text = (data.vz * cmToM).ToString();
+                var currTime = data.time_boot_ms * msToS;
                 if (z0TextBox.Text.Length == 0)
                 {
-                    x0TextBox.Text = x1TextBox.Text = (data.lon * mmToM).ToString();
-                    y0TextBox.Text = y1TextBox.Text = (data.lat * mmToM).ToString();
-                    z0TextBox.Text = z1TextBox.Text = (data.alt * mmToM).ToString();
+                    positionViaGPS = (data.lon * mmToM, data.lat * mmToM, data.alt * mmToM);
+                    x0TextBox.Text = x1TextBox.Text = positionViaGPS.Item1.ToString();
+                    y0TextBox.Text = y1TextBox.Text = positionViaGPS.Item2.ToString();
+                    z0TextBox.Text = z1TextBox.Text = positionViaGPS.Item3.ToString();
                 }
                 else
                 {
-                    double time = (data.time_boot_ms * msToS - double.Parse(timeTextBox.Text)) * cmToM;
-                    x1TextBox.Text = Math.Round(double.Parse(x1TextBox.Text) + data.vx * time, 2).ToString();
-                    y1TextBox.Text = Math.Round(double.Parse(y1TextBox.Text) + data.vy * time, 2).ToString();
-                    z1TextBox.Text = Math.Round(double.Parse(z1TextBox.Text) + data.vz * time, 2).ToString();
+                    double dt = (currTime - time) * cmToM;
+                    positionViaGPS.Item1 += data.vx * dt;
+                    positionViaGPS.Item2 += data.vy * dt;
+                    positionViaGPS.Item3 += data.vz * dt;
+                    x1TextBox.Text = Math.Round(positionViaGPS.Item1, 2).ToString();
+                    y1TextBox.Text = Math.Round(positionViaGPS.Item2, 2).ToString();
+                    z1TextBox.Text = Math.Round(positionViaGPS.Item3, 2).ToString();
                 }
-                timeTextBox.Text = (data.time_boot_ms * msToS).ToString();
+                time = currTime;
+                timeTextBox.Text = time.ToString();
+                orientTextBox.Text = (data.hdg * cmToM).ToString();
             }
-            else if(userData.GetType() == typeof(MAVLink.mavlink_vfr_hud_t))
+            else if (userData.GetType() == typeof(MAVLink.mavlink_vfr_hud_t))
             {
                 var data = (MAVLink.mavlink_vfr_hud_t)userData;
                 headingTextBox.Text = data.heading.ToString();
@@ -179,6 +190,23 @@ namespace SimpleExample
                 altTextBox.Text = data.alt.ToString();
                 climbTextBox.Text = Math.Round(data.climb, 2).ToString();
                 throttleTextBox.Text = data.throttle.ToString();
+                if (dxTextBox.Text.Length == 0)
+                {
+                    positionViaHUD = (0, 0, 0);
+                    dxTextBox.Text = positionViaGPS.Item1.ToString();
+                    dyTextBox.Text = positionViaGPS.Item2.ToString();
+                    dzTextBox.Text = positionViaGPS.Item3.ToString();
+                }
+                else if (Math.Abs(data.groundspeed) >= 0.1)
+                {
+                    double angle = data.heading * Math.PI / 180;
+                    positionViaHUD.Item1 += Math.Sin(angle);
+                    positionViaHUD.Item2 += Math.Cos(angle);
+                    positionViaHUD.Item3 += data.climb;
+                    dxTextBox.Text = Math.Round(positionViaHUD.Item1, 2).ToString();
+                    dyTextBox.Text = Math.Round(positionViaHUD.Item2, 2).ToString();
+                    dzTextBox.Text = Math.Round(positionViaHUD.Item3, 2).ToString();
+                }
             }
         }
 
