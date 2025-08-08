@@ -26,7 +26,9 @@ namespace SimpleExample
         byte sysid;
         // our target compid
         byte compid;
-        double time;
+        double prevAngle = 0;
+        double prevTime = 0;
+        double diffTime = 0;
         (double, double, double) positionViaGPS;
         (double, double, double) positionViaHUD;
 
@@ -66,6 +68,15 @@ namespace SimpleExample
             bgw.RunWorkerAsync();
         }
 
+        void processMessageType<T>(object sender, MAVLink.MAVLinkMessage packet)
+        {
+            if (packet.data.GetType() != typeof(T))
+                return;
+            var data = (T)packet.data;
+            BackgroundWorker worker = sender as BackgroundWorker;
+            worker.ReportProgress(0, data);
+        }
+
         void bgw_DoWork(object sender, DoWorkEventArgs e)
         {
             while (serialPort1.IsOpen)
@@ -82,20 +93,10 @@ namespace SimpleExample
                         if (packet == null || packet.data == null)
                             continue;
                     }
-                    
-                    if (packet.data.GetType() == typeof(MAVLink.mavlink_global_position_int_t))
-                    {
-                        var data = (MAVLink.mavlink_global_position_int_t)packet.data;
-                        Console.WriteLine("X is " + data.vx + " Y is " + data.vy + " Z is " + data.vz);
-                        BackgroundWorker worker = sender as BackgroundWorker;
-                        worker.ReportProgress(0, data);
-                    }
-                    else if (packet.data.GetType() == typeof(MAVLink.mavlink_vfr_hud_t))
-                    {
-                        var data = (MAVLink.mavlink_vfr_hud_t)packet.data;
-                        BackgroundWorker worker = sender as BackgroundWorker;
-                        worker.ReportProgress(0, data);
-                    }
+
+                    processMessageType<MAVLink.mavlink_global_position_int_t>(sender, packet);
+                    processMessageType<MAVLink.mavlink_vfr_hud_t>(sender, packet);
+                    processMessageType<mavlink_raw_imu_t>(sender, packet);
 
                     // check to see if its a hb packet from the comport
                     if (packet.data.GetType() == typeof(MAVLink.mavlink_heartbeat_t))
@@ -160,6 +161,7 @@ namespace SimpleExample
                 vyTextBox.Text = (data.vy * cmToM).ToString();
                 vzTextBox.Text = (data.vz * cmToM).ToString();
                 var currTime = data.time_boot_ms * msToS;
+                diffTime = (currTime - prevTime);
                 if (z0TextBox.Text.Length == 0)
                 {
                     positionViaGPS = (data.lon * mmToM, data.lat * mmToM, data.alt * mmToM);
@@ -169,7 +171,7 @@ namespace SimpleExample
                 }
                 else
                 {
-                    double dt = (currTime - time) * cmToM;
+                    var dt = diffTime * cmToM;
                     positionViaGPS.Item1 += data.vx * dt;
                     positionViaGPS.Item2 += data.vy * dt;
                     positionViaGPS.Item3 += data.vz * dt;
@@ -177,8 +179,8 @@ namespace SimpleExample
                     y1TextBox.Text = Math.Round(positionViaGPS.Item2, 2).ToString();
                     z1TextBox.Text = Math.Round(positionViaGPS.Item3, 2).ToString();
                 }
-                time = currTime;
-                timeTextBox.Text = time.ToString();
+                prevTime = currTime;
+                timeTextBox.Text = prevTime.ToString();
                 orientTextBox.Text = (data.hdg * cmToM).ToString();
             }
             else if (userData.GetType() == typeof(MAVLink.mavlink_vfr_hud_t))
@@ -190,6 +192,7 @@ namespace SimpleExample
                 altTextBox.Text = data.alt.ToString();
                 climbTextBox.Text = Math.Round(data.climb, 2).ToString();
                 throttleTextBox.Text = data.throttle.ToString();
+                double angle = data.heading * Math.PI / 180;
                 if (dxTextBox.Text.Length == 0)
                 {
                     positionViaHUD = (0, 0, 0);
@@ -197,16 +200,18 @@ namespace SimpleExample
                     dyTextBox.Text = positionViaGPS.Item2.ToString();
                     dzTextBox.Text = positionViaGPS.Item3.ToString();
                 }
-                else if (Math.Abs(data.groundspeed) >= 0.1)
+                else if (Math.Abs(data.groundspeed) > 0.2)
                 {
-                    double angle = data.heading * Math.PI / 180;
-                    positionViaHUD.Item1 += Math.Sin(angle);
-                    positionViaHUD.Item2 += Math.Cos(angle);
-                    positionViaHUD.Item3 += data.climb;
+                    double averageAngle = (prevAngle + angle) * 0.5;
+                    var delta = diffTime * data.groundspeed;
+                    positionViaHUD.Item1 += delta * Math.Sin(averageAngle);
+                    positionViaHUD.Item2 += delta * Math.Cos(averageAngle);
+                    positionViaHUD.Item3 += delta * data.climb;
                     dxTextBox.Text = Math.Round(positionViaHUD.Item1, 2).ToString();
                     dyTextBox.Text = Math.Round(positionViaHUD.Item2, 2).ToString();
                     dzTextBox.Text = Math.Round(positionViaHUD.Item3, 2).ToString();
                 }
+                prevAngle = angle;
             }
         }
 
