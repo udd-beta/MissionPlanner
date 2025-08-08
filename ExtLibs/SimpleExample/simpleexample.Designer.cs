@@ -80,6 +80,30 @@
             this.dLabel = new System.Windows.Forms.Label();
             this.orientTextBox = new System.Windows.Forms.TextBox();
             this.orientLabel = new System.Windows.Forms.Label();
+            this.ymagTextBox = new System.Windows.Forms.TextBox();
+            this.ymagLabel = new System.Windows.Forms.Label();
+            this.xmagTextBox = new System.Windows.Forms.TextBox();
+            this.xmagLabel = new System.Windows.Forms.Label();
+            this.xgyroTextBox = new System.Windows.Forms.TextBox();
+            this.xgyroLabel = new System.Windows.Forms.Label();
+            this.yaccTextBox = new System.Windows.Forms.TextBox();
+            this.ygyroTextBox = new System.Windows.Forms.TextBox();
+            this.yaccLabel = new System.Windows.Forms.Label();
+            this.ygyroLabel = new System.Windows.Forms.Label();
+            this.xaccTextBox = new System.Windows.Forms.TextBox();
+            this.xaccLabel = new System.Windows.Forms.Label();
+            this.temperatureTextBox = new System.Windows.Forms.TextBox();
+            this.temperatureLabel = new System.Windows.Forms.Label();
+            this.idTextBox = new System.Windows.Forms.TextBox();
+            this.idLabel = new System.Windows.Forms.Label();
+            this.time_usecTextBox = new System.Windows.Forms.TextBox();
+            this.time_usecLabel = new System.Windows.Forms.Label();
+            this.zmagTextBox = new System.Windows.Forms.TextBox();
+            this.zmagLabel = new System.Windows.Forms.Label();
+            this.zaccTextBox = new System.Windows.Forms.TextBox();
+            this.zgyroTextBox = new System.Windows.Forms.TextBox();
+            this.zaccLabel = new System.Windows.Forms.Label();
+            this.zgyroLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // CMB_comport
@@ -178,6 +202,7 @@
             // 
             // x0TextBox
             // 
+            this.x0TextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.x0TextBox.Location = new System.Drawing.Point(635, 62);
             this.x0TextBox.Name = "x0TextBox";
             this.x0TextBox.Size = new System.Drawing.Size(54, 22);
@@ -185,6 +210,7 @@
             // 
             // x1TextBox
             // 
+            this.x1TextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.x1TextBox.Location = new System.Drawing.Point(635, 90);
             this.x1TextBox.Name = "x1TextBox";
             this.x1TextBox.Size = new System.Drawing.Size(54, 22);
@@ -233,6 +259,7 @@
             // 
             // vxTextBox
             // 
+            this.vxTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.vxTextBox.Location = new System.Drawing.Point(635, 126);
             this.vxTextBox.Name = "vxTextBox";
             this.vxTextBox.Size = new System.Drawing.Size(54, 22);
@@ -331,6 +358,7 @@
             // 
             // vGroundSpeedTextBox
             // 
+            this.vGroundSpeedTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.vGroundSpeedTextBox.Location = new System.Drawing.Point(463, 210);
             this.vGroundSpeedTextBox.Name = "vGroundSpeedTextBox";
             this.vGroundSpeedTextBox.Size = new System.Drawing.Size(54, 22);
@@ -436,6 +464,7 @@
             // 
             // dxTextBox
             // 
+            this.dxTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.dxTextBox.Location = new System.Drawing.Point(644, 290);
             this.dxTextBox.Name = "dxTextBox";
             this.dxTextBox.Size = new System.Drawing.Size(54, 22);
@@ -507,11 +536,228 @@
             this.orientLabel.TabIndex = 49;
             this.orientLabel.Text = "Орієнтація, °";
             // 
+            // ymagTextBox
+            // 
+            this.ymagTextBox.Location = new System.Drawing.Point(561, 425);
+            this.ymagTextBox.Name = "ymagTextBox";
+            this.ymagTextBox.Size = new System.Drawing.Size(54, 22);
+            this.ymagTextBox.TabIndex = 67;
+            // 
+            // ymagLabel
+            // 
+            this.ymagLabel.AutoSize = true;
+            this.ymagLabel.Location = new System.Drawing.Point(541, 425);
+            this.ymagLabel.Name = "ymagLabel";
+            this.ymagLabel.Size = new System.Drawing.Size(14, 16);
+            this.ymagLabel.TabIndex = 65;
+            this.ymagLabel.Text = "y";
+            // 
+            // xmagTextBox
+            // 
+            this.xmagTextBox.Location = new System.Drawing.Point(481, 422);
+            this.xmagTextBox.Name = "xmagTextBox";
+            this.xmagTextBox.Size = new System.Drawing.Size(54, 22);
+            this.xmagTextBox.TabIndex = 64;
+            // 
+            // xmagLabel
+            // 
+            this.xmagLabel.AutoSize = true;
+            this.xmagLabel.Location = new System.Drawing.Point(233, 428);
+            this.xmagLabel.Name = "xmagLabel";
+            this.xmagLabel.Size = new System.Drawing.Size(230, 16);
+            this.xmagLabel.TabIndex = 63;
+            this.xmagLabel.Text = "Магнітне поле вздовж осі, гаус:    х";
+            // 
+            // xgyroTextBox
+            // 
+            this.xgyroTextBox.Location = new System.Drawing.Point(481, 382);
+            this.xgyroTextBox.Name = "xgyroTextBox";
+            this.xgyroTextBox.Size = new System.Drawing.Size(54, 22);
+            this.xgyroTextBox.TabIndex = 58;
+            // 
+            // xgyroLabel
+            // 
+            this.xgyroLabel.AutoSize = true;
+            this.xgyroLabel.Location = new System.Drawing.Point(201, 388);
+            this.xgyroLabel.Name = "xgyroLabel";
+            this.xgyroLabel.Size = new System.Drawing.Size(262, 16);
+            this.xgyroLabel.TabIndex = 57;
+            this.xgyroLabel.Text = "Кутова швидкість довкола осі, рад/с:    х";
+            // 
+            // yaccTextBox
+            // 
+            this.yaccTextBox.Location = new System.Drawing.Point(561, 339);
+            this.yaccTextBox.Name = "yaccTextBox";
+            this.yaccTextBox.Size = new System.Drawing.Size(54, 22);
+            this.yaccTextBox.TabIndex = 56;
+            // 
+            // ygyroTextBox
+            // 
+            this.ygyroTextBox.Location = new System.Drawing.Point(561, 385);
+            this.ygyroTextBox.Name = "ygyroTextBox";
+            this.ygyroTextBox.Size = new System.Drawing.Size(54, 22);
+            this.ygyroTextBox.TabIndex = 55;
+            // 
+            // yaccLabel
+            // 
+            this.yaccLabel.AutoSize = true;
+            this.yaccLabel.Location = new System.Drawing.Point(541, 342);
+            this.yaccLabel.Name = "yaccLabel";
+            this.yaccLabel.Size = new System.Drawing.Size(14, 16);
+            this.yaccLabel.TabIndex = 54;
+            this.yaccLabel.Text = "y";
+            // 
+            // ygyroLabel
+            // 
+            this.ygyroLabel.AutoSize = true;
+            this.ygyroLabel.Location = new System.Drawing.Point(541, 385);
+            this.ygyroLabel.Name = "ygyroLabel";
+            this.ygyroLabel.Size = new System.Drawing.Size(14, 16);
+            this.ygyroLabel.TabIndex = 53;
+            this.ygyroLabel.Text = "y";
+            // 
+            // xaccTextBox
+            // 
+            this.xaccTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.xaccTextBox.Location = new System.Drawing.Point(481, 336);
+            this.xaccTextBox.Name = "xaccTextBox";
+            this.xaccTextBox.Size = new System.Drawing.Size(54, 22);
+            this.xaccTextBox.TabIndex = 52;
+            // 
+            // xaccLabel
+            // 
+            this.xaccLabel.AutoSize = true;
+            this.xaccLabel.Location = new System.Drawing.Point(259, 345);
+            this.xaccLabel.Name = "xaccLabel";
+            this.xaccLabel.Size = new System.Drawing.Size(204, 16);
+            this.xaccLabel.TabIndex = 51;
+            this.xaccLabel.Text = "Прискорення вздовж осі, G:    х";
+            // 
+            // temperatureTextBox
+            // 
+            this.temperatureTextBox.Location = new System.Drawing.Point(139, 416);
+            this.temperatureTextBox.Name = "temperatureTextBox";
+            this.temperatureTextBox.Size = new System.Drawing.Size(54, 22);
+            this.temperatureTextBox.TabIndex = 74;
+            // 
+            // temperatureLabel
+            // 
+            this.temperatureLabel.AutoSize = true;
+            this.temperatureLabel.Location = new System.Drawing.Point(18, 419);
+            this.temperatureLabel.Name = "temperatureLabel";
+            this.temperatureLabel.Size = new System.Drawing.Size(96, 16);
+            this.temperatureLabel.TabIndex = 73;
+            this.temperatureLabel.Text = "Температура";
+            // 
+            // idTextBox
+            // 
+            this.idTextBox.Location = new System.Drawing.Point(139, 376);
+            this.idTextBox.Name = "idTextBox";
+            this.idTextBox.Size = new System.Drawing.Size(54, 22);
+            this.idTextBox.TabIndex = 72;
+            // 
+            // idLabel
+            // 
+            this.idLabel.AutoSize = true;
+            this.idLabel.Location = new System.Drawing.Point(96, 379);
+            this.idLabel.Name = "idLabel";
+            this.idLabel.Size = new System.Drawing.Size(18, 16);
+            this.idLabel.TabIndex = 71;
+            this.idLabel.Text = "id";
+            // 
+            // time_usecTextBox
+            // 
+            this.time_usecTextBox.Location = new System.Drawing.Point(139, 336);
+            this.time_usecTextBox.Name = "time_usecTextBox";
+            this.time_usecTextBox.Size = new System.Drawing.Size(97, 22);
+            this.time_usecTextBox.TabIndex = 70;
+            // 
+            // time_usecLabel
+            // 
+            this.time_usecLabel.AutoSize = true;
+            this.time_usecLabel.Location = new System.Drawing.Point(12, 339);
+            this.time_usecLabel.Name = "time_usecLabel";
+            this.time_usecLabel.Size = new System.Drawing.Size(110, 16);
+            this.time_usecLabel.TabIndex = 69;
+            this.time_usecLabel.Text = "Час від запуску";
+            // 
+            // zmagTextBox
+            // 
+            this.zmagTextBox.Location = new System.Drawing.Point(641, 425);
+            this.zmagTextBox.Name = "zmagTextBox";
+            this.zmagTextBox.Size = new System.Drawing.Size(54, 22);
+            this.zmagTextBox.TabIndex = 80;
+            // 
+            // zmagLabel
+            // 
+            this.zmagLabel.AutoSize = true;
+            this.zmagLabel.Location = new System.Drawing.Point(621, 425);
+            this.zmagLabel.Name = "zmagLabel";
+            this.zmagLabel.Size = new System.Drawing.Size(13, 16);
+            this.zmagLabel.TabIndex = 79;
+            this.zmagLabel.Text = "z";
+            // 
+            // zaccTextBox
+            // 
+            this.zaccTextBox.Location = new System.Drawing.Point(641, 339);
+            this.zaccTextBox.Name = "zaccTextBox";
+            this.zaccTextBox.Size = new System.Drawing.Size(54, 22);
+            this.zaccTextBox.TabIndex = 78;
+            // 
+            // zgyroTextBox
+            // 
+            this.zgyroTextBox.Location = new System.Drawing.Point(641, 385);
+            this.zgyroTextBox.Name = "zgyroTextBox";
+            this.zgyroTextBox.Size = new System.Drawing.Size(54, 22);
+            this.zgyroTextBox.TabIndex = 77;
+            // 
+            // zaccLabel
+            // 
+            this.zaccLabel.AutoSize = true;
+            this.zaccLabel.Location = new System.Drawing.Point(621, 342);
+            this.zaccLabel.Name = "zaccLabel";
+            this.zaccLabel.Size = new System.Drawing.Size(13, 16);
+            this.zaccLabel.TabIndex = 76;
+            this.zaccLabel.Text = "z";
+            // 
+            // zgyroLabel
+            // 
+            this.zgyroLabel.AutoSize = true;
+            this.zgyroLabel.Location = new System.Drawing.Point(621, 385);
+            this.zgyroLabel.Name = "zgyroLabel";
+            this.zgyroLabel.Size = new System.Drawing.Size(13, 16);
+            this.zgyroLabel.TabIndex = 75;
+            this.zgyroLabel.Text = "z";
+            // 
             // simpleexample
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(729, 377);
+            this.ClientSize = new System.Drawing.Size(729, 471);
+            this.Controls.Add(this.zmagTextBox);
+            this.Controls.Add(this.zmagLabel);
+            this.Controls.Add(this.zaccTextBox);
+            this.Controls.Add(this.zgyroTextBox);
+            this.Controls.Add(this.zaccLabel);
+            this.Controls.Add(this.zgyroLabel);
+            this.Controls.Add(this.temperatureTextBox);
+            this.Controls.Add(this.temperatureLabel);
+            this.Controls.Add(this.idTextBox);
+            this.Controls.Add(this.idLabel);
+            this.Controls.Add(this.time_usecTextBox);
+            this.Controls.Add(this.time_usecLabel);
+            this.Controls.Add(this.ymagTextBox);
+            this.Controls.Add(this.ymagLabel);
+            this.Controls.Add(this.xmagTextBox);
+            this.Controls.Add(this.xmagLabel);
+            this.Controls.Add(this.xgyroTextBox);
+            this.Controls.Add(this.xgyroLabel);
+            this.Controls.Add(this.yaccTextBox);
+            this.Controls.Add(this.ygyroTextBox);
+            this.Controls.Add(this.yaccLabel);
+            this.Controls.Add(this.ygyroLabel);
+            this.Controls.Add(this.xaccTextBox);
+            this.Controls.Add(this.xaccLabel);
             this.Controls.Add(this.orientTextBox);
             this.Controls.Add(this.orientLabel);
             this.Controls.Add(this.dLabel);
@@ -623,6 +869,30 @@
         private System.Windows.Forms.Label dLabel;
         private System.Windows.Forms.TextBox orientTextBox;
         private System.Windows.Forms.Label orientLabel;
+        private System.Windows.Forms.TextBox ymagTextBox;
+        private System.Windows.Forms.Label ymagLabel;
+        private System.Windows.Forms.TextBox xmagTextBox;
+        private System.Windows.Forms.Label xmagLabel;
+        private System.Windows.Forms.TextBox xgyroTextBox;
+        private System.Windows.Forms.Label xgyroLabel;
+        private System.Windows.Forms.TextBox yaccTextBox;
+        private System.Windows.Forms.TextBox ygyroTextBox;
+        private System.Windows.Forms.Label yaccLabel;
+        private System.Windows.Forms.Label ygyroLabel;
+        private System.Windows.Forms.TextBox xaccTextBox;
+        private System.Windows.Forms.Label xaccLabel;
+        private System.Windows.Forms.TextBox temperatureTextBox;
+        private System.Windows.Forms.Label temperatureLabel;
+        private System.Windows.Forms.TextBox idTextBox;
+        private System.Windows.Forms.Label idLabel;
+        private System.Windows.Forms.TextBox time_usecTextBox;
+        private System.Windows.Forms.Label time_usecLabel;
+        private System.Windows.Forms.TextBox zmagTextBox;
+        private System.Windows.Forms.Label zmagLabel;
+        private System.Windows.Forms.TextBox zaccTextBox;
+        private System.Windows.Forms.TextBox zgyroTextBox;
+        private System.Windows.Forms.Label zaccLabel;
+        private System.Windows.Forms.Label zgyroLabel;
     }
 }
 

@@ -94,8 +94,8 @@ namespace SimpleExample
                             continue;
                     }
 
-                    processMessageType<MAVLink.mavlink_global_position_int_t>(sender, packet);
-                    processMessageType<MAVLink.mavlink_vfr_hud_t>(sender, packet);
+                    processMessageType<mavlink_global_position_int_t>(sender, packet);
+                    processMessageType<mavlink_vfr_hud_t>(sender, packet);
                     processMessageType<mavlink_raw_imu_t>(sender, packet);
 
                     // check to see if its a hb packet from the comport
@@ -153,10 +153,11 @@ namespace SimpleExample
             const double msToS = 0.001;
             const double mmToM = 0.001;
             const double cmToM = 0.01;
+            const double mgToMs = 0.001 / 9.80665;
             var userData = e.UserState;
-            if (userData.GetType() == typeof(MAVLink.mavlink_global_position_int_t))
+            if (userData.GetType() == typeof(mavlink_global_position_int_t))
             {
-                var data = (MAVLink.mavlink_global_position_int_t)userData;
+                var data = (mavlink_global_position_int_t)userData;
                 vxTextBox.Text = (data.vx * cmToM).ToString();
                 vyTextBox.Text = (data.vy * cmToM).ToString();
                 vzTextBox.Text = (data.vz * cmToM).ToString();
@@ -183,9 +184,9 @@ namespace SimpleExample
                 timeTextBox.Text = prevTime.ToString();
                 orientTextBox.Text = (data.hdg * cmToM).ToString();
             }
-            else if (userData.GetType() == typeof(MAVLink.mavlink_vfr_hud_t))
+            else if (userData.GetType() == typeof(mavlink_vfr_hud_t))
             {
-                var data = (MAVLink.mavlink_vfr_hud_t)userData;
+                var data = (mavlink_vfr_hud_t)userData;
                 headingTextBox.Text = data.heading.ToString();
                 vAirSpeedTextBox.Text = data.airspeed.ToString();
                 vGroundSpeedTextBox.Text = Math.Round(data.groundspeed, 1).ToString();
@@ -212,6 +213,22 @@ namespace SimpleExample
                     dzTextBox.Text = Math.Round(positionViaHUD.Item3, 2).ToString();
                 }
                 prevAngle = angle;
+            }
+            else if (userData.GetType() == typeof(mavlink_raw_imu_t))
+            {
+                var data = (mavlink_raw_imu_t)userData;
+                time_usecTextBox.Text = (data.time_usec * msToS * msToS).ToString();
+                idTextBox.Text = data.id.ToString();
+                temperatureTextBox.Text = data.temperature.ToString();
+                xaccTextBox.Text = Math.Round(mgToMs * data.xacc, 3).ToString();
+                yaccTextBox.Text = Math.Round(mgToMs * data.yacc, 3).ToString();
+                zaccTextBox.Text = Math.Round(mgToMs * data.zacc, 3).ToString();
+                xgyroTextBox.Text = Math.Round(mmToM * data.xgyro, 1).ToString();
+                ygyroTextBox.Text = Math.Round(mmToM * data.ygyro, 1).ToString();
+                zgyroTextBox.Text = Math.Round(mmToM * data.zgyro, 1).ToString();
+                xmagTextBox.Text = Math.Round(mmToM * data.xmag, 1).ToString();
+                ymagTextBox.Text = Math.Round(mmToM * data.ymag, 1).ToString();
+                zmagTextBox.Text = Math.Round(mmToM * data.zmag, 1).ToString();                
             }
         }
 
