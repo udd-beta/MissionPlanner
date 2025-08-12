@@ -104,6 +104,21 @@
             this.zgyroTextBox = new System.Windows.Forms.TextBox();
             this.zaccLabel = new System.Windows.Forms.Label();
             this.zgyroLabel = new System.Windows.Forms.Label();
+            this.fzmagTextBox = new System.Windows.Forms.TextBox();
+            this.fzaccTextBox = new System.Windows.Forms.TextBox();
+            this.fzgyroTextBox = new System.Windows.Forms.TextBox();
+            this.fymagTextBox = new System.Windows.Forms.TextBox();
+            this.fxmagTextBox = new System.Windows.Forms.TextBox();
+            this.fxgyroTextBox = new System.Windows.Forms.TextBox();
+            this.fyaccTextBox = new System.Windows.Forms.TextBox();
+            this.fygyroTextBox = new System.Windows.Forms.TextBox();
+            this.fxaccTextBox = new System.Windows.Forms.TextBox();
+            this.rawAltTextBox = new System.Windows.Forms.TextBox();
+            this.rawAltLabel = new System.Windows.Forms.Label();
+            this.rawLonTextBox = new System.Windows.Forms.TextBox();
+            this.rawLonLabel = new System.Windows.Forms.Label();
+            this.rawLatTextBox = new System.Windows.Forms.TextBox();
+            this.rawLatLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // CMB_comport
@@ -538,7 +553,7 @@
             // 
             // ymagTextBox
             // 
-            this.ymagTextBox.Location = new System.Drawing.Point(561, 425);
+            this.ymagTextBox.Location = new System.Drawing.Point(561, 453);
             this.ymagTextBox.Name = "ymagTextBox";
             this.ymagTextBox.Size = new System.Drawing.Size(54, 22);
             this.ymagTextBox.TabIndex = 67;
@@ -546,7 +561,7 @@
             // ymagLabel
             // 
             this.ymagLabel.AutoSize = true;
-            this.ymagLabel.Location = new System.Drawing.Point(541, 425);
+            this.ymagLabel.Location = new System.Drawing.Point(541, 453);
             this.ymagLabel.Name = "ymagLabel";
             this.ymagLabel.Size = new System.Drawing.Size(14, 16);
             this.ymagLabel.TabIndex = 65;
@@ -554,7 +569,7 @@
             // 
             // xmagTextBox
             // 
-            this.xmagTextBox.Location = new System.Drawing.Point(481, 422);
+            this.xmagTextBox.Location = new System.Drawing.Point(481, 450);
             this.xmagTextBox.Name = "xmagTextBox";
             this.xmagTextBox.Size = new System.Drawing.Size(54, 22);
             this.xmagTextBox.TabIndex = 64;
@@ -562,7 +577,7 @@
             // xmagLabel
             // 
             this.xmagLabel.AutoSize = true;
-            this.xmagLabel.Location = new System.Drawing.Point(233, 428);
+            this.xmagLabel.Location = new System.Drawing.Point(233, 456);
             this.xmagLabel.Name = "xmagLabel";
             this.xmagLabel.Size = new System.Drawing.Size(230, 16);
             this.xmagLabel.TabIndex = 63;
@@ -570,7 +585,7 @@
             // 
             // xgyroTextBox
             // 
-            this.xgyroTextBox.Location = new System.Drawing.Point(481, 382);
+            this.xgyroTextBox.Location = new System.Drawing.Point(481, 391);
             this.xgyroTextBox.Name = "xgyroTextBox";
             this.xgyroTextBox.Size = new System.Drawing.Size(54, 22);
             this.xgyroTextBox.TabIndex = 58;
@@ -578,7 +593,7 @@
             // xgyroLabel
             // 
             this.xgyroLabel.AutoSize = true;
-            this.xgyroLabel.Location = new System.Drawing.Point(201, 388);
+            this.xgyroLabel.Location = new System.Drawing.Point(201, 397);
             this.xgyroLabel.Name = "xgyroLabel";
             this.xgyroLabel.Size = new System.Drawing.Size(262, 16);
             this.xgyroLabel.TabIndex = 57;
@@ -593,7 +608,7 @@
             // 
             // ygyroTextBox
             // 
-            this.ygyroTextBox.Location = new System.Drawing.Point(561, 385);
+            this.ygyroTextBox.Location = new System.Drawing.Point(561, 394);
             this.ygyroTextBox.Name = "ygyroTextBox";
             this.ygyroTextBox.Size = new System.Drawing.Size(54, 22);
             this.ygyroTextBox.TabIndex = 55;
@@ -610,7 +625,7 @@
             // ygyroLabel
             // 
             this.ygyroLabel.AutoSize = true;
-            this.ygyroLabel.Location = new System.Drawing.Point(541, 385);
+            this.ygyroLabel.Location = new System.Drawing.Point(541, 394);
             this.ygyroLabel.Name = "ygyroLabel";
             this.ygyroLabel.Size = new System.Drawing.Size(14, 16);
             this.ygyroLabel.TabIndex = 53;
@@ -635,7 +650,7 @@
             // 
             // temperatureTextBox
             // 
-            this.temperatureTextBox.Location = new System.Drawing.Point(139, 416);
+            this.temperatureTextBox.Location = new System.Drawing.Point(139, 444);
             this.temperatureTextBox.Name = "temperatureTextBox";
             this.temperatureTextBox.Size = new System.Drawing.Size(54, 22);
             this.temperatureTextBox.TabIndex = 74;
@@ -643,7 +658,7 @@
             // temperatureLabel
             // 
             this.temperatureLabel.AutoSize = true;
-            this.temperatureLabel.Location = new System.Drawing.Point(18, 419);
+            this.temperatureLabel.Location = new System.Drawing.Point(18, 447);
             this.temperatureLabel.Name = "temperatureLabel";
             this.temperatureLabel.Size = new System.Drawing.Size(96, 16);
             this.temperatureLabel.TabIndex = 73;
@@ -651,7 +666,7 @@
             // 
             // idTextBox
             // 
-            this.idTextBox.Location = new System.Drawing.Point(139, 376);
+            this.idTextBox.Location = new System.Drawing.Point(139, 385);
             this.idTextBox.Name = "idTextBox";
             this.idTextBox.Size = new System.Drawing.Size(54, 22);
             this.idTextBox.TabIndex = 72;
@@ -659,7 +674,7 @@
             // idLabel
             // 
             this.idLabel.AutoSize = true;
-            this.idLabel.Location = new System.Drawing.Point(96, 379);
+            this.idLabel.Location = new System.Drawing.Point(96, 388);
             this.idLabel.Name = "idLabel";
             this.idLabel.Size = new System.Drawing.Size(18, 16);
             this.idLabel.TabIndex = 71;
@@ -683,7 +698,7 @@
             // 
             // zmagTextBox
             // 
-            this.zmagTextBox.Location = new System.Drawing.Point(641, 425);
+            this.zmagTextBox.Location = new System.Drawing.Point(641, 453);
             this.zmagTextBox.Name = "zmagTextBox";
             this.zmagTextBox.Size = new System.Drawing.Size(54, 22);
             this.zmagTextBox.TabIndex = 80;
@@ -691,7 +706,7 @@
             // zmagLabel
             // 
             this.zmagLabel.AutoSize = true;
-            this.zmagLabel.Location = new System.Drawing.Point(621, 425);
+            this.zmagLabel.Location = new System.Drawing.Point(621, 453);
             this.zmagLabel.Name = "zmagLabel";
             this.zmagLabel.Size = new System.Drawing.Size(13, 16);
             this.zmagLabel.TabIndex = 79;
@@ -706,7 +721,7 @@
             // 
             // zgyroTextBox
             // 
-            this.zgyroTextBox.Location = new System.Drawing.Point(641, 385);
+            this.zgyroTextBox.Location = new System.Drawing.Point(641, 394);
             this.zgyroTextBox.Name = "zgyroTextBox";
             this.zgyroTextBox.Size = new System.Drawing.Size(54, 22);
             this.zgyroTextBox.TabIndex = 77;
@@ -723,17 +738,144 @@
             // zgyroLabel
             // 
             this.zgyroLabel.AutoSize = true;
-            this.zgyroLabel.Location = new System.Drawing.Point(621, 385);
+            this.zgyroLabel.Location = new System.Drawing.Point(621, 394);
             this.zgyroLabel.Name = "zgyroLabel";
             this.zgyroLabel.Size = new System.Drawing.Size(13, 16);
             this.zgyroLabel.TabIndex = 75;
             this.zgyroLabel.Text = "z";
             // 
+            // fzmagTextBox
+            // 
+            this.fzmagTextBox.Location = new System.Drawing.Point(641, 481);
+            this.fzmagTextBox.Name = "fzmagTextBox";
+            this.fzmagTextBox.Size = new System.Drawing.Size(54, 22);
+            this.fzmagTextBox.TabIndex = 95;
+            // 
+            // fzaccTextBox
+            // 
+            this.fzaccTextBox.Location = new System.Drawing.Point(641, 367);
+            this.fzaccTextBox.Name = "fzaccTextBox";
+            this.fzaccTextBox.Size = new System.Drawing.Size(54, 22);
+            this.fzaccTextBox.TabIndex = 93;
+            // 
+            // fzgyroTextBox
+            // 
+            this.fzgyroTextBox.Location = new System.Drawing.Point(641, 422);
+            this.fzgyroTextBox.Name = "fzgyroTextBox";
+            this.fzgyroTextBox.Size = new System.Drawing.Size(54, 22);
+            this.fzgyroTextBox.TabIndex = 92;
+            // 
+            // fymagTextBox
+            // 
+            this.fymagTextBox.Location = new System.Drawing.Point(561, 481);
+            this.fymagTextBox.Name = "fymagTextBox";
+            this.fymagTextBox.Size = new System.Drawing.Size(54, 22);
+            this.fymagTextBox.TabIndex = 89;
+            // 
+            // fxmagTextBox
+            // 
+            this.fxmagTextBox.Location = new System.Drawing.Point(481, 478);
+            this.fxmagTextBox.Name = "fxmagTextBox";
+            this.fxmagTextBox.Size = new System.Drawing.Size(54, 22);
+            this.fxmagTextBox.TabIndex = 87;
+            // 
+            // fxgyroTextBox
+            // 
+            this.fxgyroTextBox.Location = new System.Drawing.Point(481, 419);
+            this.fxgyroTextBox.Name = "fxgyroTextBox";
+            this.fxgyroTextBox.Size = new System.Drawing.Size(54, 22);
+            this.fxgyroTextBox.TabIndex = 86;
+            // 
+            // fyaccTextBox
+            // 
+            this.fyaccTextBox.Location = new System.Drawing.Point(561, 367);
+            this.fyaccTextBox.Name = "fyaccTextBox";
+            this.fyaccTextBox.Size = new System.Drawing.Size(54, 22);
+            this.fyaccTextBox.TabIndex = 85;
+            // 
+            // fygyroTextBox
+            // 
+            this.fygyroTextBox.Location = new System.Drawing.Point(561, 422);
+            this.fygyroTextBox.Name = "fygyroTextBox";
+            this.fygyroTextBox.Size = new System.Drawing.Size(54, 22);
+            this.fygyroTextBox.TabIndex = 84;
+            // 
+            // fxaccTextBox
+            // 
+            this.fxaccTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.fxaccTextBox.Location = new System.Drawing.Point(481, 364);
+            this.fxaccTextBox.Name = "fxaccTextBox";
+            this.fxaccTextBox.Size = new System.Drawing.Size(54, 22);
+            this.fxaccTextBox.TabIndex = 81;
+            // 
+            // rawAltTextBox
+            // 
+            this.rawAltTextBox.Location = new System.Drawing.Point(641, 528);
+            this.rawAltTextBox.Name = "rawAltTextBox";
+            this.rawAltTextBox.Size = new System.Drawing.Size(54, 22);
+            this.rawAltTextBox.TabIndex = 101;
+            // 
+            // rawAltLabel
+            // 
+            this.rawAltLabel.AutoSize = true;
+            this.rawAltLabel.Location = new System.Drawing.Point(558, 534);
+            this.rawAltLabel.Name = "rawAltLabel";
+            this.rawAltLabel.Size = new System.Drawing.Size(53, 16);
+            this.rawAltLabel.TabIndex = 100;
+            this.rawAltLabel.Text = "висота";
+            // 
+            // rawLonTextBox
+            // 
+            this.rawLonTextBox.Location = new System.Drawing.Point(481, 528);
+            this.rawLonTextBox.Name = "rawLonTextBox";
+            this.rawLonTextBox.Size = new System.Drawing.Size(54, 22);
+            this.rawLonTextBox.TabIndex = 99;
+            // 
+            // rawLonLabel
+            // 
+            this.rawLonLabel.AutoSize = true;
+            this.rawLonLabel.Location = new System.Drawing.Point(397, 534);
+            this.rawLonLabel.Name = "rawLonLabel";
+            this.rawLonLabel.Size = new System.Drawing.Size(60, 16);
+            this.rawLonLabel.TabIndex = 98;
+            this.rawLonLabel.Text = "довгота";
+            // 
+            // rawLatTextBox
+            // 
+            this.rawLatTextBox.Location = new System.Drawing.Point(325, 528);
+            this.rawLatTextBox.Name = "rawLatTextBox";
+            this.rawLatTextBox.Size = new System.Drawing.Size(54, 22);
+            this.rawLatTextBox.TabIndex = 97;
+            // 
+            // rawLatLabel
+            // 
+            this.rawLatLabel.AutoSize = true;
+            this.rawLatLabel.Location = new System.Drawing.Point(136, 534);
+            this.rawLatLabel.Name = "rawLatLabel";
+            this.rawLatLabel.Size = new System.Drawing.Size(159, 16);
+            this.rawLatLabel.TabIndex = 96;
+            this.rawLatLabel.Text = "Сирі GPS дані:    широта";
+            // 
             // simpleexample
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(729, 471);
+            this.ClientSize = new System.Drawing.Size(729, 588);
+            this.Controls.Add(this.rawAltTextBox);
+            this.Controls.Add(this.rawAltLabel);
+            this.Controls.Add(this.rawLonTextBox);
+            this.Controls.Add(this.rawLonLabel);
+            this.Controls.Add(this.rawLatTextBox);
+            this.Controls.Add(this.rawLatLabel);
+            this.Controls.Add(this.fzmagTextBox);
+            this.Controls.Add(this.fzaccTextBox);
+            this.Controls.Add(this.fzgyroTextBox);
+            this.Controls.Add(this.fymagTextBox);
+            this.Controls.Add(this.fxmagTextBox);
+            this.Controls.Add(this.fxgyroTextBox);
+            this.Controls.Add(this.fyaccTextBox);
+            this.Controls.Add(this.fygyroTextBox);
+            this.Controls.Add(this.fxaccTextBox);
             this.Controls.Add(this.zmagTextBox);
             this.Controls.Add(this.zmagLabel);
             this.Controls.Add(this.zaccTextBox);
@@ -893,6 +1035,21 @@
         private System.Windows.Forms.TextBox zgyroTextBox;
         private System.Windows.Forms.Label zaccLabel;
         private System.Windows.Forms.Label zgyroLabel;
+        private System.Windows.Forms.TextBox fzmagTextBox;
+        private System.Windows.Forms.TextBox fzaccTextBox;
+        private System.Windows.Forms.TextBox fzgyroTextBox;
+        private System.Windows.Forms.TextBox fymagTextBox;
+        private System.Windows.Forms.TextBox fxmagTextBox;
+        private System.Windows.Forms.TextBox fxgyroTextBox;
+        private System.Windows.Forms.TextBox fyaccTextBox;
+        private System.Windows.Forms.TextBox fygyroTextBox;
+        private System.Windows.Forms.TextBox fxaccTextBox;
+        private System.Windows.Forms.TextBox rawAltTextBox;
+        private System.Windows.Forms.Label rawAltLabel;
+        private System.Windows.Forms.TextBox rawLonTextBox;
+        private System.Windows.Forms.Label rawLonLabel;
+        private System.Windows.Forms.TextBox rawLatTextBox;
+        private System.Windows.Forms.Label rawLatLabel;
     }
 }
 

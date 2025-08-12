@@ -31,6 +31,7 @@ namespace SimpleExample
         double diffTime = 0;
         (double, double, double) positionViaGPS;
         (double, double, double) positionViaHUD;
+        //KalmanFilter filter;
 
         public simpleexample()
         {
@@ -97,6 +98,7 @@ namespace SimpleExample
                     processMessageType<mavlink_global_position_int_t>(sender, packet);
                     processMessageType<mavlink_vfr_hud_t>(sender, packet);
                     processMessageType<mavlink_raw_imu_t>(sender, packet);
+                    processMessageType<mavlink_gps_raw_int_t>(sender, packet);
 
                     // check to see if its a hb packet from the comport
                     if (packet.data.GetType() == typeof(MAVLink.mavlink_heartbeat_t))
@@ -228,7 +230,24 @@ namespace SimpleExample
                 zgyroTextBox.Text = Math.Round(mmToM * data.zgyro, 1).ToString();
                 xmagTextBox.Text = Math.Round(mmToM * data.xmag, 1).ToString();
                 ymagTextBox.Text = Math.Round(mmToM * data.ymag, 1).ToString();
-                zmagTextBox.Text = Math.Round(mmToM * data.zmag, 1).ToString();                
+                zmagTextBox.Text = Math.Round(mmToM * data.zmag, 1).ToString();
+
+                //fxaccTextBox.Text = Math.Round(mgToMs * filter.process(data.xacc), 3).ToString();
+                //fyaccTextBox.Text = Math.Round(mgToMs * filter.process(data.yacc), 3).ToString();
+                //fzaccTextBox.Text = Math.Round(mgToMs * filter.process(data.zacc), 3).ToString();
+                //fxgyroTextBox.Text = Math.Round(mmToM * filter.process(data.xgyro), 1).ToString();
+                //fygyroTextBox.Text = Math.Round(mmToM * filter.process(data.ygyro), 1).ToString();
+                //fzgyroTextBox.Text = Math.Round(mmToM * filter.process(data.zgyro), 1).ToString();
+                //fxmagTextBox.Text = Math.Round(mmToM * filter.process(data.xmag), 1).ToString();
+                //fymagTextBox.Text = Math.Round(mmToM * filter.process(data.ymag), 1).ToString();
+                //fzmagTextBox.Text = Math.Round(mmToM * filter.process(data.zmag), 1).ToString();
+            }
+            else if (userData.GetType() == typeof(mavlink_gps_raw_int_t))
+            {
+                var data = (mavlink_gps_raw_int_t)userData;
+                rawLatTextBox.Text = data.lat.ToString();
+                rawLonTextBox.Text = data.lon.ToString();
+                rawAltTextBox.Text = data.alt.ToString();
             }
         }
 
