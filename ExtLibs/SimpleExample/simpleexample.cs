@@ -43,7 +43,11 @@ namespace SimpleExample
         double maxAcc = 0;
         double maxGyro = 0;
         double sumAcc = 0;
-        int[,] tendency = new int[16, 16];
+        const int rowsCount = 16;
+        const int colsCount = 16;
+        const int avgsCount = 10;
+        int[,] tendency = new int[rowsCount, colsCount];
+        List<double>[,] lastValues = new List<double>[rowsCount, colsCount];
 
         public simpleexample()
         {
@@ -53,8 +57,8 @@ namespace SimpleExample
                 CMB_comport.Text = CMB_comport.Items[0].ToString();
             if (cmb_baudrate.Items.Count > 0)
                 cmb_baudrate.Text = cmb_baudrate.Items[0].ToString();
-            IMUdataGridView.ColumnCount = 16;
-            IMUdataGridView.RowCount = 16;
+            IMUdataGridView.ColumnCount = colsCount;
+            IMUdataGridView.RowCount = rowsCount;
             foreach (DataGridViewColumn column in IMUdataGridView.Columns)
                 column.Width = 50;
             IMUdataGridView.RowHeadersWidth = 150;
@@ -77,9 +81,12 @@ namespace SimpleExample
             IMUdataGridView.Rows[14].HeaderCell.Value = "VIBRATION";
             IMUdataGridView.Rows[14].SetValues("time_usec", "vibration_x", "vibration_y", "vibration_z", "clipping_0", "clipping_1", "clipping_2");
             tabControl.SelectedIndex = 1;
-            for (int i = 0; i < 16; ++i)
-                for (int j = 0; j < 16; ++j)
+            for (int i = 0; i < rowsCount; ++i)
+                for (int j = 0; j < colsCount; ++j)
+                {
                     tendency[i, j] = 0;
+                    lastValues[i, j] = new List<double>();
+                }
         }
 
         private void but_connect_Click(object sender, EventArgs e)
@@ -193,8 +200,19 @@ namespace SimpleExample
             }
         }
 
-        void updateCell(int row, int col, double value)
+        void updateCell(int row, int col, double inValue)
         {
+            var list = lastValues[row, col];
+            double value = inValue;
+            if (list.Count > 0)
+            {
+                if (list.Count == avgsCount)
+                    list.RemoveAt(0);
+                foreach (double v in list)
+                    value += v;
+                list.Add(inValue);
+                value /= list.Count;
+            }
             var cell = IMUdataGridView.Rows[row].Cells[col];
             if (cell.Value != null)
             {
