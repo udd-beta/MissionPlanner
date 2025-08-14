@@ -51,6 +51,30 @@ namespace SimpleExample
                 CMB_comport.Text = CMB_comport.Items[0].ToString();
             if (cmb_baudrate.Items.Count > 0)
                 cmb_baudrate.Text = cmb_baudrate.Items[0].ToString();
+            IMUdataGridView.ColumnCount = 16;
+            IMUdataGridView.RowCount = 16;
+            foreach (DataGridViewColumn column in IMUdataGridView.Columns)
+                column.Width = 50;
+            IMUdataGridView.RowHeadersWidth = 150;
+            for (int i = 0; i < IMUdataGridView.Rows.Count; i += 2)
+                IMUdataGridView.Rows[i].DefaultCellStyle.BackColor = Color.LightBlue;
+            IMUdataGridView.Rows[0].HeaderCell.Value = "ATTITUDE";
+            IMUdataGridView.Rows[0].SetValues("time_boot_ms", "roll", "pitch", "yaw", "rollspeed", "pitchspeed", "yawspeed");
+            IMUdataGridView.Rows[2].HeaderCell.Value = "GLOBAL_POSITION_INT";
+            IMUdataGridView.Rows[2].SetValues("time_boot_ms", "lat", "lon", "alt", "relative_alt", "vx", "vy", "vz", "hdg");
+            IMUdataGridView.Rows[4].HeaderCell.Value = "VFR_HUD";
+            IMUdataGridView.Rows[4].SetValues("airspeed", "groundspeed", "heading", "throttle", "alt", "climb");
+            IMUdataGridView.Rows[6].HeaderCell.Value = "RAW_IMU";
+            IMUdataGridView.Rows[6].SetValues("time_usec", "xacc", "yacc", "zacc", "xgyro", "ygyro", "zgyro", "xmag", "ymag", "zmag");
+            IMUdataGridView.Rows[8].HeaderCell.Value = "SCALED_IMU2";
+            IMUdataGridView.Rows[8].SetValues("time_boot_ms", "xacc", "yacc", "zacc", "xgyro", "ygyro", "zgyro", "xmag", "ymag", "zmag");
+            IMUdataGridView.Rows[10].HeaderCell.Value = "SCALED_IMU3";
+            IMUdataGridView.Rows[10].SetValues("time_boot_ms", "xacc", "yacc", "zacc", "xgyro", "ygyro", "zgyro", "xmag", "ymag", "zmag");
+            IMUdataGridView.Rows[12].HeaderCell.Value = "GPS_RAW_INT";
+            //IMUdataGridView.Rows[12].SetValues("time_usec", "fix_type", "lat", "lon", "alt", "eph", "epv", "vel", "cog", "satellites_visible", "alt_ellipsoid", "h_acc", "v_acc", "vel_acc", "hdg_acc", "yaw");
+            IMUdataGridView.Rows[14].HeaderCell.Value = "VIBRATION";
+            IMUdataGridView.Rows[14].SetValues("time_usec", "vibration_x", "vibration_y", "vibration_z", "clipping_0", "clipping_1", "clipping_2");
+            tabControl.SelectedIndex = 1;
         }
 
         private void but_connect_Click(object sender, EventArgs e)
@@ -105,10 +129,14 @@ namespace SimpleExample
                             continue;
                     }
 
+                    processMessageType<mavlink_attitude_t>(sender, packet);
                     processMessageType<mavlink_global_position_int_t>(sender, packet);
                     processMessageType<mavlink_vfr_hud_t>(sender, packet);
                     processMessageType<mavlink_raw_imu_t>(sender, packet);
+                    processMessageType<mavlink_scaled_imu2_t>(sender, packet);
+                    processMessageType<mavlink_scaled_imu3_t>(sender, packet);
                     processMessageType<mavlink_gps_raw_int_t>(sender, packet);
+                    processMessageType<mavlink_vibration_t>(sender, packet);
 
                     // check to see if its a hb packet from the comport
                     if (packet.data.GetType() == typeof(MAVLink.mavlink_heartbeat_t))
@@ -306,9 +334,50 @@ namespace SimpleExample
                 rawLonTextBox.Text = data.lon.ToString();
                 rawAltTextBox.Text = data.alt.ToString();
             }
+
+            if (userData.GetType() == typeof(mavlink_attitude_t))
+            {
+                var data = (mavlink_attitude_t)userData;
+                IMUdataGridView.Rows[1].SetValues(data.time_boot_ms, data.roll, data.pitch, data.yaw, data.rollspeed, data.pitchspeed, data.yawspeed);
+            }
+            else if (userData.GetType() == typeof(mavlink_global_position_int_t))
+            {
+                var data = (mavlink_global_position_int_t)userData;
+                IMUdataGridView.Rows[3].SetValues(data.time_boot_ms, data.lat, data.lon, data.alt, data.relative_alt, data.vx, data.vy, data.vz, data.hdg);
+            }
+            else if (userData.GetType() == typeof(mavlink_vfr_hud_t))
+            {
+                var data = (mavlink_vfr_hud_t)userData;
+                IMUdataGridView.Rows[5].SetValues(data.airspeed, data.groundspeed, data.heading, data.throttle, data.alt, data.climb);
+            }
+            else if (userData.GetType() == typeof(mavlink_raw_imu_t))
+            {
+                var data = (mavlink_raw_imu_t)userData;
+                IMUdataGridView.Rows[7].SetValues(data.time_usec, data.xacc, data.yacc, data.zacc, data.xgyro, data.ygyro, data.zgyro, data.xmag, data.ymag, data.zmag);
+            }
+            else if (userData.GetType() == typeof(mavlink_scaled_imu2_t))
+            {
+                var data = (mavlink_scaled_imu2_t)userData;
+                IMUdataGridView.Rows[9].SetValues(data.time_boot_ms, data.xacc, data.yacc, data.zacc, data.xgyro, data.ygyro, data.zgyro, data.xmag, data.ymag, data.zmag);
+            }
+            else if (userData.GetType() == typeof(mavlink_scaled_imu3_t))
+            {
+                var data = (mavlink_scaled_imu3_t)userData;
+                IMUdataGridView.Rows[11].SetValues(data.time_boot_ms, data.xacc, data.yacc, data.zacc, data.xgyro, data.ygyro, data.zgyro, data.xmag, data.ymag, data.zmag);
+            }
+            else if (userData.GetType() == typeof(mavlink_gps_raw_int_t))
+            {
+            //    var data = (mavlink_gps_raw_int_t)userData;
+            //    IMUdataGridView.Rows[13].SetValues(data.time_usec, data.fix_type, data.lat, data.lon, data.alt, data.eph, data.epv, data.vel, data.cog, data.satellites_visible, data.alt_ellipsoid, data.h_acc, data.v_acc, data.vel_acc, data.hdg_acc, data.yaw);
+            }
+            else if (userData.GetType() == typeof(mavlink_vibration_t))
+            {
+                var data = (mavlink_vibration_t)userData;
+                IMUdataGridView.Rows[15].SetValues(data.time_usec, data.vibration_x, data.vibration_y, data.vibration_z, data.clipping_0, data.clipping_1, data.clipping_2);
+            }
         }
 
-        T readsomedata<T>(byte sysid,byte compid,int timeout = 2000)
+            T readsomedata<T>(byte sysid,byte compid,int timeout = 2000)
         {
             DateTime deadline = DateTime.Now.AddMilliseconds(timeout);
 

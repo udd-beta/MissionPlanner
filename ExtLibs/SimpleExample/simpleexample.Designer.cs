@@ -131,11 +131,14 @@
             this.maxGyroLabel = new System.Windows.Forms.Label();
             this.sumAccTextBox = new System.Windows.Forms.TextBox();
             this.sumAccLabel = new System.Windows.Forms.Label();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tabControl1.SuspendLayout();
+            this.IMUdataGridView = new System.Windows.Forms.DataGridView();
+            this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.IMUdataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // CMB_comport
@@ -975,15 +978,16 @@
             this.sumAccLabel.TabIndex = 112;
             this.sumAccLabel.Text = "Інтеграл";
             // 
-            // tabControl1
+            // tabControl
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(12, 50);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(743, 570);
-            this.tabControl1.TabIndex = 114;
+            this.tabControl.Controls.Add(this.tabPage1);
+            this.tabControl.Controls.Add(this.tabPage2);
+            this.tabControl.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tabControl.Location = new System.Drawing.Point(0, 64);
+            this.tabControl.Name = "tabControl";
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Size = new System.Drawing.Size(884, 570);
+            this.tabControl.TabIndex = 114;
             // 
             // tabPage1
             // 
@@ -1093,20 +1097,32 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.IMUdataGridView);
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(735, 541);
+            this.tabPage2.Size = new System.Drawing.Size(876, 541);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Друге наближення";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // IMUdataGridView
+            // 
+            this.IMUdataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.IMUdataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.IMUdataGridView.Location = new System.Drawing.Point(3, 3);
+            this.IMUdataGridView.Name = "IMUdataGridView";
+            this.IMUdataGridView.RowHeadersWidth = 51;
+            this.IMUdataGridView.RowTemplate.Height = 24;
+            this.IMUdataGridView.Size = new System.Drawing.Size(870, 535);
+            this.IMUdataGridView.TabIndex = 0;
             // 
             // simpleexample
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(770, 634);
-            this.Controls.Add(this.tabControl1);
+            this.ClientSize = new System.Drawing.Size(884, 634);
+            this.Controls.Add(this.tabControl);
             this.Controls.Add(this.but_mission);
             this.Controls.Add(this.but_armdisarm);
             this.Controls.Add(this.but_connect);
@@ -1115,9 +1131,11 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "simpleexample";
             this.Text = "Дані з польотного контролера";
-            this.tabControl1.ResumeLayout(false);
+            this.tabControl.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.IMUdataGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1226,9 +1244,10 @@
         private System.Windows.Forms.Label maxGyroLabel;
         private System.Windows.Forms.TextBox sumAccTextBox;
         private System.Windows.Forms.Label sumAccLabel;
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.DataGridView IMUdataGridView;
     }
 }
 
