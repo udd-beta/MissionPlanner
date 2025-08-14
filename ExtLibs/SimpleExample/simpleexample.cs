@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.IO.Ports;
 using System.Linq;
@@ -42,6 +43,7 @@ namespace SimpleExample
         double maxAcc = 0;
         double maxGyro = 0;
         double sumAcc = 0;
+        int[,] tendency = new int[16, 16];
 
         public simpleexample()
         {
@@ -75,6 +77,9 @@ namespace SimpleExample
             IMUdataGridView.Rows[14].HeaderCell.Value = "VIBRATION";
             IMUdataGridView.Rows[14].SetValues("time_usec", "vibration_x", "vibration_y", "vibration_z", "clipping_0", "clipping_1", "clipping_2");
             tabControl.SelectedIndex = 1;
+            for (int i = 0; i < 16; ++i)
+                for (int j = 0; j < 16; ++j)
+                    tendency[i, j] = 0;
         }
 
         private void but_connect_Click(object sender, EventArgs e)
@@ -186,6 +191,42 @@ namespace SimpleExample
 
                 System.Threading.Thread.Sleep(1);
             }
+        }
+
+        void updateCell(int row, int col, double value)
+        {
+            var cell = IMUdataGridView.Rows[row].Cells[col];
+            if (cell.Value != null)
+            {
+                if (value < Convert.ToDouble(cell.Value))
+                {
+                    if (tendency[row, col] >= 0)
+                        tendency[row, col] = -1;
+                    else
+                        --tendency[row, col];
+                    if (tendency[row, col] < -4)
+                        cell.Style.BackColor = Color.Red;
+                    else
+                        cell.Style.BackColor = Color.LightCoral;
+                }
+                else if (value > Convert.ToDouble(cell.Value))
+                {
+                    if (tendency[row, col] <= 0)
+                        tendency[row, col] = 1;
+                    else
+                        ++tendency[row, col];
+                    if (tendency[row, col] > 4)
+                        cell.Style.BackColor = Color.Green;
+                    else
+                        cell.Style.BackColor = Color.LightGreen;
+                }
+                else
+                {
+                    tendency[row, col] = 0;
+                    cell.Style.BackColor = Color.White;
+                }
+            }
+            cell.Value = value;
         }
 
         private void bgw_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -338,32 +379,32 @@ namespace SimpleExample
             if (userData.GetType() == typeof(mavlink_attitude_t))
             {
                 var data = (mavlink_attitude_t)userData;
-                IMUdataGridView.Rows[1].SetValues(data.time_boot_ms, data.roll, data.pitch, data.yaw, data.rollspeed, data.pitchspeed, data.yawspeed);
+                updateCell(1, 0, data.time_boot_ms); updateCell(1, 1, data.roll); updateCell(1, 2, data.pitch); updateCell(1, 3, data.yaw); updateCell(1, 4, data.rollspeed); updateCell(1, 5, data.pitchspeed); updateCell(1, 6, data.yawspeed);
             }
             else if (userData.GetType() == typeof(mavlink_global_position_int_t))
             {
                 var data = (mavlink_global_position_int_t)userData;
-                IMUdataGridView.Rows[3].SetValues(data.time_boot_ms, data.lat, data.lon, data.alt, data.relative_alt, data.vx, data.vy, data.vz, data.hdg);
+                updateCell(3, 0, data.time_boot_ms); updateCell(3, 1, data.lat); updateCell(3, 2, data.lon); updateCell(3, 3, data.alt); updateCell(3, 4, data.relative_alt); updateCell(3, 5, data.vx); updateCell(3, 6, data.vy); updateCell(3, 7, data.vz); updateCell(3, 8, data.hdg);
             }
             else if (userData.GetType() == typeof(mavlink_vfr_hud_t))
             {
                 var data = (mavlink_vfr_hud_t)userData;
-                IMUdataGridView.Rows[5].SetValues(data.airspeed, data.groundspeed, data.heading, data.throttle, data.alt, data.climb);
+                updateCell(5, 0, data.airspeed); updateCell(5, 1, data.groundspeed); updateCell(5, 2, data.heading); updateCell(5, 3, data.throttle); updateCell(5, 4, data.alt); updateCell(5, 5, data.climb);
             }
             else if (userData.GetType() == typeof(mavlink_raw_imu_t))
             {
                 var data = (mavlink_raw_imu_t)userData;
-                IMUdataGridView.Rows[7].SetValues(data.time_usec, data.xacc, data.yacc, data.zacc, data.xgyro, data.ygyro, data.zgyro, data.xmag, data.ymag, data.zmag);
+                updateCell(7, 0, data.time_usec); updateCell(7, 1, data.xacc); updateCell(7, 2, data.yacc); updateCell(7, 3, data.zacc); updateCell(7, 4, data.xgyro); updateCell(7, 5, data.ygyro); updateCell(7, 6, data.zgyro); updateCell(7, 7, data.xmag); updateCell(7, 8, data.ymag); updateCell(7, 9, data.zmag);
             }
             else if (userData.GetType() == typeof(mavlink_scaled_imu2_t))
             {
                 var data = (mavlink_scaled_imu2_t)userData;
-                IMUdataGridView.Rows[9].SetValues(data.time_boot_ms, data.xacc, data.yacc, data.zacc, data.xgyro, data.ygyro, data.zgyro, data.xmag, data.ymag, data.zmag);
+                updateCell(9, 0, data.time_boot_ms); updateCell(9, 1, data.xacc); updateCell(9, 2, data.yacc); updateCell(9, 3, data.zacc); updateCell(9, 4, data.xgyro); updateCell(9, 5, data.ygyro); updateCell(9, 6, data.zgyro); updateCell(9, 7, data.xmag); updateCell(9, 8, data.ymag); updateCell(9, 9, data.zmag);
             }
             else if (userData.GetType() == typeof(mavlink_scaled_imu3_t))
             {
                 var data = (mavlink_scaled_imu3_t)userData;
-                IMUdataGridView.Rows[11].SetValues(data.time_boot_ms, data.xacc, data.yacc, data.zacc, data.xgyro, data.ygyro, data.zgyro, data.xmag, data.ymag, data.zmag);
+                updateCell(11, 0, data.time_boot_ms); updateCell(11, 1, data.xacc); updateCell(11, 2, data.yacc); updateCell(11, 3, data.zacc); updateCell(11, 4, data.xgyro); updateCell(11, 5, data.ygyro); updateCell(11, 6, data.zgyro); updateCell(11, 7, data.xmag); updateCell(11, 8, data.ymag); updateCell(11, 9, data.zmag);
             }
             else if (userData.GetType() == typeof(mavlink_gps_raw_int_t))
             {
@@ -373,11 +414,11 @@ namespace SimpleExample
             else if (userData.GetType() == typeof(mavlink_vibration_t))
             {
                 var data = (mavlink_vibration_t)userData;
-                IMUdataGridView.Rows[15].SetValues(data.time_usec, data.vibration_x, data.vibration_y, data.vibration_z, data.clipping_0, data.clipping_1, data.clipping_2);
+                updateCell(15, 0, data.time_usec); updateCell(15, 1, data.vibration_x); updateCell(15, 2, data.vibration_y); updateCell(15, 3, data.vibration_z); updateCell(15, 4, data.clipping_0); updateCell(15, 5, data.clipping_1); updateCell(15, 6, data.clipping_2);
             }
         }
 
-            T readsomedata<T>(byte sysid,byte compid,int timeout = 2000)
+        T readsomedata<T>(byte sysid,byte compid,int timeout = 2000)
         {
             DateTime deadline = DateTime.Now.AddMilliseconds(timeout);
 
