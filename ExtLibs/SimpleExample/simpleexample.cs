@@ -41,6 +41,7 @@ namespace SimpleExample
         double accWay = 0;
         double maxAcc = 0;
         double maxGyro = 0;
+        double sumAcc = 0;
 
         public simpleexample()
         {
@@ -260,6 +261,7 @@ namespace SimpleExample
                     initAccX = data.xacc;
                     initAccY = data.yacc;
                     initAccZ = data.zacc;
+                    sumAcc = xacc;
                     return;
                 }
                 var dt = 0.5;// (data.time_usec - imuTime) * msToS;
@@ -268,27 +270,34 @@ namespace SimpleExample
                 const double gyroSensitivity = 10.0;// 65.536 / mmToM;
                 const double accMultiplier = 6;
                 const double gyroMutliplier = 0.7;
-
-                var currLength = Math.Abs(Math.Round(data.zgyro * mmToM * dt, 2));
-                wayLength += currLength;
-                double gyroWeight = 0.9;
-                double accWeight = 1 - gyroWeight;
-                if (Math.Abs(xacc) > accSencitivity)
-                    wayLength = wayLength * gyroWeight + Math.Abs(xacc) * mgToMs * dt * dt * accWeight;
-                
-                if (Math.Abs(xacc) > maxAcc)
-                    maxAcc = Math.Abs(xacc);
+                sumAcc += xacc;
+                var acc = xacc;// Math.Sqrt(xacc * xacc + yacc + yacc);
+                if (Math.Abs(acc) > maxAcc)
+                    maxAcc = Math.Abs(acc);
                 if (Math.Abs(data.zgyro) > maxGyro)
                     maxGyro = Math.Abs(data.zgyro);
-                if (Math.Abs(xacc) > accSencitivity)
-                    accWay += Math.Round(Math.Sqrt(Math.Abs(xacc)) * accMultiplier * dt * dt, 3);
+                if (Math.Abs(acc) > accSencitivity)
+                {
+                    var way = Math.Round(Math.Sqrt(Math.Abs(acc)) * accMultiplier * dt * dt, 3);
+                    if (sumAcc > 0)
+                        accWay += way;
+                    else
+                        accWay -= way;
+                }
                 if (Math.Abs(data.zgyro) > gyroSensitivity)
-                    gyroWay += Math.Round(Math.Abs(data.zgyro) * gyroMutliplier * mmToM * dt, 3);
+                {
+                    var way = Math.Round(Math.Abs(data.zgyro) * gyroMutliplier * mmToM * dt, 3);
+                    if (sumAcc > 0)
+                        gyroWay += way;
+                    else
+                        gyroWay -= way;
+                }
                 accTextBox.Text = accWay.ToString();
                 gyroTextBox.Text = gyroWay.ToString();
                 wayTextBox.Text = (accWay + gyroWay).ToString();
-                maxAccTextBox.Text = maxAcc.ToString();
-                maxGyroTextBox.Text = maxGyro.ToString();
+                maxAccTextBox.Text = Math.Round(maxAcc, 3).ToString();
+                maxGyroTextBox.Text = Math.Round(maxGyro, 3).ToString();
+                sumAccTextBox.Text = Math.Round(sumAcc, 3).ToString();
             }
             else if (userData.GetType() == typeof(mavlink_gps_raw_int_t))
             {

@@ -129,6 +129,13 @@
             this.maxAccLabel = new System.Windows.Forms.Label();
             this.maxGyroTextBox = new System.Windows.Forms.TextBox();
             this.maxGyroLabel = new System.Windows.Forms.Label();
+            this.sumAccTextBox = new System.Windows.Forms.TextBox();
+            this.sumAccLabel = new System.Windows.Forms.Label();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // CMB_comport
@@ -194,7 +201,7 @@
             // z0Label
             // 
             this.z0Label.AutoSize = true;
-            this.z0Label.Location = new System.Drawing.Point(184, 65);
+            this.z0Label.Location = new System.Drawing.Point(203, 9);
             this.z0Label.Name = "z0Label";
             this.z0Label.Size = new System.Drawing.Size(72, 16);
             this.z0Label.TabIndex = 5;
@@ -203,7 +210,7 @@
             // y0Label
             // 
             this.y0Label.AutoSize = true;
-            this.y0Label.Location = new System.Drawing.Point(354, 65);
+            this.y0Label.Location = new System.Drawing.Point(373, 9);
             this.y0Label.Name = "y0Label";
             this.y0Label.Size = new System.Drawing.Size(75, 16);
             this.y0Label.TabIndex = 7;
@@ -212,7 +219,7 @@
             // x0Label
             // 
             this.x0Label.AutoSize = true;
-            this.x0Label.Location = new System.Drawing.Point(555, 65);
+            this.x0Label.Location = new System.Drawing.Point(574, 9);
             this.x0Label.Name = "x0Label";
             this.x0Label.Size = new System.Drawing.Size(79, 16);
             this.x0Label.TabIndex = 9;
@@ -220,7 +227,7 @@
             // 
             // y0TextBox
             // 
-            this.y0TextBox.Location = new System.Drawing.Point(463, 62);
+            this.y0TextBox.Location = new System.Drawing.Point(482, 6);
             this.y0TextBox.Name = "y0TextBox";
             this.y0TextBox.Size = new System.Drawing.Size(54, 22);
             this.y0TextBox.TabIndex = 10;
@@ -228,7 +235,7 @@
             // x0TextBox
             // 
             this.x0TextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.x0TextBox.Location = new System.Drawing.Point(635, 62);
+            this.x0TextBox.Location = new System.Drawing.Point(654, 6);
             this.x0TextBox.Name = "x0TextBox";
             this.x0TextBox.Size = new System.Drawing.Size(54, 22);
             this.x0TextBox.TabIndex = 11;
@@ -236,14 +243,14 @@
             // x1TextBox
             // 
             this.x1TextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.x1TextBox.Location = new System.Drawing.Point(635, 90);
+            this.x1TextBox.Location = new System.Drawing.Point(654, 34);
             this.x1TextBox.Name = "x1TextBox";
             this.x1TextBox.Size = new System.Drawing.Size(54, 22);
             this.x1TextBox.TabIndex = 17;
             // 
             // y1TextBox
             // 
-            this.y1TextBox.Location = new System.Drawing.Point(463, 90);
+            this.y1TextBox.Location = new System.Drawing.Point(482, 34);
             this.y1TextBox.Name = "y1TextBox";
             this.y1TextBox.Size = new System.Drawing.Size(54, 22);
             this.y1TextBox.TabIndex = 16;
@@ -251,7 +258,7 @@
             // x1Label
             // 
             this.x1Label.AutoSize = true;
-            this.x1Label.Location = new System.Drawing.Point(555, 93);
+            this.x1Label.Location = new System.Drawing.Point(574, 37);
             this.x1Label.Name = "x1Label";
             this.x1Label.Size = new System.Drawing.Size(79, 16);
             this.x1Label.TabIndex = 15;
@@ -260,7 +267,7 @@
             // y2Label
             // 
             this.y2Label.AutoSize = true;
-            this.y2Label.Location = new System.Drawing.Point(354, 93);
+            this.y2Label.Location = new System.Drawing.Point(373, 37);
             this.y2Label.Name = "y2Label";
             this.y2Label.Size = new System.Drawing.Size(75, 16);
             this.y2Label.TabIndex = 14;
@@ -268,7 +275,7 @@
             // 
             // z1TextBox
             // 
-            this.z1TextBox.Location = new System.Drawing.Point(262, 90);
+            this.z1TextBox.Location = new System.Drawing.Point(281, 34);
             this.z1TextBox.Name = "z1TextBox";
             this.z1TextBox.Size = new System.Drawing.Size(54, 22);
             this.z1TextBox.TabIndex = 13;
@@ -276,7 +283,7 @@
             // z1Label
             // 
             this.z1Label.AutoSize = true;
-            this.z1Label.Location = new System.Drawing.Point(184, 93);
+            this.z1Label.Location = new System.Drawing.Point(203, 37);
             this.z1Label.Name = "z1Label";
             this.z1Label.Size = new System.Drawing.Size(72, 16);
             this.z1Label.TabIndex = 12;
@@ -285,14 +292,14 @@
             // vxTextBox
             // 
             this.vxTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.vxTextBox.Location = new System.Drawing.Point(635, 126);
+            this.vxTextBox.Location = new System.Drawing.Point(654, 70);
             this.vxTextBox.Name = "vxTextBox";
             this.vxTextBox.Size = new System.Drawing.Size(54, 22);
             this.vxTextBox.TabIndex = 23;
             // 
             // vyTextBox
             // 
-            this.vyTextBox.Location = new System.Drawing.Point(463, 126);
+            this.vyTextBox.Location = new System.Drawing.Point(482, 70);
             this.vyTextBox.Name = "vyTextBox";
             this.vyTextBox.Size = new System.Drawing.Size(54, 22);
             this.vyTextBox.TabIndex = 22;
@@ -300,24 +307,24 @@
             // vxLabel
             // 
             this.vxLabel.AutoSize = true;
-            this.vxLabel.Location = new System.Drawing.Point(555, 129);
+            this.vxLabel.Location = new System.Drawing.Point(574, 70);
             this.vxLabel.Name = "vxLabel";
-            this.vxLabel.Size = new System.Drawing.Size(76, 16);
+            this.vxLabel.Size = new System.Drawing.Size(66, 16);
             this.vxLabel.TabIndex = 21;
-            this.vxLabel.Text = "По довготі";
+            this.vxLabel.Text = "По курсу";
             // 
             // vyLabel
             // 
             this.vyLabel.AutoSize = true;
-            this.vyLabel.Location = new System.Drawing.Point(354, 129);
+            this.vyLabel.Location = new System.Drawing.Point(374, 73);
             this.vyLabel.Name = "vyLabel";
-            this.vyLabel.Size = new System.Drawing.Size(71, 16);
+            this.vyLabel.Size = new System.Drawing.Size(34, 16);
             this.vyLabel.TabIndex = 20;
-            this.vyLabel.Text = "По широті";
+            this.vyLabel.Text = "Убік";
             // 
             // vzTextBox
             // 
-            this.vzTextBox.Location = new System.Drawing.Point(262, 126);
+            this.vzTextBox.Location = new System.Drawing.Point(281, 70);
             this.vzTextBox.Name = "vzTextBox";
             this.vzTextBox.Size = new System.Drawing.Size(54, 22);
             this.vzTextBox.TabIndex = 19;
@@ -325,7 +332,7 @@
             // vzLabel
             // 
             this.vzLabel.AutoSize = true;
-            this.vzLabel.Location = new System.Drawing.Point(184, 129);
+            this.vzLabel.Location = new System.Drawing.Point(203, 73);
             this.vzLabel.Name = "vzLabel";
             this.vzLabel.Size = new System.Drawing.Size(65, 16);
             this.vzLabel.TabIndex = 18;
@@ -334,7 +341,7 @@
             // velocityLabel
             // 
             this.velocityLabel.AutoSize = true;
-            this.velocityLabel.Location = new System.Drawing.Point(28, 126);
+            this.velocityLabel.Location = new System.Drawing.Point(47, 70);
             this.velocityLabel.Name = "velocityLabel";
             this.velocityLabel.Size = new System.Drawing.Size(76, 16);
             this.velocityLabel.TabIndex = 26;
@@ -343,7 +350,7 @@
             // position1Label
             // 
             this.position1Label.AutoSize = true;
-            this.position1Label.Location = new System.Drawing.Point(28, 90);
+            this.position1Label.Location = new System.Drawing.Point(47, 34);
             this.position1Label.Name = "position1Label";
             this.position1Label.Size = new System.Drawing.Size(120, 16);
             this.position1Label.TabIndex = 25;
@@ -352,7 +359,7 @@
             // position0Label
             // 
             this.position0Label.AutoSize = true;
-            this.position0Label.Location = new System.Drawing.Point(28, 62);
+            this.position0Label.Location = new System.Drawing.Point(47, 6);
             this.position0Label.Name = "position0Label";
             this.position0Label.Size = new System.Drawing.Size(135, 16);
             this.position0Label.TabIndex = 24;
@@ -360,14 +367,14 @@
             // 
             // z0TextBox
             // 
-            this.z0TextBox.Location = new System.Drawing.Point(262, 62);
+            this.z0TextBox.Location = new System.Drawing.Point(281, 6);
             this.z0TextBox.Name = "z0TextBox";
             this.z0TextBox.Size = new System.Drawing.Size(54, 22);
             this.z0TextBox.TabIndex = 6;
             // 
             // timeTextBox
             // 
-            this.timeTextBox.Location = new System.Drawing.Point(592, 168);
+            this.timeTextBox.Location = new System.Drawing.Point(611, 112);
             this.timeTextBox.Name = "timeTextBox";
             this.timeTextBox.Size = new System.Drawing.Size(97, 22);
             this.timeTextBox.TabIndex = 28;
@@ -375,7 +382,7 @@
             // timeLabel
             // 
             this.timeLabel.AutoSize = true;
-            this.timeLabel.Location = new System.Drawing.Point(555, 168);
+            this.timeLabel.Location = new System.Drawing.Point(574, 112);
             this.timeLabel.Name = "timeLabel";
             this.timeLabel.Size = new System.Drawing.Size(31, 16);
             this.timeLabel.TabIndex = 27;
@@ -384,14 +391,14 @@
             // vGroundSpeedTextBox
             // 
             this.vGroundSpeedTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.vGroundSpeedTextBox.Location = new System.Drawing.Point(463, 210);
+            this.vGroundSpeedTextBox.Location = new System.Drawing.Point(482, 154);
             this.vGroundSpeedTextBox.Name = "vGroundSpeedTextBox";
             this.vGroundSpeedTextBox.Size = new System.Drawing.Size(54, 22);
             this.vGroundSpeedTextBox.TabIndex = 34;
             // 
             // vAirSpeedTextBox
             // 
-            this.vAirSpeedTextBox.Location = new System.Drawing.Point(463, 250);
+            this.vAirSpeedTextBox.Location = new System.Drawing.Point(482, 194);
             this.vAirSpeedTextBox.Name = "vAirSpeedTextBox";
             this.vAirSpeedTextBox.Size = new System.Drawing.Size(54, 22);
             this.vAirSpeedTextBox.TabIndex = 33;
@@ -399,7 +406,7 @@
             // vGroundLabel
             // 
             this.vGroundLabel.AutoSize = true;
-            this.vGroundLabel.Location = new System.Drawing.Point(333, 213);
+            this.vGroundLabel.Location = new System.Drawing.Point(352, 157);
             this.vGroundLabel.Name = "vGroundLabel";
             this.vGroundLabel.Size = new System.Drawing.Size(130, 16);
             this.vGroundLabel.TabIndex = 32;
@@ -408,7 +415,7 @@
             // vAirLabel
             // 
             this.vAirLabel.AutoSize = true;
-            this.vAirLabel.Location = new System.Drawing.Point(322, 253);
+            this.vAirLabel.Location = new System.Drawing.Point(341, 197);
             this.vAirLabel.Name = "vAirLabel";
             this.vAirLabel.Size = new System.Drawing.Size(141, 16);
             this.vAirLabel.TabIndex = 31;
@@ -416,7 +423,7 @@
             // 
             // headingTextBox
             // 
-            this.headingTextBox.Location = new System.Drawing.Point(262, 210);
+            this.headingTextBox.Location = new System.Drawing.Point(281, 154);
             this.headingTextBox.Name = "headingTextBox";
             this.headingTextBox.Size = new System.Drawing.Size(54, 22);
             this.headingTextBox.TabIndex = 30;
@@ -424,7 +431,7 @@
             // headingLabel
             // 
             this.headingLabel.AutoSize = true;
-            this.headingLabel.Location = new System.Drawing.Point(170, 213);
+            this.headingLabel.Location = new System.Drawing.Point(189, 157);
             this.headingLabel.Name = "headingLabel";
             this.headingLabel.Size = new System.Drawing.Size(87, 16);
             this.headingLabel.TabIndex = 29;
@@ -432,7 +439,7 @@
             // 
             // altTextBox
             // 
-            this.altTextBox.Location = new System.Drawing.Point(262, 250);
+            this.altTextBox.Location = new System.Drawing.Point(281, 194);
             this.altTextBox.Name = "altTextBox";
             this.altTextBox.Size = new System.Drawing.Size(54, 22);
             this.altTextBox.TabIndex = 36;
@@ -440,7 +447,7 @@
             // altLabel
             // 
             this.altLabel.AutoSize = true;
-            this.altLabel.Location = new System.Drawing.Point(182, 253);
+            this.altLabel.Location = new System.Drawing.Point(201, 197);
             this.altLabel.Name = "altLabel";
             this.altLabel.Size = new System.Drawing.Size(54, 16);
             this.altLabel.TabIndex = 35;
@@ -449,7 +456,7 @@
             // hudLabel
             // 
             this.hudLabel.AutoSize = true;
-            this.hudLabel.Location = new System.Drawing.Point(28, 216);
+            this.hudLabel.Location = new System.Drawing.Point(47, 160);
             this.hudLabel.Name = "hudLabel";
             this.hudLabel.Size = new System.Drawing.Size(96, 16);
             this.hudLabel.TabIndex = 37;
@@ -457,14 +464,14 @@
             // 
             // throttleTextBox
             // 
-            this.throttleTextBox.Location = new System.Drawing.Point(644, 210);
+            this.throttleTextBox.Location = new System.Drawing.Point(663, 154);
             this.throttleTextBox.Name = "throttleTextBox";
             this.throttleTextBox.Size = new System.Drawing.Size(54, 22);
             this.throttleTextBox.TabIndex = 41;
             // 
             // climbTextBox
             // 
-            this.climbTextBox.Location = new System.Drawing.Point(644, 250);
+            this.climbTextBox.Location = new System.Drawing.Point(663, 194);
             this.climbTextBox.Name = "climbTextBox";
             this.climbTextBox.Size = new System.Drawing.Size(54, 22);
             this.climbTextBox.TabIndex = 40;
@@ -472,7 +479,7 @@
             // throttleLabel
             // 
             this.throttleLabel.AutoSize = true;
-            this.throttleLabel.Location = new System.Drawing.Point(572, 216);
+            this.throttleLabel.Location = new System.Drawing.Point(591, 160);
             this.throttleLabel.Name = "throttleLabel";
             this.throttleLabel.Size = new System.Drawing.Size(62, 16);
             this.throttleLabel.TabIndex = 39;
@@ -481,7 +488,7 @@
             // climbLabel
             // 
             this.climbLabel.AutoSize = true;
-            this.climbLabel.Location = new System.Drawing.Point(578, 253);
+            this.climbLabel.Location = new System.Drawing.Point(597, 197);
             this.climbLabel.Name = "climbLabel";
             this.climbLabel.Size = new System.Drawing.Size(53, 16);
             this.climbLabel.TabIndex = 38;
@@ -490,14 +497,14 @@
             // dxTextBox
             // 
             this.dxTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.dxTextBox.Location = new System.Drawing.Point(644, 290);
+            this.dxTextBox.Location = new System.Drawing.Point(663, 234);
             this.dxTextBox.Name = "dxTextBox";
             this.dxTextBox.Size = new System.Drawing.Size(54, 22);
             this.dxTextBox.TabIndex = 47;
             // 
             // dyTextBox
             // 
-            this.dyTextBox.Location = new System.Drawing.Point(464, 290);
+            this.dyTextBox.Location = new System.Drawing.Point(483, 234);
             this.dyTextBox.Name = "dyTextBox";
             this.dyTextBox.Size = new System.Drawing.Size(54, 22);
             this.dyTextBox.TabIndex = 46;
@@ -505,7 +512,7 @@
             // dxLabel
             // 
             this.dxLabel.AutoSize = true;
-            this.dxLabel.Location = new System.Drawing.Point(556, 293);
+            this.dxLabel.Location = new System.Drawing.Point(575, 237);
             this.dxLabel.Name = "dxLabel";
             this.dxLabel.Size = new System.Drawing.Size(79, 16);
             this.dxLabel.TabIndex = 45;
@@ -514,7 +521,7 @@
             // dyLabel
             // 
             this.dyLabel.AutoSize = true;
-            this.dyLabel.Location = new System.Drawing.Point(355, 293);
+            this.dyLabel.Location = new System.Drawing.Point(374, 237);
             this.dyLabel.Name = "dyLabel";
             this.dyLabel.Size = new System.Drawing.Size(75, 16);
             this.dyLabel.TabIndex = 44;
@@ -522,7 +529,7 @@
             // 
             // dzTextBox
             // 
-            this.dzTextBox.Location = new System.Drawing.Point(263, 290);
+            this.dzTextBox.Location = new System.Drawing.Point(282, 234);
             this.dzTextBox.Name = "dzTextBox";
             this.dzTextBox.Size = new System.Drawing.Size(54, 22);
             this.dzTextBox.TabIndex = 43;
@@ -530,7 +537,7 @@
             // dzLabel
             // 
             this.dzLabel.AutoSize = true;
-            this.dzLabel.Location = new System.Drawing.Point(185, 293);
+            this.dzLabel.Location = new System.Drawing.Point(204, 237);
             this.dzLabel.Name = "dzLabel";
             this.dzLabel.Size = new System.Drawing.Size(72, 16);
             this.dzLabel.TabIndex = 42;
@@ -539,7 +546,7 @@
             // dLabel
             // 
             this.dLabel.AutoSize = true;
-            this.dLabel.Location = new System.Drawing.Point(14, 293);
+            this.dLabel.Location = new System.Drawing.Point(33, 237);
             this.dLabel.Name = "dLabel";
             this.dLabel.Size = new System.Drawing.Size(160, 16);
             this.dLabel.TabIndex = 48;
@@ -547,7 +554,7 @@
             // 
             // orientTextBox
             // 
-            this.orientTextBox.Location = new System.Drawing.Point(262, 162);
+            this.orientTextBox.Location = new System.Drawing.Point(281, 106);
             this.orientTextBox.Name = "orientTextBox";
             this.orientTextBox.Size = new System.Drawing.Size(54, 22);
             this.orientTextBox.TabIndex = 50;
@@ -555,7 +562,7 @@
             // orientLabel
             // 
             this.orientLabel.AutoSize = true;
-            this.orientLabel.Location = new System.Drawing.Point(170, 165);
+            this.orientLabel.Location = new System.Drawing.Point(189, 109);
             this.orientLabel.Name = "orientLabel";
             this.orientLabel.Size = new System.Drawing.Size(87, 16);
             this.orientLabel.TabIndex = 49;
@@ -563,7 +570,7 @@
             // 
             // ymagTextBox
             // 
-            this.ymagTextBox.Location = new System.Drawing.Point(561, 453);
+            this.ymagTextBox.Location = new System.Drawing.Point(580, 397);
             this.ymagTextBox.Name = "ymagTextBox";
             this.ymagTextBox.Size = new System.Drawing.Size(54, 22);
             this.ymagTextBox.TabIndex = 67;
@@ -571,7 +578,7 @@
             // ymagLabel
             // 
             this.ymagLabel.AutoSize = true;
-            this.ymagLabel.Location = new System.Drawing.Point(541, 453);
+            this.ymagLabel.Location = new System.Drawing.Point(560, 397);
             this.ymagLabel.Name = "ymagLabel";
             this.ymagLabel.Size = new System.Drawing.Size(14, 16);
             this.ymagLabel.TabIndex = 65;
@@ -579,7 +586,7 @@
             // 
             // xmagTextBox
             // 
-            this.xmagTextBox.Location = new System.Drawing.Point(481, 450);
+            this.xmagTextBox.Location = new System.Drawing.Point(500, 394);
             this.xmagTextBox.Name = "xmagTextBox";
             this.xmagTextBox.Size = new System.Drawing.Size(54, 22);
             this.xmagTextBox.TabIndex = 64;
@@ -587,7 +594,7 @@
             // xmagLabel
             // 
             this.xmagLabel.AutoSize = true;
-            this.xmagLabel.Location = new System.Drawing.Point(233, 456);
+            this.xmagLabel.Location = new System.Drawing.Point(252, 419);
             this.xmagLabel.Name = "xmagLabel";
             this.xmagLabel.Size = new System.Drawing.Size(230, 16);
             this.xmagLabel.TabIndex = 63;
@@ -595,7 +602,7 @@
             // 
             // xgyroTextBox
             // 
-            this.xgyroTextBox.Location = new System.Drawing.Point(481, 391);
+            this.xgyroTextBox.Location = new System.Drawing.Point(500, 335);
             this.xgyroTextBox.Name = "xgyroTextBox";
             this.xgyroTextBox.Size = new System.Drawing.Size(54, 22);
             this.xgyroTextBox.TabIndex = 58;
@@ -603,7 +610,7 @@
             // xgyroLabel
             // 
             this.xgyroLabel.AutoSize = true;
-            this.xgyroLabel.Location = new System.Drawing.Point(201, 397);
+            this.xgyroLabel.Location = new System.Drawing.Point(220, 341);
             this.xgyroLabel.Name = "xgyroLabel";
             this.xgyroLabel.Size = new System.Drawing.Size(262, 16);
             this.xgyroLabel.TabIndex = 57;
@@ -611,14 +618,14 @@
             // 
             // yaccTextBox
             // 
-            this.yaccTextBox.Location = new System.Drawing.Point(561, 339);
+            this.yaccTextBox.Location = new System.Drawing.Point(580, 283);
             this.yaccTextBox.Name = "yaccTextBox";
             this.yaccTextBox.Size = new System.Drawing.Size(54, 22);
             this.yaccTextBox.TabIndex = 56;
             // 
             // ygyroTextBox
             // 
-            this.ygyroTextBox.Location = new System.Drawing.Point(561, 394);
+            this.ygyroTextBox.Location = new System.Drawing.Point(580, 338);
             this.ygyroTextBox.Name = "ygyroTextBox";
             this.ygyroTextBox.Size = new System.Drawing.Size(54, 22);
             this.ygyroTextBox.TabIndex = 55;
@@ -626,7 +633,7 @@
             // yaccLabel
             // 
             this.yaccLabel.AutoSize = true;
-            this.yaccLabel.Location = new System.Drawing.Point(541, 342);
+            this.yaccLabel.Location = new System.Drawing.Point(560, 286);
             this.yaccLabel.Name = "yaccLabel";
             this.yaccLabel.Size = new System.Drawing.Size(14, 16);
             this.yaccLabel.TabIndex = 54;
@@ -635,7 +642,7 @@
             // ygyroLabel
             // 
             this.ygyroLabel.AutoSize = true;
-            this.ygyroLabel.Location = new System.Drawing.Point(541, 394);
+            this.ygyroLabel.Location = new System.Drawing.Point(560, 338);
             this.ygyroLabel.Name = "ygyroLabel";
             this.ygyroLabel.Size = new System.Drawing.Size(14, 16);
             this.ygyroLabel.TabIndex = 53;
@@ -644,7 +651,7 @@
             // xaccTextBox
             // 
             this.xaccTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.xaccTextBox.Location = new System.Drawing.Point(481, 336);
+            this.xaccTextBox.Location = new System.Drawing.Point(500, 280);
             this.xaccTextBox.Name = "xaccTextBox";
             this.xaccTextBox.Size = new System.Drawing.Size(54, 22);
             this.xaccTextBox.TabIndex = 52;
@@ -652,7 +659,7 @@
             // xaccLabel
             // 
             this.xaccLabel.AutoSize = true;
-            this.xaccLabel.Location = new System.Drawing.Point(259, 345);
+            this.xaccLabel.Location = new System.Drawing.Point(278, 289);
             this.xaccLabel.Name = "xaccLabel";
             this.xaccLabel.Size = new System.Drawing.Size(204, 16);
             this.xaccLabel.TabIndex = 51;
@@ -660,7 +667,7 @@
             // 
             // temperatureTextBox
             // 
-            this.temperatureTextBox.Location = new System.Drawing.Point(139, 397);
+            this.temperatureTextBox.Location = new System.Drawing.Point(158, 341);
             this.temperatureTextBox.Name = "temperatureTextBox";
             this.temperatureTextBox.Size = new System.Drawing.Size(54, 22);
             this.temperatureTextBox.TabIndex = 74;
@@ -668,7 +675,7 @@
             // temperatureLabel
             // 
             this.temperatureLabel.AutoSize = true;
-            this.temperatureLabel.Location = new System.Drawing.Point(18, 400);
+            this.temperatureLabel.Location = new System.Drawing.Point(37, 344);
             this.temperatureLabel.Name = "temperatureLabel";
             this.temperatureLabel.Size = new System.Drawing.Size(96, 16);
             this.temperatureLabel.TabIndex = 73;
@@ -676,7 +683,7 @@
             // 
             // idTextBox
             // 
-            this.idTextBox.Location = new System.Drawing.Point(139, 367);
+            this.idTextBox.Location = new System.Drawing.Point(158, 311);
             this.idTextBox.Name = "idTextBox";
             this.idTextBox.Size = new System.Drawing.Size(54, 22);
             this.idTextBox.TabIndex = 72;
@@ -684,7 +691,7 @@
             // idLabel
             // 
             this.idLabel.AutoSize = true;
-            this.idLabel.Location = new System.Drawing.Point(96, 370);
+            this.idLabel.Location = new System.Drawing.Point(115, 314);
             this.idLabel.Name = "idLabel";
             this.idLabel.Size = new System.Drawing.Size(18, 16);
             this.idLabel.TabIndex = 71;
@@ -692,7 +699,7 @@
             // 
             // time_usecTextBox
             // 
-            this.time_usecTextBox.Location = new System.Drawing.Point(139, 336);
+            this.time_usecTextBox.Location = new System.Drawing.Point(158, 280);
             this.time_usecTextBox.Name = "time_usecTextBox";
             this.time_usecTextBox.Size = new System.Drawing.Size(97, 22);
             this.time_usecTextBox.TabIndex = 70;
@@ -700,7 +707,7 @@
             // time_usecLabel
             // 
             this.time_usecLabel.AutoSize = true;
-            this.time_usecLabel.Location = new System.Drawing.Point(12, 339);
+            this.time_usecLabel.Location = new System.Drawing.Point(31, 283);
             this.time_usecLabel.Name = "time_usecLabel";
             this.time_usecLabel.Size = new System.Drawing.Size(110, 16);
             this.time_usecLabel.TabIndex = 69;
@@ -708,7 +715,7 @@
             // 
             // zmagTextBox
             // 
-            this.zmagTextBox.Location = new System.Drawing.Point(641, 453);
+            this.zmagTextBox.Location = new System.Drawing.Point(660, 397);
             this.zmagTextBox.Name = "zmagTextBox";
             this.zmagTextBox.Size = new System.Drawing.Size(54, 22);
             this.zmagTextBox.TabIndex = 80;
@@ -716,7 +723,7 @@
             // zmagLabel
             // 
             this.zmagLabel.AutoSize = true;
-            this.zmagLabel.Location = new System.Drawing.Point(621, 453);
+            this.zmagLabel.Location = new System.Drawing.Point(640, 397);
             this.zmagLabel.Name = "zmagLabel";
             this.zmagLabel.Size = new System.Drawing.Size(13, 16);
             this.zmagLabel.TabIndex = 79;
@@ -724,14 +731,14 @@
             // 
             // zaccTextBox
             // 
-            this.zaccTextBox.Location = new System.Drawing.Point(641, 339);
+            this.zaccTextBox.Location = new System.Drawing.Point(660, 283);
             this.zaccTextBox.Name = "zaccTextBox";
             this.zaccTextBox.Size = new System.Drawing.Size(54, 22);
             this.zaccTextBox.TabIndex = 78;
             // 
             // zgyroTextBox
             // 
-            this.zgyroTextBox.Location = new System.Drawing.Point(641, 394);
+            this.zgyroTextBox.Location = new System.Drawing.Point(660, 338);
             this.zgyroTextBox.Name = "zgyroTextBox";
             this.zgyroTextBox.Size = new System.Drawing.Size(54, 22);
             this.zgyroTextBox.TabIndex = 77;
@@ -739,7 +746,7 @@
             // zaccLabel
             // 
             this.zaccLabel.AutoSize = true;
-            this.zaccLabel.Location = new System.Drawing.Point(621, 342);
+            this.zaccLabel.Location = new System.Drawing.Point(640, 286);
             this.zaccLabel.Name = "zaccLabel";
             this.zaccLabel.Size = new System.Drawing.Size(13, 16);
             this.zaccLabel.TabIndex = 76;
@@ -748,7 +755,7 @@
             // zgyroLabel
             // 
             this.zgyroLabel.AutoSize = true;
-            this.zgyroLabel.Location = new System.Drawing.Point(621, 394);
+            this.zgyroLabel.Location = new System.Drawing.Point(640, 338);
             this.zgyroLabel.Name = "zgyroLabel";
             this.zgyroLabel.Size = new System.Drawing.Size(13, 16);
             this.zgyroLabel.TabIndex = 75;
@@ -756,56 +763,56 @@
             // 
             // fzmagTextBox
             // 
-            this.fzmagTextBox.Location = new System.Drawing.Point(641, 481);
+            this.fzmagTextBox.Location = new System.Drawing.Point(660, 444);
             this.fzmagTextBox.Name = "fzmagTextBox";
             this.fzmagTextBox.Size = new System.Drawing.Size(54, 22);
             this.fzmagTextBox.TabIndex = 95;
             // 
             // fzaccTextBox
             // 
-            this.fzaccTextBox.Location = new System.Drawing.Point(641, 367);
+            this.fzaccTextBox.Location = new System.Drawing.Point(660, 311);
             this.fzaccTextBox.Name = "fzaccTextBox";
             this.fzaccTextBox.Size = new System.Drawing.Size(54, 22);
             this.fzaccTextBox.TabIndex = 93;
             // 
             // fzgyroTextBox
             // 
-            this.fzgyroTextBox.Location = new System.Drawing.Point(641, 422);
+            this.fzgyroTextBox.Location = new System.Drawing.Point(660, 366);
             this.fzgyroTextBox.Name = "fzgyroTextBox";
             this.fzgyroTextBox.Size = new System.Drawing.Size(54, 22);
             this.fzgyroTextBox.TabIndex = 92;
             // 
             // fymagTextBox
             // 
-            this.fymagTextBox.Location = new System.Drawing.Point(561, 481);
+            this.fymagTextBox.Location = new System.Drawing.Point(580, 444);
             this.fymagTextBox.Name = "fymagTextBox";
             this.fymagTextBox.Size = new System.Drawing.Size(54, 22);
             this.fymagTextBox.TabIndex = 89;
             // 
             // fxmagTextBox
             // 
-            this.fxmagTextBox.Location = new System.Drawing.Point(481, 478);
+            this.fxmagTextBox.Location = new System.Drawing.Point(500, 441);
             this.fxmagTextBox.Name = "fxmagTextBox";
             this.fxmagTextBox.Size = new System.Drawing.Size(54, 22);
             this.fxmagTextBox.TabIndex = 87;
             // 
             // fxgyroTextBox
             // 
-            this.fxgyroTextBox.Location = new System.Drawing.Point(481, 419);
+            this.fxgyroTextBox.Location = new System.Drawing.Point(500, 363);
             this.fxgyroTextBox.Name = "fxgyroTextBox";
             this.fxgyroTextBox.Size = new System.Drawing.Size(54, 22);
             this.fxgyroTextBox.TabIndex = 86;
             // 
             // fyaccTextBox
             // 
-            this.fyaccTextBox.Location = new System.Drawing.Point(561, 367);
+            this.fyaccTextBox.Location = new System.Drawing.Point(580, 311);
             this.fyaccTextBox.Name = "fyaccTextBox";
             this.fyaccTextBox.Size = new System.Drawing.Size(54, 22);
             this.fyaccTextBox.TabIndex = 85;
             // 
             // fygyroTextBox
             // 
-            this.fygyroTextBox.Location = new System.Drawing.Point(561, 422);
+            this.fygyroTextBox.Location = new System.Drawing.Point(580, 366);
             this.fygyroTextBox.Name = "fygyroTextBox";
             this.fygyroTextBox.Size = new System.Drawing.Size(54, 22);
             this.fygyroTextBox.TabIndex = 84;
@@ -813,14 +820,14 @@
             // fxaccTextBox
             // 
             this.fxaccTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.fxaccTextBox.Location = new System.Drawing.Point(481, 364);
+            this.fxaccTextBox.Location = new System.Drawing.Point(500, 308);
             this.fxaccTextBox.Name = "fxaccTextBox";
             this.fxaccTextBox.Size = new System.Drawing.Size(54, 22);
             this.fxaccTextBox.TabIndex = 81;
             // 
             // rawAltTextBox
             // 
-            this.rawAltTextBox.Location = new System.Drawing.Point(641, 528);
+            this.rawAltTextBox.Location = new System.Drawing.Point(660, 491);
             this.rawAltTextBox.Name = "rawAltTextBox";
             this.rawAltTextBox.Size = new System.Drawing.Size(54, 22);
             this.rawAltTextBox.TabIndex = 101;
@@ -828,7 +835,7 @@
             // rawAltLabel
             // 
             this.rawAltLabel.AutoSize = true;
-            this.rawAltLabel.Location = new System.Drawing.Point(558, 534);
+            this.rawAltLabel.Location = new System.Drawing.Point(577, 497);
             this.rawAltLabel.Name = "rawAltLabel";
             this.rawAltLabel.Size = new System.Drawing.Size(53, 16);
             this.rawAltLabel.TabIndex = 100;
@@ -836,7 +843,7 @@
             // 
             // rawLonTextBox
             // 
-            this.rawLonTextBox.Location = new System.Drawing.Point(481, 528);
+            this.rawLonTextBox.Location = new System.Drawing.Point(500, 491);
             this.rawLonTextBox.Name = "rawLonTextBox";
             this.rawLonTextBox.Size = new System.Drawing.Size(54, 22);
             this.rawLonTextBox.TabIndex = 99;
@@ -844,7 +851,7 @@
             // rawLonLabel
             // 
             this.rawLonLabel.AutoSize = true;
-            this.rawLonLabel.Location = new System.Drawing.Point(397, 534);
+            this.rawLonLabel.Location = new System.Drawing.Point(416, 497);
             this.rawLonLabel.Name = "rawLonLabel";
             this.rawLonLabel.Size = new System.Drawing.Size(60, 16);
             this.rawLonLabel.TabIndex = 98;
@@ -852,7 +859,7 @@
             // 
             // rawLatTextBox
             // 
-            this.rawLatTextBox.Location = new System.Drawing.Point(325, 528);
+            this.rawLatTextBox.Location = new System.Drawing.Point(344, 491);
             this.rawLatTextBox.Name = "rawLatTextBox";
             this.rawLatTextBox.Size = new System.Drawing.Size(54, 22);
             this.rawLatTextBox.TabIndex = 97;
@@ -860,7 +867,7 @@
             // rawLatLabel
             // 
             this.rawLatLabel.AutoSize = true;
-            this.rawLatLabel.Location = new System.Drawing.Point(136, 534);
+            this.rawLatLabel.Location = new System.Drawing.Point(155, 497);
             this.rawLatLabel.Name = "rawLatLabel";
             this.rawLatLabel.Size = new System.Drawing.Size(159, 16);
             this.rawLatLabel.TabIndex = 96;
@@ -869,7 +876,7 @@
             // wayTextBox
             // 
             this.wayTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.wayTextBox.Location = new System.Drawing.Point(139, 436);
+            this.wayTextBox.Location = new System.Drawing.Point(158, 380);
             this.wayTextBox.Name = "wayTextBox";
             this.wayTextBox.Size = new System.Drawing.Size(54, 22);
             this.wayTextBox.TabIndex = 103;
@@ -877,7 +884,7 @@
             // wayLabel
             // 
             this.wayLabel.AutoSize = true;
-            this.wayLabel.Location = new System.Drawing.Point(1, 439);
+            this.wayLabel.Location = new System.Drawing.Point(20, 383);
             this.wayLabel.Name = "wayLabel";
             this.wayLabel.Size = new System.Drawing.Size(132, 16);
             this.wayLabel.TabIndex = 102;
@@ -886,7 +893,7 @@
             // gyroTextBox
             // 
             this.gyroTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.gyroTextBox.Location = new System.Drawing.Point(139, 502);
+            this.gyroTextBox.Location = new System.Drawing.Point(158, 465);
             this.gyroTextBox.Name = "gyroTextBox";
             this.gyroTextBox.Size = new System.Drawing.Size(54, 22);
             this.gyroTextBox.TabIndex = 105;
@@ -894,7 +901,7 @@
             // gyroLabel
             // 
             this.gyroLabel.AutoSize = true;
-            this.gyroLabel.Location = new System.Drawing.Point(31, 505);
+            this.gyroLabel.Location = new System.Drawing.Point(50, 468);
             this.gyroLabel.Name = "gyroLabel";
             this.gyroLabel.Size = new System.Drawing.Size(93, 16);
             this.gyroLabel.TabIndex = 104;
@@ -903,7 +910,7 @@
             // accTextBox
             // 
             this.accTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.accTextBox.Location = new System.Drawing.Point(139, 475);
+            this.accTextBox.Location = new System.Drawing.Point(158, 438);
             this.accTextBox.Name = "accTextBox";
             this.accTextBox.Size = new System.Drawing.Size(54, 22);
             this.accTextBox.TabIndex = 107;
@@ -911,7 +918,7 @@
             // accLabel
             // 
             this.accLabel.AutoSize = true;
-            this.accLabel.Location = new System.Drawing.Point(8, 478);
+            this.accLabel.Location = new System.Drawing.Point(27, 441);
             this.accLabel.Name = "accLabel";
             this.accLabel.Size = new System.Drawing.Size(116, 16);
             this.accLabel.TabIndex = 106;
@@ -920,7 +927,7 @@
             // maxAccTextBox
             // 
             this.maxAccTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.maxAccTextBox.Location = new System.Drawing.Point(245, 475);
+            this.maxAccTextBox.Location = new System.Drawing.Point(264, 438);
             this.maxAccTextBox.Name = "maxAccTextBox";
             this.maxAccTextBox.Size = new System.Drawing.Size(54, 22);
             this.maxAccTextBox.TabIndex = 111;
@@ -928,7 +935,7 @@
             // maxAccLabel
             // 
             this.maxAccLabel.AutoSize = true;
-            this.maxAccLabel.Location = new System.Drawing.Point(199, 478);
+            this.maxAccLabel.Location = new System.Drawing.Point(218, 441);
             this.maxAccLabel.Name = "maxAccLabel";
             this.maxAccLabel.Size = new System.Drawing.Size(40, 16);
             this.maxAccLabel.TabIndex = 110;
@@ -937,7 +944,7 @@
             // maxGyroTextBox
             // 
             this.maxGyroTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.maxGyroTextBox.Location = new System.Drawing.Point(245, 502);
+            this.maxGyroTextBox.Location = new System.Drawing.Point(264, 465);
             this.maxGyroTextBox.Name = "maxGyroTextBox";
             this.maxGyroTextBox.Size = new System.Drawing.Size(54, 22);
             this.maxGyroTextBox.TabIndex = 109;
@@ -945,111 +952,161 @@
             // maxGyroLabel
             // 
             this.maxGyroLabel.AutoSize = true;
-            this.maxGyroLabel.Location = new System.Drawing.Point(199, 505);
+            this.maxGyroLabel.Location = new System.Drawing.Point(218, 468);
             this.maxGyroLabel.Name = "maxGyroLabel";
             this.maxGyroLabel.Size = new System.Drawing.Size(40, 16);
             this.maxGyroLabel.TabIndex = 108;
             this.maxGyroLabel.Text = "Макс";
             // 
+            // sumAccTextBox
+            // 
+            this.sumAccTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.sumAccTextBox.Location = new System.Drawing.Point(400, 441);
+            this.sumAccTextBox.Name = "sumAccTextBox";
+            this.sumAccTextBox.Size = new System.Drawing.Size(54, 22);
+            this.sumAccTextBox.TabIndex = 113;
+            // 
+            // sumAccLabel
+            // 
+            this.sumAccLabel.AutoSize = true;
+            this.sumAccLabel.Location = new System.Drawing.Point(331, 444);
+            this.sumAccLabel.Name = "sumAccLabel";
+            this.sumAccLabel.Size = new System.Drawing.Size(63, 16);
+            this.sumAccLabel.TabIndex = 112;
+            this.sumAccLabel.Text = "Інтеграл";
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(12, 50);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(743, 570);
+            this.tabControl1.TabIndex = 114;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.x0TextBox);
+            this.tabPage1.Controls.Add(this.sumAccTextBox);
+            this.tabPage1.Controls.Add(this.z0Label);
+            this.tabPage1.Controls.Add(this.sumAccLabel);
+            this.tabPage1.Controls.Add(this.z0TextBox);
+            this.tabPage1.Controls.Add(this.maxAccTextBox);
+            this.tabPage1.Controls.Add(this.y0Label);
+            this.tabPage1.Controls.Add(this.maxAccLabel);
+            this.tabPage1.Controls.Add(this.x0Label);
+            this.tabPage1.Controls.Add(this.maxGyroTextBox);
+            this.tabPage1.Controls.Add(this.y0TextBox);
+            this.tabPage1.Controls.Add(this.maxGyroLabel);
+            this.tabPage1.Controls.Add(this.z1Label);
+            this.tabPage1.Controls.Add(this.accTextBox);
+            this.tabPage1.Controls.Add(this.z1TextBox);
+            this.tabPage1.Controls.Add(this.accLabel);
+            this.tabPage1.Controls.Add(this.y2Label);
+            this.tabPage1.Controls.Add(this.gyroTextBox);
+            this.tabPage1.Controls.Add(this.x1Label);
+            this.tabPage1.Controls.Add(this.gyroLabel);
+            this.tabPage1.Controls.Add(this.y1TextBox);
+            this.tabPage1.Controls.Add(this.rawAltTextBox);
+            this.tabPage1.Controls.Add(this.wayTextBox);
+            this.tabPage1.Controls.Add(this.rawAltLabel);
+            this.tabPage1.Controls.Add(this.x1TextBox);
+            this.tabPage1.Controls.Add(this.rawLonTextBox);
+            this.tabPage1.Controls.Add(this.wayLabel);
+            this.tabPage1.Controls.Add(this.rawLonLabel);
+            this.tabPage1.Controls.Add(this.vzLabel);
+            this.tabPage1.Controls.Add(this.rawLatTextBox);
+            this.tabPage1.Controls.Add(this.vzTextBox);
+            this.tabPage1.Controls.Add(this.rawLatLabel);
+            this.tabPage1.Controls.Add(this.vyLabel);
+            this.tabPage1.Controls.Add(this.fzmagTextBox);
+            this.tabPage1.Controls.Add(this.vxLabel);
+            this.tabPage1.Controls.Add(this.fymagTextBox);
+            this.tabPage1.Controls.Add(this.vyTextBox);
+            this.tabPage1.Controls.Add(this.fxmagTextBox);
+            this.tabPage1.Controls.Add(this.vxTextBox);
+            this.tabPage1.Controls.Add(this.xmagLabel);
+            this.tabPage1.Controls.Add(this.position0Label);
+            this.tabPage1.Controls.Add(this.position1Label);
+            this.tabPage1.Controls.Add(this.fzaccTextBox);
+            this.tabPage1.Controls.Add(this.velocityLabel);
+            this.tabPage1.Controls.Add(this.fzgyroTextBox);
+            this.tabPage1.Controls.Add(this.timeLabel);
+            this.tabPage1.Controls.Add(this.timeTextBox);
+            this.tabPage1.Controls.Add(this.headingLabel);
+            this.tabPage1.Controls.Add(this.fxgyroTextBox);
+            this.tabPage1.Controls.Add(this.headingTextBox);
+            this.tabPage1.Controls.Add(this.fyaccTextBox);
+            this.tabPage1.Controls.Add(this.vAirLabel);
+            this.tabPage1.Controls.Add(this.fygyroTextBox);
+            this.tabPage1.Controls.Add(this.vGroundLabel);
+            this.tabPage1.Controls.Add(this.fxaccTextBox);
+            this.tabPage1.Controls.Add(this.vAirSpeedTextBox);
+            this.tabPage1.Controls.Add(this.zmagTextBox);
+            this.tabPage1.Controls.Add(this.vGroundSpeedTextBox);
+            this.tabPage1.Controls.Add(this.zmagLabel);
+            this.tabPage1.Controls.Add(this.altLabel);
+            this.tabPage1.Controls.Add(this.zaccTextBox);
+            this.tabPage1.Controls.Add(this.altTextBox);
+            this.tabPage1.Controls.Add(this.zgyroTextBox);
+            this.tabPage1.Controls.Add(this.hudLabel);
+            this.tabPage1.Controls.Add(this.zaccLabel);
+            this.tabPage1.Controls.Add(this.climbLabel);
+            this.tabPage1.Controls.Add(this.zgyroLabel);
+            this.tabPage1.Controls.Add(this.throttleLabel);
+            this.tabPage1.Controls.Add(this.temperatureTextBox);
+            this.tabPage1.Controls.Add(this.climbTextBox);
+            this.tabPage1.Controls.Add(this.temperatureLabel);
+            this.tabPage1.Controls.Add(this.throttleTextBox);
+            this.tabPage1.Controls.Add(this.idTextBox);
+            this.tabPage1.Controls.Add(this.dzLabel);
+            this.tabPage1.Controls.Add(this.idLabel);
+            this.tabPage1.Controls.Add(this.dzTextBox);
+            this.tabPage1.Controls.Add(this.time_usecTextBox);
+            this.tabPage1.Controls.Add(this.dyLabel);
+            this.tabPage1.Controls.Add(this.time_usecLabel);
+            this.tabPage1.Controls.Add(this.dxLabel);
+            this.tabPage1.Controls.Add(this.ymagTextBox);
+            this.tabPage1.Controls.Add(this.dyTextBox);
+            this.tabPage1.Controls.Add(this.ymagLabel);
+            this.tabPage1.Controls.Add(this.dxTextBox);
+            this.tabPage1.Controls.Add(this.xmagTextBox);
+            this.tabPage1.Controls.Add(this.dLabel);
+            this.tabPage1.Controls.Add(this.orientLabel);
+            this.tabPage1.Controls.Add(this.xgyroTextBox);
+            this.tabPage1.Controls.Add(this.orientTextBox);
+            this.tabPage1.Controls.Add(this.xgyroLabel);
+            this.tabPage1.Controls.Add(this.xaccLabel);
+            this.tabPage1.Controls.Add(this.yaccTextBox);
+            this.tabPage1.Controls.Add(this.xaccTextBox);
+            this.tabPage1.Controls.Add(this.ygyroTextBox);
+            this.tabPage1.Controls.Add(this.ygyroLabel);
+            this.tabPage1.Controls.Add(this.yaccLabel);
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(735, 541);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Перше наближення";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(735, 541);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Друге наближення";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
             // simpleexample
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(729, 588);
-            this.Controls.Add(this.maxAccTextBox);
-            this.Controls.Add(this.maxAccLabel);
-            this.Controls.Add(this.maxGyroTextBox);
-            this.Controls.Add(this.maxGyroLabel);
-            this.Controls.Add(this.accTextBox);
-            this.Controls.Add(this.accLabel);
-            this.Controls.Add(this.gyroTextBox);
-            this.Controls.Add(this.gyroLabel);
-            this.Controls.Add(this.wayTextBox);
-            this.Controls.Add(this.wayLabel);
-            this.Controls.Add(this.rawAltTextBox);
-            this.Controls.Add(this.rawAltLabel);
-            this.Controls.Add(this.rawLonTextBox);
-            this.Controls.Add(this.rawLonLabel);
-            this.Controls.Add(this.rawLatTextBox);
-            this.Controls.Add(this.rawLatLabel);
-            this.Controls.Add(this.fzmagTextBox);
-            this.Controls.Add(this.fzaccTextBox);
-            this.Controls.Add(this.fzgyroTextBox);
-            this.Controls.Add(this.fymagTextBox);
-            this.Controls.Add(this.fxmagTextBox);
-            this.Controls.Add(this.fxgyroTextBox);
-            this.Controls.Add(this.fyaccTextBox);
-            this.Controls.Add(this.fygyroTextBox);
-            this.Controls.Add(this.fxaccTextBox);
-            this.Controls.Add(this.zmagTextBox);
-            this.Controls.Add(this.zmagLabel);
-            this.Controls.Add(this.zaccTextBox);
-            this.Controls.Add(this.zgyroTextBox);
-            this.Controls.Add(this.zaccLabel);
-            this.Controls.Add(this.zgyroLabel);
-            this.Controls.Add(this.temperatureTextBox);
-            this.Controls.Add(this.temperatureLabel);
-            this.Controls.Add(this.idTextBox);
-            this.Controls.Add(this.idLabel);
-            this.Controls.Add(this.time_usecTextBox);
-            this.Controls.Add(this.time_usecLabel);
-            this.Controls.Add(this.ymagTextBox);
-            this.Controls.Add(this.ymagLabel);
-            this.Controls.Add(this.xmagTextBox);
-            this.Controls.Add(this.xmagLabel);
-            this.Controls.Add(this.xgyroTextBox);
-            this.Controls.Add(this.xgyroLabel);
-            this.Controls.Add(this.yaccTextBox);
-            this.Controls.Add(this.ygyroTextBox);
-            this.Controls.Add(this.yaccLabel);
-            this.Controls.Add(this.ygyroLabel);
-            this.Controls.Add(this.xaccTextBox);
-            this.Controls.Add(this.xaccLabel);
-            this.Controls.Add(this.orientTextBox);
-            this.Controls.Add(this.orientLabel);
-            this.Controls.Add(this.dLabel);
-            this.Controls.Add(this.dxTextBox);
-            this.Controls.Add(this.dyTextBox);
-            this.Controls.Add(this.dxLabel);
-            this.Controls.Add(this.dyLabel);
-            this.Controls.Add(this.dzTextBox);
-            this.Controls.Add(this.dzLabel);
-            this.Controls.Add(this.throttleTextBox);
-            this.Controls.Add(this.climbTextBox);
-            this.Controls.Add(this.throttleLabel);
-            this.Controls.Add(this.climbLabel);
-            this.Controls.Add(this.hudLabel);
-            this.Controls.Add(this.altTextBox);
-            this.Controls.Add(this.altLabel);
-            this.Controls.Add(this.vGroundSpeedTextBox);
-            this.Controls.Add(this.vAirSpeedTextBox);
-            this.Controls.Add(this.vGroundLabel);
-            this.Controls.Add(this.vAirLabel);
-            this.Controls.Add(this.headingTextBox);
-            this.Controls.Add(this.headingLabel);
-            this.Controls.Add(this.timeTextBox);
-            this.Controls.Add(this.timeLabel);
-            this.Controls.Add(this.velocityLabel);
-            this.Controls.Add(this.position1Label);
-            this.Controls.Add(this.position0Label);
-            this.Controls.Add(this.vxTextBox);
-            this.Controls.Add(this.vyTextBox);
-            this.Controls.Add(this.vxLabel);
-            this.Controls.Add(this.vyLabel);
-            this.Controls.Add(this.vzTextBox);
-            this.Controls.Add(this.vzLabel);
-            this.Controls.Add(this.x1TextBox);
-            this.Controls.Add(this.y1TextBox);
-            this.Controls.Add(this.x1Label);
-            this.Controls.Add(this.y2Label);
-            this.Controls.Add(this.z1TextBox);
-            this.Controls.Add(this.z1Label);
-            this.Controls.Add(this.x0TextBox);
-            this.Controls.Add(this.y0TextBox);
-            this.Controls.Add(this.x0Label);
-            this.Controls.Add(this.y0Label);
-            this.Controls.Add(this.z0TextBox);
-            this.Controls.Add(this.z0Label);
+            this.ClientSize = new System.Drawing.Size(770, 634);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.but_mission);
             this.Controls.Add(this.but_armdisarm);
             this.Controls.Add(this.but_connect);
@@ -1058,8 +1115,10 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "simpleexample";
             this.Text = "Дані з польотного контролера";
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -1165,6 +1224,11 @@
         private System.Windows.Forms.Label maxAccLabel;
         private System.Windows.Forms.TextBox maxGyroTextBox;
         private System.Windows.Forms.Label maxGyroLabel;
+        private System.Windows.Forms.TextBox sumAccTextBox;
+        private System.Windows.Forms.Label sumAccLabel;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
     }
 }
 
