@@ -119,6 +119,12 @@
             this.rawLonLabel = new System.Windows.Forms.Label();
             this.rawLatTextBox = new System.Windows.Forms.TextBox();
             this.rawLatLabel = new System.Windows.Forms.Label();
+            this.wayTextBox = new System.Windows.Forms.TextBox();
+            this.wayLabel = new System.Windows.Forms.Label();
+            this.gyroTextBox = new System.Windows.Forms.TextBox();
+            this.gyroLabel = new System.Windows.Forms.Label();
+            this.accTextBox = new System.Windows.Forms.TextBox();
+            this.accLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // CMB_comport
@@ -650,7 +656,7 @@
             // 
             // temperatureTextBox
             // 
-            this.temperatureTextBox.Location = new System.Drawing.Point(139, 444);
+            this.temperatureTextBox.Location = new System.Drawing.Point(139, 397);
             this.temperatureTextBox.Name = "temperatureTextBox";
             this.temperatureTextBox.Size = new System.Drawing.Size(54, 22);
             this.temperatureTextBox.TabIndex = 74;
@@ -658,7 +664,7 @@
             // temperatureLabel
             // 
             this.temperatureLabel.AutoSize = true;
-            this.temperatureLabel.Location = new System.Drawing.Point(18, 447);
+            this.temperatureLabel.Location = new System.Drawing.Point(18, 400);
             this.temperatureLabel.Name = "temperatureLabel";
             this.temperatureLabel.Size = new System.Drawing.Size(96, 16);
             this.temperatureLabel.TabIndex = 73;
@@ -666,7 +672,7 @@
             // 
             // idTextBox
             // 
-            this.idTextBox.Location = new System.Drawing.Point(139, 385);
+            this.idTextBox.Location = new System.Drawing.Point(139, 367);
             this.idTextBox.Name = "idTextBox";
             this.idTextBox.Size = new System.Drawing.Size(54, 22);
             this.idTextBox.TabIndex = 72;
@@ -674,7 +680,7 @@
             // idLabel
             // 
             this.idLabel.AutoSize = true;
-            this.idLabel.Location = new System.Drawing.Point(96, 388);
+            this.idLabel.Location = new System.Drawing.Point(96, 370);
             this.idLabel.Name = "idLabel";
             this.idLabel.Size = new System.Drawing.Size(18, 16);
             this.idLabel.TabIndex = 71;
@@ -856,11 +862,68 @@
             this.rawLatLabel.TabIndex = 96;
             this.rawLatLabel.Text = "Сирі GPS дані:    широта";
             // 
+            // wayTextBox
+            // 
+            this.wayTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.wayTextBox.Location = new System.Drawing.Point(139, 436);
+            this.wayTextBox.Name = "wayTextBox";
+            this.wayTextBox.Size = new System.Drawing.Size(54, 22);
+            this.wayTextBox.TabIndex = 103;
+            // 
+            // wayLabel
+            // 
+            this.wayLabel.AutoSize = true;
+            this.wayLabel.Location = new System.Drawing.Point(1, 439);
+            this.wayLabel.Name = "wayLabel";
+            this.wayLabel.Size = new System.Drawing.Size(132, 16);
+            this.wayLabel.TabIndex = 102;
+            this.wayLabel.Text = "Подоланий шлях, м:";
+            // 
+            // gyroTextBox
+            // 
+            this.gyroTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.gyroTextBox.Location = new System.Drawing.Point(139, 502);
+            this.gyroTextBox.Name = "gyroTextBox";
+            this.gyroTextBox.Size = new System.Drawing.Size(54, 22);
+            this.gyroTextBox.TabIndex = 105;
+            // 
+            // gyroLabel
+            // 
+            this.gyroLabel.AutoSize = true;
+            this.gyroLabel.Location = new System.Drawing.Point(31, 505);
+            this.gyroLabel.Name = "gyroLabel";
+            this.gyroLabel.Size = new System.Drawing.Size(93, 16);
+            this.gyroLabel.TabIndex = 104;
+            this.gyroLabel.Text = "Від гіроскопа";
+            // 
+            // accTextBox
+            // 
+            this.accTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.accTextBox.Location = new System.Drawing.Point(139, 475);
+            this.accTextBox.Name = "accTextBox";
+            this.accTextBox.Size = new System.Drawing.Size(54, 22);
+            this.accTextBox.TabIndex = 107;
+            // 
+            // accLabel
+            // 
+            this.accLabel.AutoSize = true;
+            this.accLabel.Location = new System.Drawing.Point(8, 478);
+            this.accLabel.Name = "accLabel";
+            this.accLabel.Size = new System.Drawing.Size(116, 16);
+            this.accLabel.TabIndex = 106;
+            this.accLabel.Text = "Від акселометра";
+            // 
             // simpleexample
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(729, 588);
+            this.Controls.Add(this.accTextBox);
+            this.Controls.Add(this.accLabel);
+            this.Controls.Add(this.gyroTextBox);
+            this.Controls.Add(this.gyroLabel);
+            this.Controls.Add(this.wayTextBox);
+            this.Controls.Add(this.wayLabel);
             this.Controls.Add(this.rawAltTextBox);
             this.Controls.Add(this.rawAltLabel);
             this.Controls.Add(this.rawLonTextBox);
@@ -1050,6 +1113,12 @@
         private System.Windows.Forms.Label rawLonLabel;
         private System.Windows.Forms.TextBox rawLatTextBox;
         private System.Windows.Forms.Label rawLatLabel;
+        private System.Windows.Forms.TextBox wayTextBox;
+        private System.Windows.Forms.Label wayLabel;
+        private System.Windows.Forms.TextBox gyroTextBox;
+        private System.Windows.Forms.Label gyroLabel;
+        private System.Windows.Forms.TextBox accTextBox;
+        private System.Windows.Forms.Label accLabel;
     }
 }
 

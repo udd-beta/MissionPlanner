@@ -29,9 +29,16 @@ namespace SimpleExample
         double prevAngle = 0;
         double prevTime = 0;
         double diffTime = 0;
+        double imuTime = 0;
         (double, double, double) positionViaGPS;
         (double, double, double) positionViaHUD;
         //KalmanFilter filter;
+        double wayLength = 0;
+        double initAccX = 0;
+        double initAccY = 0;
+        double initAccZ = 0;
+        double gyroWay = 0;
+        double accWay = 0;
 
         public simpleexample()
         {
@@ -222,9 +229,12 @@ namespace SimpleExample
                 time_usecTextBox.Text = (data.time_usec * msToS * msToS).ToString();
                 idTextBox.Text = data.id.ToString();
                 temperatureTextBox.Text = data.temperature.ToString();
-                xaccTextBox.Text = Math.Round(mgToMs * data.xacc, 3).ToString();
-                yaccTextBox.Text = Math.Round(mgToMs * data.yacc, 3).ToString();
-                zaccTextBox.Text = Math.Round(mgToMs * data.zacc, 3).ToString();
+                double xacc = mgToMs * (data.xacc - initAccX);
+                double yacc = mgToMs * (data.yacc - initAccY);
+                double zacc = mgToMs * (data.zacc - initAccZ);
+                xaccTextBox.Text = Math.Round(xacc, 3).ToString();
+                yaccTextBox.Text = Math.Round(yacc, 3).ToString();
+                zaccTextBox.Text = Math.Round(zacc, 3).ToString();
                 xgyroTextBox.Text = Math.Round(mmToM * data.xgyro, 1).ToString();
                 ygyroTextBox.Text = Math.Round(mmToM * data.ygyro, 1).ToString();
                 zgyroTextBox.Text = Math.Round(mmToM * data.zgyro, 1).ToString();
@@ -241,6 +251,36 @@ namespace SimpleExample
                 //fxmagTextBox.Text = Math.Round(mmToM * filter.process(data.xmag), 1).ToString();
                 //fymagTextBox.Text = Math.Round(mmToM * filter.process(data.ymag), 1).ToString();
                 //fzmagTextBox.Text = Math.Round(mmToM * filter.process(data.zmag), 1).ToString();
+
+                if (imuTime == 0)
+                {
+                    imuTime = data.time_usec;
+                    initAccX = data.xacc;
+                    initAccY = data.yacc;
+                    initAccZ = data.zacc;
+                    return;
+                }
+                var dt = 0.5;// (data.time_usec - imuTime) * msToS;
+                imuTime = data.time_usec;
+                const double accSencitivity = 0.002;// 8192.0 / mmToM;
+                const double gyroSensitivity = 10.0;// 65.536 / mmToM;
+                const double accMultiplier = 60;
+                const double gyroMutliplier = 1;
+
+                var currLength = Math.Abs(Math.Round(data.zgyro * mmToM * dt, 2));
+                wayLength += currLength;
+                double gyroWeight = 0.9;
+                double accWeight = 1 - gyroWeight;
+                if (Math.Abs(xacc) > accSencitivity)
+                    wayLength = wayLength * gyroWeight + Math.Abs(xacc) * mgToMs * dt * dt * accWeight;
+                
+                if (Math.Abs(xacc) > accSencitivity)
+                    accWay += Math.Round(Math.Abs(xacc) * accMultiplier * dt * dt, 3);
+                if (Math.Abs(data.zgyro) > gyroSensitivity)
+                    gyroWay += Math.Round(Math.Abs(data.zgyro) * gyroMutliplier * mmToM * dt, 3);
+                accTextBox.Text = accWay.ToString();
+                gyroTextBox.Text = gyroWay.ToString();
+                wayTextBox.Text = (accWay + gyroWay).ToString();
             }
             else if (userData.GetType() == typeof(mavlink_gps_raw_int_t))
             {
