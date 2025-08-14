@@ -125,6 +125,10 @@
             this.gyroLabel = new System.Windows.Forms.Label();
             this.accTextBox = new System.Windows.Forms.TextBox();
             this.accLabel = new System.Windows.Forms.Label();
+            this.maxAccTextBox = new System.Windows.Forms.TextBox();
+            this.maxAccLabel = new System.Windows.Forms.Label();
+            this.maxGyroTextBox = new System.Windows.Forms.TextBox();
+            this.maxGyroLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // CMB_comport
@@ -913,11 +917,49 @@
             this.accLabel.TabIndex = 106;
             this.accLabel.Text = "Від акселометра";
             // 
+            // maxAccTextBox
+            // 
+            this.maxAccTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.maxAccTextBox.Location = new System.Drawing.Point(245, 475);
+            this.maxAccTextBox.Name = "maxAccTextBox";
+            this.maxAccTextBox.Size = new System.Drawing.Size(54, 22);
+            this.maxAccTextBox.TabIndex = 111;
+            // 
+            // maxAccLabel
+            // 
+            this.maxAccLabel.AutoSize = true;
+            this.maxAccLabel.Location = new System.Drawing.Point(199, 478);
+            this.maxAccLabel.Name = "maxAccLabel";
+            this.maxAccLabel.Size = new System.Drawing.Size(40, 16);
+            this.maxAccLabel.TabIndex = 110;
+            this.maxAccLabel.Text = "Макс";
+            // 
+            // maxGyroTextBox
+            // 
+            this.maxGyroTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.maxGyroTextBox.Location = new System.Drawing.Point(245, 502);
+            this.maxGyroTextBox.Name = "maxGyroTextBox";
+            this.maxGyroTextBox.Size = new System.Drawing.Size(54, 22);
+            this.maxGyroTextBox.TabIndex = 109;
+            // 
+            // maxGyroLabel
+            // 
+            this.maxGyroLabel.AutoSize = true;
+            this.maxGyroLabel.Location = new System.Drawing.Point(199, 505);
+            this.maxGyroLabel.Name = "maxGyroLabel";
+            this.maxGyroLabel.Size = new System.Drawing.Size(40, 16);
+            this.maxGyroLabel.TabIndex = 108;
+            this.maxGyroLabel.Text = "Макс";
+            // 
             // simpleexample
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(729, 588);
+            this.Controls.Add(this.maxAccTextBox);
+            this.Controls.Add(this.maxAccLabel);
+            this.Controls.Add(this.maxGyroTextBox);
+            this.Controls.Add(this.maxGyroLabel);
             this.Controls.Add(this.accTextBox);
             this.Controls.Add(this.accLabel);
             this.Controls.Add(this.gyroTextBox);
@@ -1119,6 +1161,10 @@
         private System.Windows.Forms.Label gyroLabel;
         private System.Windows.Forms.TextBox accTextBox;
         private System.Windows.Forms.Label accLabel;
+        private System.Windows.Forms.TextBox maxAccTextBox;
+        private System.Windows.Forms.Label maxAccLabel;
+        private System.Windows.Forms.TextBox maxGyroTextBox;
+        private System.Windows.Forms.Label maxGyroLabel;
     }
 }
 
