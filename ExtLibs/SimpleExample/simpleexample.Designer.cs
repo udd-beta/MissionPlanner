@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.CMB_comport = new System.Windows.Forms.ComboBox();
             this.cmb_baudrate = new System.Windows.Forms.ComboBox();
             this.but_connect = new System.Windows.Forms.Button();
@@ -135,16 +138,22 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.IMUdataGridView = new System.Windows.Forms.DataGridView();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.IMUchart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.IMUdataGridView)).BeginInit();
+            this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.IMUchart)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // CMB_comport
             // 
             this.CMB_comport.FormattingEnabled = true;
-            this.CMB_comport.Location = new System.Drawing.Point(17, 16);
+            this.CMB_comport.Location = new System.Drawing.Point(16, 24);
             this.CMB_comport.Margin = new System.Windows.Forms.Padding(4);
             this.CMB_comport.Name = "CMB_comport";
             this.CMB_comport.Size = new System.Drawing.Size(160, 24);
@@ -162,7 +171,7 @@
             "38400",
             "57600",
             "115200"});
-            this.cmb_baudrate.Location = new System.Drawing.Point(187, 15);
+            this.cmb_baudrate.Location = new System.Drawing.Point(186, 23);
             this.cmb_baudrate.Margin = new System.Windows.Forms.Padding(4);
             this.cmb_baudrate.Name = "cmb_baudrate";
             this.cmb_baudrate.Size = new System.Drawing.Size(160, 24);
@@ -170,7 +179,7 @@
             // 
             // but_connect
             // 
-            this.but_connect.Location = new System.Drawing.Point(357, 15);
+            this.but_connect.Location = new System.Drawing.Point(356, 23);
             this.but_connect.Margin = new System.Windows.Forms.Padding(4);
             this.but_connect.Name = "but_connect";
             this.but_connect.Size = new System.Drawing.Size(100, 28);
@@ -181,7 +190,7 @@
             // 
             // but_armdisarm
             // 
-            this.but_armdisarm.Location = new System.Drawing.Point(603, 15);
+            this.but_armdisarm.Location = new System.Drawing.Point(602, 23);
             this.but_armdisarm.Margin = new System.Windows.Forms.Padding(4);
             this.but_armdisarm.Name = "but_armdisarm";
             this.but_armdisarm.Size = new System.Drawing.Size(100, 28);
@@ -192,7 +201,7 @@
             // 
             // but_mission
             // 
-            this.but_mission.Location = new System.Drawing.Point(465, 15);
+            this.but_mission.Location = new System.Drawing.Point(464, 23);
             this.but_mission.Margin = new System.Windows.Forms.Padding(4);
             this.but_mission.Name = "but_mission";
             this.but_mission.Size = new System.Drawing.Size(129, 28);
@@ -982,11 +991,12 @@
             // 
             this.tabControl.Controls.Add(this.tabPage1);
             this.tabControl.Controls.Add(this.tabPage2);
-            this.tabControl.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tabControl.Location = new System.Drawing.Point(0, 64);
+            this.tabControl.Controls.Add(this.tabPage3);
+            this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl.Location = new System.Drawing.Point(0, 82);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(884, 570);
+            this.tabControl.Size = new System.Drawing.Size(884, 556);
             this.tabControl.TabIndex = 114;
             // 
             // tabPage1
@@ -1090,7 +1100,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(735, 541);
+            this.tabPage1.Size = new System.Drawing.Size(876, 521);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Перше наближення";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -1101,7 +1111,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(876, 541);
+            this.tabPage2.Size = new System.Drawing.Size(876, 492);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Друге наближення";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1114,20 +1124,55 @@
             this.IMUdataGridView.Name = "IMUdataGridView";
             this.IMUdataGridView.RowHeadersWidth = 51;
             this.IMUdataGridView.RowTemplate.Height = 24;
-            this.IMUdataGridView.Size = new System.Drawing.Size(870, 535);
+            this.IMUdataGridView.Size = new System.Drawing.Size(870, 486);
             this.IMUdataGridView.TabIndex = 0;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.IMUchart);
+            this.tabPage3.Location = new System.Drawing.Point(4, 25);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(876, 527);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Графіки IMU";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // IMUchart
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.IMUchart.ChartAreas.Add(chartArea1);
+            this.IMUchart.Dock = System.Windows.Forms.DockStyle.Fill;
+            legend1.Name = "Legend1";
+            this.IMUchart.Legends.Add(legend1);
+            this.IMUchart.Location = new System.Drawing.Point(0, 0);
+            this.IMUchart.Name = "IMUchart";
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.IMUchart.Series.Add(series1);
+            this.IMUchart.Size = new System.Drawing.Size(876, 527);
+            this.IMUchart.TabIndex = 0;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.cmb_baudrate);
+            this.panel1.Controls.Add(this.CMB_comport);
+            this.panel1.Controls.Add(this.but_mission);
+            this.panel1.Controls.Add(this.but_connect);
+            this.panel1.Controls.Add(this.but_armdisarm);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(884, 82);
+            this.panel1.TabIndex = 115;
             // 
             // simpleexample
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(884, 634);
+            this.ClientSize = new System.Drawing.Size(884, 638);
             this.Controls.Add(this.tabControl);
-            this.Controls.Add(this.but_mission);
-            this.Controls.Add(this.but_armdisarm);
-            this.Controls.Add(this.but_connect);
-            this.Controls.Add(this.cmb_baudrate);
-            this.Controls.Add(this.CMB_comport);
+            this.Controls.Add(this.panel1);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "simpleexample";
             this.Text = "Дані з польотного контролера";
@@ -1136,6 +1181,9 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.IMUdataGridView)).EndInit();
+            this.tabPage3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.IMUchart)).EndInit();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1248,6 +1296,9 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.DataGridView IMUdataGridView;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.DataVisualization.Charting.Chart IMUchart;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 
