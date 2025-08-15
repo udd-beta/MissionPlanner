@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.CMB_comport = new System.Windows.Forms.ComboBox();
             this.cmb_baudrate = new System.Windows.Forms.ComboBox();
             this.but_connect = new System.Windows.Forms.Button();
@@ -140,36 +140,36 @@
             this.IMUdataGridView = new System.Windows.Forms.DataGridView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.IMUchart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.stepLabel = new System.Windows.Forms.Label();
-            this.diapasonNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.xAccCheckBox = new System.Windows.Forms.CheckBox();
-            this.yAccCheckBox = new System.Windows.Forms.CheckBox();
-            this.zAccCheckBox = new System.Windows.Forms.CheckBox();
-            this.xGyroCheckBox = new System.Windows.Forms.CheckBox();
-            this.yGyroCheckBox = new System.Windows.Forms.CheckBox();
+            this.themesComboBox = new System.Windows.Forms.ComboBox();
+            this.themesLabel = new System.Windows.Forms.Label();
+            this.maxYNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.maxYLabel = new System.Windows.Forms.Label();
+            this.minYNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.minYLabel = new System.Windows.Forms.Label();
             this.zMagCheckBox = new System.Windows.Forms.CheckBox();
             this.yMagCheckBox = new System.Windows.Forms.CheckBox();
             this.xMagCheckBox = new System.Windows.Forms.CheckBox();
             this.zGyroCheckBox = new System.Windows.Forms.CheckBox();
-            this.minYNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.minYLabel = new System.Windows.Forms.Label();
-            this.maxYNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.maxYLabel = new System.Windows.Forms.Label();
-            this.themesLabel = new System.Windows.Forms.Label();
-            this.themesComboBox = new System.Windows.Forms.ComboBox();
+            this.yGyroCheckBox = new System.Windows.Forms.CheckBox();
+            this.xGyroCheckBox = new System.Windows.Forms.CheckBox();
+            this.zAccCheckBox = new System.Windows.Forms.CheckBox();
+            this.yAccCheckBox = new System.Windows.Forms.CheckBox();
+            this.xAccCheckBox = new System.Windows.Forms.CheckBox();
+            this.diapasonNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.stepLabel = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.IMUdataGridView)).BeginInit();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.IMUchart)).BeginInit();
-            this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.diapasonNumericUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.minYNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxYNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.minYNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.diapasonNumericUpDown)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // CMB_comport
@@ -1135,7 +1135,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(876, 492);
+            this.tabPage2.Size = new System.Drawing.Size(876, 527);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Друге наближення";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1148,7 +1148,7 @@
             this.IMUdataGridView.Name = "IMUdataGridView";
             this.IMUdataGridView.RowHeadersWidth = 51;
             this.IMUdataGridView.RowTemplate.Height = 24;
-            this.IMUdataGridView.Size = new System.Drawing.Size(870, 486);
+            this.IMUdataGridView.Size = new System.Drawing.Size(870, 521);
             this.IMUdataGridView.TabIndex = 0;
             // 
             // tabPage3
@@ -1164,32 +1164,19 @@
             // 
             // IMUchart
             // 
-            chartArea3.Name = "ChartArea1";
-            this.IMUchart.ChartAreas.Add(chartArea3);
+            chartArea6.Name = "ChartArea1";
+            this.IMUchart.ChartAreas.Add(chartArea6);
             this.IMUchart.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend3.Name = "Legend1";
-            this.IMUchart.Legends.Add(legend3);
+            legend6.Name = "Legend1";
+            this.IMUchart.Legends.Add(legend6);
             this.IMUchart.Location = new System.Drawing.Point(0, 71);
             this.IMUchart.Name = "IMUchart";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.IMUchart.Series.Add(series3);
+            series6.ChartArea = "ChartArea1";
+            series6.Legend = "Legend1";
+            series6.Name = "Series1";
+            this.IMUchart.Series.Add(series6);
             this.IMUchart.Size = new System.Drawing.Size(876, 456);
             this.IMUchart.TabIndex = 0;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.cmb_baudrate);
-            this.panel1.Controls.Add(this.CMB_comport);
-            this.panel1.Controls.Add(this.but_mission);
-            this.panel1.Controls.Add(this.but_connect);
-            this.panel1.Controls.Add(this.but_armdisarm);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(884, 82);
-            this.panel1.TabIndex = 115;
             // 
             // panel2
             // 
@@ -1216,162 +1203,23 @@
             this.panel2.Size = new System.Drawing.Size(876, 71);
             this.panel2.TabIndex = 1;
             // 
-            // stepLabel
+            // themesComboBox
             // 
-            this.stepLabel.AutoSize = true;
-            this.stepLabel.Location = new System.Drawing.Point(9, 4);
-            this.stepLabel.Name = "stepLabel";
-            this.stepLabel.Size = new System.Drawing.Size(163, 16);
-            this.stepLabel.TabIndex = 1;
-            this.stepLabel.Text = "Діапазон спостережень";
+            this.themesComboBox.FormattingEnabled = true;
+            this.themesComboBox.Location = new System.Drawing.Point(649, 28);
+            this.themesComboBox.Name = "themesComboBox";
+            this.themesComboBox.Size = new System.Drawing.Size(207, 24);
+            this.themesComboBox.TabIndex = 17;
+            this.themesComboBox.SelectedIndexChanged += new System.EventHandler(this.themesComboBox_SelectedIndexChanged);
             // 
-            // diapasonNumericUpDown
+            // themesLabel
             // 
-            this.diapasonNumericUpDown.Increment = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.diapasonNumericUpDown.Location = new System.Drawing.Point(178, 4);
-            this.diapasonNumericUpDown.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.diapasonNumericUpDown.Name = "diapasonNumericUpDown";
-            this.diapasonNumericUpDown.Size = new System.Drawing.Size(55, 22);
-            this.diapasonNumericUpDown.TabIndex = 2;
-            this.diapasonNumericUpDown.Value = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            // 
-            // xAccCheckBox
-            // 
-            this.xAccCheckBox.AutoSize = true;
-            this.xAccCheckBox.Location = new System.Drawing.Point(8, 33);
-            this.xAccCheckBox.Name = "xAccCheckBox";
-            this.xAccCheckBox.Size = new System.Drawing.Size(57, 20);
-            this.xAccCheckBox.TabIndex = 3;
-            this.xAccCheckBox.Text = "xacc";
-            this.xAccCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // yAccCheckBox
-            // 
-            this.yAccCheckBox.AutoSize = true;
-            this.yAccCheckBox.Location = new System.Drawing.Point(71, 33);
-            this.yAccCheckBox.Name = "yAccCheckBox";
-            this.yAccCheckBox.Size = new System.Drawing.Size(58, 20);
-            this.yAccCheckBox.TabIndex = 4;
-            this.yAccCheckBox.Text = "yacc";
-            this.yAccCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // zAccCheckBox
-            // 
-            this.zAccCheckBox.AutoSize = true;
-            this.zAccCheckBox.Location = new System.Drawing.Point(134, 33);
-            this.zAccCheckBox.Name = "zAccCheckBox";
-            this.zAccCheckBox.Size = new System.Drawing.Size(57, 20);
-            this.zAccCheckBox.TabIndex = 5;
-            this.zAccCheckBox.Text = "zacc";
-            this.zAccCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // xGyroCheckBox
-            // 
-            this.xGyroCheckBox.AutoSize = true;
-            this.xGyroCheckBox.Location = new System.Drawing.Point(197, 33);
-            this.xGyroCheckBox.Name = "xGyroCheckBox";
-            this.xGyroCheckBox.Size = new System.Drawing.Size(62, 20);
-            this.xGyroCheckBox.TabIndex = 6;
-            this.xGyroCheckBox.Text = "xgyro";
-            this.xGyroCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // yGyroCheckBox
-            // 
-            this.yGyroCheckBox.AutoSize = true;
-            this.yGyroCheckBox.Location = new System.Drawing.Point(260, 33);
-            this.yGyroCheckBox.Name = "yGyroCheckBox";
-            this.yGyroCheckBox.Size = new System.Drawing.Size(63, 20);
-            this.yGyroCheckBox.TabIndex = 7;
-            this.yGyroCheckBox.Text = "ygyro";
-            this.yGyroCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // zMagCheckBox
-            // 
-            this.zMagCheckBox.AutoSize = true;
-            this.zMagCheckBox.Location = new System.Drawing.Point(512, 33);
-            this.zMagCheckBox.Name = "zMagCheckBox";
-            this.zMagCheckBox.Size = new System.Drawing.Size(62, 20);
-            this.zMagCheckBox.TabIndex = 11;
-            this.zMagCheckBox.Text = "zmag";
-            this.zMagCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // yMagCheckBox
-            // 
-            this.yMagCheckBox.AutoSize = true;
-            this.yMagCheckBox.Location = new System.Drawing.Point(449, 33);
-            this.yMagCheckBox.Name = "yMagCheckBox";
-            this.yMagCheckBox.Size = new System.Drawing.Size(63, 20);
-            this.yMagCheckBox.TabIndex = 10;
-            this.yMagCheckBox.Text = "ymag";
-            this.yMagCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // xMagCheckBox
-            // 
-            this.xMagCheckBox.AutoSize = true;
-            this.xMagCheckBox.Location = new System.Drawing.Point(386, 33);
-            this.xMagCheckBox.Name = "xMagCheckBox";
-            this.xMagCheckBox.Size = new System.Drawing.Size(62, 20);
-            this.xMagCheckBox.TabIndex = 9;
-            this.xMagCheckBox.Text = "xmag";
-            this.xMagCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // zGyroCheckBox
-            // 
-            this.zGyroCheckBox.AutoSize = true;
-            this.zGyroCheckBox.Location = new System.Drawing.Point(323, 33);
-            this.zGyroCheckBox.Name = "zGyroCheckBox";
-            this.zGyroCheckBox.Size = new System.Drawing.Size(62, 20);
-            this.zGyroCheckBox.TabIndex = 8;
-            this.zGyroCheckBox.Text = "zgyro";
-            this.zGyroCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // minYNumericUpDown
-            // 
-            this.minYNumericUpDown.Increment = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.minYNumericUpDown.Location = new System.Drawing.Point(361, 4);
-            this.minYNumericUpDown.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.minYNumericUpDown.Minimum = new decimal(new int[] {
-            2000,
-            0,
-            0,
-            -2147483648});
-            this.minYNumericUpDown.Name = "minYNumericUpDown";
-            this.minYNumericUpDown.Size = new System.Drawing.Size(63, 22);
-            this.minYNumericUpDown.TabIndex = 13;
-            this.minYNumericUpDown.Value = new decimal(new int[] {
-            1100,
-            0,
-            0,
-            -2147483648});
-            // 
-            // minYLabel
-            // 
-            this.minYLabel.AutoSize = true;
-            this.minYLabel.Location = new System.Drawing.Point(239, 4);
-            this.minYLabel.Name = "minYLabel";
-            this.minYLabel.Size = new System.Drawing.Size(117, 16);
-            this.minYLabel.TabIndex = 12;
-            this.minYLabel.Text = "Видимий мінімум";
+            this.themesLabel.AutoSize = true;
+            this.themesLabel.Location = new System.Drawing.Point(646, 4);
+            this.themesLabel.Name = "themesLabel";
+            this.themesLabel.Size = new System.Drawing.Size(127, 16);
+            this.themesLabel.TabIndex = 16;
+            this.themesLabel.Text = "Теми відображень";
             // 
             // maxYNumericUpDown
             // 
@@ -1399,6 +1247,7 @@
             0,
             0,
             0});
+            this.maxYNumericUpDown.ValueChanged += new System.EventHandler(this.maxYNumericUpDown_ValueChanged);
             // 
             // maxYLabel
             // 
@@ -1409,27 +1258,185 @@
             this.maxYLabel.TabIndex = 14;
             this.maxYLabel.Text = "Видимий максимум";
             // 
-            // themesLabel
+            // minYNumericUpDown
             // 
-            this.themesLabel.AutoSize = true;
-            this.themesLabel.Location = new System.Drawing.Point(646, 4);
-            this.themesLabel.Name = "themesLabel";
-            this.themesLabel.Size = new System.Drawing.Size(127, 16);
-            this.themesLabel.TabIndex = 16;
-            this.themesLabel.Text = "Теми відображень";
+            this.minYNumericUpDown.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.minYNumericUpDown.Location = new System.Drawing.Point(361, 4);
+            this.minYNumericUpDown.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.minYNumericUpDown.Minimum = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            -2147483648});
+            this.minYNumericUpDown.Name = "minYNumericUpDown";
+            this.minYNumericUpDown.Size = new System.Drawing.Size(63, 22);
+            this.minYNumericUpDown.TabIndex = 13;
+            this.minYNumericUpDown.Value = new decimal(new int[] {
+            1100,
+            0,
+            0,
+            -2147483648});
+            this.minYNumericUpDown.ValueChanged += new System.EventHandler(this.minYNumericUpDown_ValueChanged);
             // 
-            // themesComboBox
+            // minYLabel
             // 
-            this.themesComboBox.FormattingEnabled = true;
-            this.themesComboBox.Items.AddRange(new object[] {
-            "Користувацький набір",
-            "Повний набір",
-            "Прямий хід + зворотній хід",
-            "Прямо + розворот + назад"});
-            this.themesComboBox.Location = new System.Drawing.Point(649, 28);
-            this.themesComboBox.Name = "themesComboBox";
-            this.themesComboBox.Size = new System.Drawing.Size(207, 24);
-            this.themesComboBox.TabIndex = 17;
+            this.minYLabel.AutoSize = true;
+            this.minYLabel.Location = new System.Drawing.Point(239, 4);
+            this.minYLabel.Name = "minYLabel";
+            this.minYLabel.Size = new System.Drawing.Size(117, 16);
+            this.minYLabel.TabIndex = 12;
+            this.minYLabel.Text = "Видимий мінімум";
+            // 
+            // zMagCheckBox
+            // 
+            this.zMagCheckBox.AutoSize = true;
+            this.zMagCheckBox.Location = new System.Drawing.Point(512, 33);
+            this.zMagCheckBox.Name = "zMagCheckBox";
+            this.zMagCheckBox.Size = new System.Drawing.Size(62, 20);
+            this.zMagCheckBox.TabIndex = 11;
+            this.zMagCheckBox.Text = "zmag";
+            this.zMagCheckBox.UseVisualStyleBackColor = true;
+            this.zMagCheckBox.CheckStateChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            // 
+            // yMagCheckBox
+            // 
+            this.yMagCheckBox.AutoSize = true;
+            this.yMagCheckBox.Location = new System.Drawing.Point(449, 33);
+            this.yMagCheckBox.Name = "yMagCheckBox";
+            this.yMagCheckBox.Size = new System.Drawing.Size(63, 20);
+            this.yMagCheckBox.TabIndex = 10;
+            this.yMagCheckBox.Text = "ymag";
+            this.yMagCheckBox.UseVisualStyleBackColor = true;
+            this.yMagCheckBox.CheckStateChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            // 
+            // xMagCheckBox
+            // 
+            this.xMagCheckBox.AutoSize = true;
+            this.xMagCheckBox.Location = new System.Drawing.Point(386, 33);
+            this.xMagCheckBox.Name = "xMagCheckBox";
+            this.xMagCheckBox.Size = new System.Drawing.Size(62, 20);
+            this.xMagCheckBox.TabIndex = 9;
+            this.xMagCheckBox.Text = "xmag";
+            this.xMagCheckBox.UseVisualStyleBackColor = true;
+            this.xMagCheckBox.CheckStateChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            // 
+            // zGyroCheckBox
+            // 
+            this.zGyroCheckBox.AutoSize = true;
+            this.zGyroCheckBox.Location = new System.Drawing.Point(323, 33);
+            this.zGyroCheckBox.Name = "zGyroCheckBox";
+            this.zGyroCheckBox.Size = new System.Drawing.Size(62, 20);
+            this.zGyroCheckBox.TabIndex = 8;
+            this.zGyroCheckBox.Text = "zgyro";
+            this.zGyroCheckBox.UseVisualStyleBackColor = true;
+            this.zGyroCheckBox.CheckStateChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            // 
+            // yGyroCheckBox
+            // 
+            this.yGyroCheckBox.AutoSize = true;
+            this.yGyroCheckBox.Location = new System.Drawing.Point(260, 33);
+            this.yGyroCheckBox.Name = "yGyroCheckBox";
+            this.yGyroCheckBox.Size = new System.Drawing.Size(63, 20);
+            this.yGyroCheckBox.TabIndex = 7;
+            this.yGyroCheckBox.Text = "ygyro";
+            this.yGyroCheckBox.UseVisualStyleBackColor = true;
+            this.yGyroCheckBox.CheckStateChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            // 
+            // xGyroCheckBox
+            // 
+            this.xGyroCheckBox.AutoSize = true;
+            this.xGyroCheckBox.Location = new System.Drawing.Point(197, 33);
+            this.xGyroCheckBox.Name = "xGyroCheckBox";
+            this.xGyroCheckBox.Size = new System.Drawing.Size(62, 20);
+            this.xGyroCheckBox.TabIndex = 6;
+            this.xGyroCheckBox.Text = "xgyro";
+            this.xGyroCheckBox.UseVisualStyleBackColor = true;
+            this.xGyroCheckBox.CheckStateChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            // 
+            // zAccCheckBox
+            // 
+            this.zAccCheckBox.AutoSize = true;
+            this.zAccCheckBox.Location = new System.Drawing.Point(134, 33);
+            this.zAccCheckBox.Name = "zAccCheckBox";
+            this.zAccCheckBox.Size = new System.Drawing.Size(57, 20);
+            this.zAccCheckBox.TabIndex = 5;
+            this.zAccCheckBox.Text = "zacc";
+            this.zAccCheckBox.UseVisualStyleBackColor = true;
+            this.zAccCheckBox.CheckStateChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            // 
+            // yAccCheckBox
+            // 
+            this.yAccCheckBox.AutoSize = true;
+            this.yAccCheckBox.Location = new System.Drawing.Point(71, 33);
+            this.yAccCheckBox.Name = "yAccCheckBox";
+            this.yAccCheckBox.Size = new System.Drawing.Size(58, 20);
+            this.yAccCheckBox.TabIndex = 4;
+            this.yAccCheckBox.Text = "yacc";
+            this.yAccCheckBox.UseVisualStyleBackColor = true;
+            this.yAccCheckBox.CheckStateChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            // 
+            // xAccCheckBox
+            // 
+            this.xAccCheckBox.AutoSize = true;
+            this.xAccCheckBox.Location = new System.Drawing.Point(8, 33);
+            this.xAccCheckBox.Name = "xAccCheckBox";
+            this.xAccCheckBox.Size = new System.Drawing.Size(57, 20);
+            this.xAccCheckBox.TabIndex = 3;
+            this.xAccCheckBox.Text = "xacc";
+            this.xAccCheckBox.UseVisualStyleBackColor = true;
+            this.xAccCheckBox.CheckStateChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            // 
+            // diapasonNumericUpDown
+            // 
+            this.diapasonNumericUpDown.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.diapasonNumericUpDown.Location = new System.Drawing.Point(178, 4);
+            this.diapasonNumericUpDown.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.diapasonNumericUpDown.Name = "diapasonNumericUpDown";
+            this.diapasonNumericUpDown.Size = new System.Drawing.Size(55, 22);
+            this.diapasonNumericUpDown.TabIndex = 2;
+            this.diapasonNumericUpDown.Value = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            // 
+            // stepLabel
+            // 
+            this.stepLabel.AutoSize = true;
+            this.stepLabel.Location = new System.Drawing.Point(9, 4);
+            this.stepLabel.Name = "stepLabel";
+            this.stepLabel.Size = new System.Drawing.Size(163, 16);
+            this.stepLabel.TabIndex = 1;
+            this.stepLabel.Text = "Діапазон спостережень";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.cmb_baudrate);
+            this.panel1.Controls.Add(this.CMB_comport);
+            this.panel1.Controls.Add(this.but_mission);
+            this.panel1.Controls.Add(this.but_connect);
+            this.panel1.Controls.Add(this.but_armdisarm);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(884, 82);
+            this.panel1.TabIndex = 115;
             // 
             // simpleexample
             // 
@@ -1448,12 +1455,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.IMUdataGridView)).EndInit();
             this.tabPage3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.IMUchart)).EndInit();
-            this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.diapasonNumericUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.minYNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxYNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.minYNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.diapasonNumericUpDown)).EndInit();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

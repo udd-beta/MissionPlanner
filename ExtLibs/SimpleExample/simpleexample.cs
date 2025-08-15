@@ -49,6 +49,7 @@ namespace SimpleExample
         const int avgsCount = 10;
         int[,] tendency = new int[rowsCount, colsCount];
         List<double>[,] lastValues = new List<double>[rowsCount, colsCount];
+        string[] themes = {"Користувацький набір", "Повний набір", "Прямий хід + зворотній хід", "Прямо + розворот + назад"};
 
         public simpleexample()
         {
@@ -109,6 +110,10 @@ namespace SimpleExample
             IMUchart.ChartAreas[0].AxisY.Maximum = (double)maxYNumericUpDown.Value;
             IMUchart.ChartAreas[0].AxisY.Minimum = (double)minYNumericUpDown.Value;
             IMUchart.ChartAreas[0].AxisY.Interval = (IMUchart.ChartAreas[0].AxisY.Maximum - IMUchart.ChartAreas[0].AxisY.Minimum) / 4;
+            themesComboBox.Items.Clear();
+            foreach (string item in themes)
+                themesComboBox.Items.Add(item);
+            themesComboBox.SelectedIndex = 0;
         }
 
         private void but_connect_Click(object sender, EventArgs e)
@@ -629,6 +634,46 @@ namespace SimpleExample
                 Console.WriteLine("MISSION_ACK send");
                 serialPort1.Write(packet, 0, packet.Length);
             }
+        }
+
+        private void themesComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (themesComboBox.SelectedIndex == 1)
+            {
+                xAccCheckBox.Checked = yAccCheckBox.Checked = zAccCheckBox.Checked = true;
+                xGyroCheckBox.Checked = yGyroCheckBox.Checked = zGyroCheckBox.Checked = true;
+                xMagCheckBox.Checked = yMagCheckBox.Checked = zMagCheckBox.Checked = true;
+                themesComboBox.SelectedIndex = 1;
+            }
+            else if (themesComboBox.SelectedIndex == 2)
+            {
+                xAccCheckBox.Checked = true; yAccCheckBox.Checked = zAccCheckBox.Checked = false;
+                xGyroCheckBox.Checked = yGyroCheckBox.Checked = false; zGyroCheckBox.Checked = true;
+                xMagCheckBox.Checked = yMagCheckBox.Checked = zMagCheckBox.Checked = false;
+                themesComboBox.SelectedIndex = 2;
+            }
+            else if (themesComboBox.SelectedIndex == 3)
+            {
+                xAccCheckBox.Checked = true; yAccCheckBox.Checked = zAccCheckBox.Checked = false;
+                xGyroCheckBox.Checked = yGyroCheckBox.Checked = false; zGyroCheckBox.Checked = true;
+                xMagCheckBox.Checked = yMagCheckBox.Checked = true; zMagCheckBox.Checked = false;
+                themesComboBox.SelectedIndex = 3;
+            }
+        }
+
+        private void minYNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            IMUchart.ChartAreas[0].AxisY.Minimum = (double)minYNumericUpDown.Value;
+        }
+
+        private void maxYNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            IMUchart.ChartAreas[0].AxisY.Maximum = (double)maxYNumericUpDown.Value;
+        }
+
+        private void checkBox_CheckedChanged(object sender, EventArgs e)
+        {
+            themesComboBox.SelectedIndex = 0;
         }
     }
 }
