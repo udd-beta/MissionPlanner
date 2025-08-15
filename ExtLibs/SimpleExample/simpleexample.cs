@@ -106,9 +106,9 @@ namespace SimpleExample
             }
             IMUchart.ChartAreas[0].AxisX.MajorGrid.LineDashStyle = ChartDashStyle.Dash;
             IMUchart.ChartAreas[0].AxisY.MajorGrid.LineDashStyle = ChartDashStyle.Dash;
-            IMUchart.ChartAreas[0].AxisY.Minimum = -1100;
-            IMUchart.ChartAreas[0].AxisY.Maximum = 1100;
-
+            IMUchart.ChartAreas[0].AxisY.Maximum = (double)maxYNumericUpDown.Value;
+            IMUchart.ChartAreas[0].AxisY.Minimum = (double)minYNumericUpDown.Value;
+            IMUchart.ChartAreas[0].AxisY.Interval = (IMUchart.ChartAreas[0].AxisY.Maximum - IMUchart.ChartAreas[0].AxisY.Minimum) / 4;
         }
 
         private void but_connect_Click(object sender, EventArgs e)
@@ -319,12 +319,12 @@ namespace SimpleExample
             const double msToS = 0.001;
             var series = IMUchart.Series[id];
             series.Points.AddXY(Math.Round(time * msToS * msToS, 1), value);
-            int xDiapason = 20;
-            if (series.Points.Count > xDiapason)
+
+            if (series.Points.Count > diapasonNumericUpDown.Value)
             {
                 series.Points.RemoveAt(0);
                 IMUchart.ChartAreas[0].AxisX.Minimum = series.Points[0].XValue;
-                IMUchart.ChartAreas[0].AxisX.Maximum = series.Points[xDiapason - 1].XValue;
+                IMUchart.ChartAreas[0].AxisX.Maximum = series.Points[(int)diapasonNumericUpDown.Value - 1].XValue;
             }
         }
 
@@ -334,9 +334,15 @@ namespace SimpleExample
             if (userData.GetType() != typeof(mavlink_raw_imu_t))
                 return;
             var data = (mavlink_raw_imu_t)userData;
-            updateChart(0, data.time_usec, data.xacc); updateChart(1, data.time_usec, data.yacc); updateChart(2, data.time_usec, data.zacc);
-            updateChart(3, data.time_usec, data.xgyro); updateChart(4, data.time_usec, data.ygyro); updateChart(5, data.time_usec, data.zgyro);
-            updateChart(6, data.time_usec, data.xmag); updateChart(7, data.time_usec, data.ymag); updateChart(8, data.time_usec, data.zmag);
+            if (xAccCheckBox.Checked) updateChart(0, data.time_usec, data.xacc);
+            if (yAccCheckBox.Checked) updateChart(1, data.time_usec, data.yacc);
+            if (zAccCheckBox.Checked) updateChart(2, data.time_usec, data.zacc);
+            if (xGyroCheckBox.Checked) updateChart(3, data.time_usec, data.xgyro);
+            if (yGyroCheckBox.Checked) updateChart(4, data.time_usec, data.ygyro);
+            if (zGyroCheckBox.Checked) updateChart(5, data.time_usec, data.zgyro);
+            if (xMagCheckBox.Checked) updateChart(6, data.time_usec, data.xmag);            
+            if (yMagCheckBox.Checked) updateChart(7, data.time_usec, data.ymag);
+            if (zMagCheckBox.Checked) updateChart(8, data.time_usec, data.zmag);
         }
 
         private void bgw_ProgressChanged(object sender, ProgressChangedEventArgs e)
