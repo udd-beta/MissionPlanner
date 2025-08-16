@@ -49,9 +49,13 @@ namespace SimpleExample
         const int avgsCount = 10;
         int[,] tendency = new int[rowsCount, colsCount];
         List<double>[,] lastValues = new List<double>[rowsCount, colsCount];
-        string[] themes = {"Користувацький набір", "Повний набір", "Прямий хід + зворотній хід", "Прямо + розворот + назад"};
+        string[] themes = {"Користувацький набір", "Повний набір", "Прямий хід + зворотній хід", "Прямо + розворот + назад", "Компас + швидкість поворотів"};
         double lastConstAcc = 0;
         double prevAcc = 0;
+        const double msToS = 0.001;
+        const double mmToM = 0.001;
+        const double cmToM = 0.01;
+        const double mgToMs = 0.001 / 9.80665;
 
         public simpleexample()
         {
@@ -115,6 +119,10 @@ namespace SimpleExample
             vaccSeries.ChartType = SeriesChartType.Line;
             vaccSeries.Color = Color.FromArgb(255, 155, 155, 0);
             IMUchart.Series.Add(vaccSeries);
+            Series dirSeries = new Series("dir");
+            dirSeries.ChartType = SeriesChartType.Line;
+            dirSeries.Color = Color.FromArgb(255, 155, 0, 155);
+            IMUchart.Series.Add(dirSeries);
             IMUchart.ChartAreas[0].AxisX.MajorGrid.LineDashStyle = ChartDashStyle.Dash;
             IMUchart.ChartAreas[0].AxisY.MajorGrid.LineDashStyle = ChartDashStyle.Dash;
             IMUchart.ChartAreas[0].AxisY.Maximum = (double)maxYNumericUpDown.Value;
@@ -346,35 +354,37 @@ namespace SimpleExample
         private void fillChart(ProgressChangedEventArgs e)
         {
             var userData = e.UserState;
-            if (userData.GetType() != typeof(mavlink_raw_imu_t))
-                return;
-            var data = (mavlink_raw_imu_t)userData;
-            if (xAccCheckBox.Checked) updateChart(0, data.time_usec, data.xacc);
-            if (yAccCheckBox.Checked) updateChart(1, data.time_usec, data.yacc);
-            if (zAccCheckBox.Checked) updateChart(2, data.time_usec, data.zacc);
-            if (xGyroCheckBox.Checked) updateChart(3, data.time_usec, data.xgyro);
-            if (yGyroCheckBox.Checked) updateChart(4, data.time_usec, data.ygyro);
-            if (zGyroCheckBox.Checked) updateChart(5, data.time_usec, data.zgyro);
-            if (xMagCheckBox.Checked) updateChart(6, data.time_usec, data.xmag);
-            if (yMagCheckBox.Checked) updateChart(7, data.time_usec, data.ymag);
-            if (zMagCheckBox.Checked) updateChart(8, data.time_usec, data.zmag);
-            if (vabsCheckBox.Checked) updateChart(9, data.time_usec, Math.Abs(data.zgyro));
-            double vacc = 0;
-            var count = IMUchart.Series[10].Points.Count;
-            if (count > 0 && Math.Abs(prevAcc - data.xacc) > 2)
-                vacc = IMUchart.Series[10].Points[count - 1].YValues[0] + (data.xacc - lastConstAcc) / 2;
-            else
-                lastConstAcc = data.xacc;
-            prevAcc = data.xacc;
-            if (vaccCheckBox.Checked) updateChart(10, data.time_usec, vacc);
+            if (userData.GetType() == typeof(mavlink_raw_imu_t))
+            {
+                var data = (mavlink_raw_imu_t)userData;
+                if (xAccCheckBox.Checked) updateChart(0, data.time_usec, data.xacc);
+                if (yAccCheckBox.Checked) updateChart(1, data.time_usec, data.yacc);
+                if (zAccCheckBox.Checked) updateChart(2, data.time_usec, data.zacc);
+                if (xGyroCheckBox.Checked) updateChart(3, data.time_usec, data.xgyro);
+                if (yGyroCheckBox.Checked) updateChart(4, data.time_usec, data.ygyro);
+                if (zGyroCheckBox.Checked) updateChart(5, data.time_usec, data.zgyro);
+                if (xMagCheckBox.Checked) updateChart(6, data.time_usec, data.xmag);
+                if (yMagCheckBox.Checked) updateChart(7, data.time_usec, data.ymag);
+                if (zMagCheckBox.Checked) updateChart(8, data.time_usec, data.zmag);
+                if (vabsCheckBox.Checked) updateChart(9, data.time_usec, Math.Abs(data.zgyro));
+                double vacc = 0;
+                var count = IMUchart.Series[10].Points.Count;
+                if (count > 0 && Math.Abs(prevAcc - data.xacc) > 2)
+                    vacc = IMUchart.Series[10].Points[count - 1].YValues[0] + (data.xacc - lastConstAcc) / 2;
+                else
+                    lastConstAcc = data.xacc;
+                prevAcc = data.xacc;
+                if (vaccCheckBox.Checked) updateChart(10, data.time_usec, vacc);
+            }
+            else if (userData.GetType() == typeof(mavlink_global_position_int_t))
+            {
+                var data = (mavlink_global_position_int_t)userData;
+                if (dirCheckBox.Checked) updateChart(11, data.time_boot_ms / msToS, data.hdg * cmToM);
+            }
         }
 
         private void bgw_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            const double msToS = 0.001;
-            const double mmToM = 0.001;
-            const double cmToM = 0.01;
-            const double mgToMs = 0.001 / 9.80665;
             var userData = e.UserState;
             if (userData.GetType() == typeof(mavlink_global_position_int_t))
             {
@@ -662,7 +672,7 @@ namespace SimpleExample
                 xAccCheckBox.Checked = yAccCheckBox.Checked = zAccCheckBox.Checked = true;
                 xGyroCheckBox.Checked = yGyroCheckBox.Checked = zGyroCheckBox.Checked = true;
                 xMagCheckBox.Checked = yMagCheckBox.Checked = zMagCheckBox.Checked = true;
-                vabsCheckBox.Checked = vaccCheckBox.Checked = true;
+                dirCheckBox.Checked = vabsCheckBox.Checked = vaccCheckBox.Checked = true;
                 themesComboBox.SelectedIndex = 1;
             }
             else if (themesComboBox.SelectedIndex == 2)
@@ -670,7 +680,7 @@ namespace SimpleExample
                 xAccCheckBox.Checked = true; yAccCheckBox.Checked = zAccCheckBox.Checked = false;
                 xGyroCheckBox.Checked = yGyroCheckBox.Checked = false; zGyroCheckBox.Checked = true;
                 xMagCheckBox.Checked = yMagCheckBox.Checked = zMagCheckBox.Checked = false;
-                vabsCheckBox.Checked = vaccCheckBox.Checked = true;
+                dirCheckBox.Checked = vabsCheckBox.Checked = vaccCheckBox.Checked = true;
                 themesComboBox.SelectedIndex = 2;
             }
             else if (themesComboBox.SelectedIndex == 3)
@@ -678,8 +688,16 @@ namespace SimpleExample
                 xAccCheckBox.Checked = true; yAccCheckBox.Checked = zAccCheckBox.Checked = false;
                 xGyroCheckBox.Checked = yGyroCheckBox.Checked = false; zGyroCheckBox.Checked = true;
                 xMagCheckBox.Checked = yMagCheckBox.Checked = true; zMagCheckBox.Checked = false;
-                vabsCheckBox.Checked = vaccCheckBox.Checked = true;
+                dirCheckBox.Checked = vabsCheckBox.Checked = vaccCheckBox.Checked = true;
                 themesComboBox.SelectedIndex = 3;
+            }
+            else if (themesComboBox.SelectedIndex == 4)
+            {
+                xAccCheckBox.Checked = yAccCheckBox.Checked = zAccCheckBox.Checked = false;
+                xGyroCheckBox.Checked = yGyroCheckBox.Checked = false; zGyroCheckBox.Checked = true;
+                xMagCheckBox.Checked = yMagCheckBox.Checked = zMagCheckBox.Checked = false;
+                dirCheckBox.Checked = true; vabsCheckBox.Checked = vaccCheckBox.Checked = false;
+                themesComboBox.SelectedIndex = 4;
             }
         }
 
