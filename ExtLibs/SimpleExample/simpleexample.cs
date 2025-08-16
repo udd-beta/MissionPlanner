@@ -50,6 +50,8 @@ namespace SimpleExample
         int[,] tendency = new int[rowsCount, colsCount];
         List<double>[,] lastValues = new List<double>[rowsCount, colsCount];
         string[] themes = {"Користувацький набір", "Повний набір", "Прямий хід + зворотній хід", "Прямо + розворот + назад"};
+        double lastConstAcc = 0;
+        double prevAcc = 0;
 
         public simpleexample()
         {
@@ -105,11 +107,19 @@ namespace SimpleExample
                 ++n;
                 IMUchart.Series.Add(series);
             }
+            Series vabsSeries = new Series("vabs");
+            vabsSeries.ChartType = SeriesChartType.Line;
+            vabsSeries.Color = Color.FromArgb(255, 0, 155, 155);
+            IMUchart.Series.Add(vabsSeries);
+            Series vaccSeries = new Series("vacc");
+            vaccSeries.ChartType = SeriesChartType.Line;
+            vaccSeries.Color = Color.FromArgb(255, 155, 155, 0);
+            IMUchart.Series.Add(vaccSeries);
             IMUchart.ChartAreas[0].AxisX.MajorGrid.LineDashStyle = ChartDashStyle.Dash;
             IMUchart.ChartAreas[0].AxisY.MajorGrid.LineDashStyle = ChartDashStyle.Dash;
             IMUchart.ChartAreas[0].AxisY.Maximum = (double)maxYNumericUpDown.Value;
             IMUchart.ChartAreas[0].AxisY.Minimum = (double)minYNumericUpDown.Value;
-            IMUchart.ChartAreas[0].AxisY.Interval = (IMUchart.ChartAreas[0].AxisY.Maximum - IMUchart.ChartAreas[0].AxisY.Minimum) / 4;
+            IMUchart.ChartAreas[0].AxisY.Interval = (IMUchart.ChartAreas[0].AxisY.Maximum - IMUchart.ChartAreas[0].AxisY.Minimum) / (int)divisionsNumericUpDown.Value;
             themesComboBox.Items.Clear();
             foreach (string item in themes)
                 themesComboBox.Items.Add(item);
@@ -345,9 +355,18 @@ namespace SimpleExample
             if (xGyroCheckBox.Checked) updateChart(3, data.time_usec, data.xgyro);
             if (yGyroCheckBox.Checked) updateChart(4, data.time_usec, data.ygyro);
             if (zGyroCheckBox.Checked) updateChart(5, data.time_usec, data.zgyro);
-            if (xMagCheckBox.Checked) updateChart(6, data.time_usec, data.xmag);            
+            if (xMagCheckBox.Checked) updateChart(6, data.time_usec, data.xmag);
             if (yMagCheckBox.Checked) updateChart(7, data.time_usec, data.ymag);
             if (zMagCheckBox.Checked) updateChart(8, data.time_usec, data.zmag);
+            if (vabsCheckBox.Checked) updateChart(9, data.time_usec, Math.Abs(data.zgyro));
+            double vacc = 0;
+            var count = IMUchart.Series[10].Points.Count;
+            if (count > 0 && Math.Abs(prevAcc - data.xacc) > 2)
+                vacc = IMUchart.Series[10].Points[count - 1].YValues[0] + (data.xacc - lastConstAcc) / 2;
+            else
+                lastConstAcc = data.xacc;
+            prevAcc = data.xacc;
+            if (vaccCheckBox.Checked) updateChart(10, data.time_usec, vacc);
         }
 
         private void bgw_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -451,7 +470,7 @@ namespace SimpleExample
                     initAccX = data.xacc;
                     initAccY = data.yacc;
                     initAccZ = data.zacc;
-                    sumAcc = xacc;
+                    sumAcc = 0;
                     return;
                 }
                 var dt = 0.5;// (data.time_usec - imuTime) * msToS;
@@ -643,6 +662,7 @@ namespace SimpleExample
                 xAccCheckBox.Checked = yAccCheckBox.Checked = zAccCheckBox.Checked = true;
                 xGyroCheckBox.Checked = yGyroCheckBox.Checked = zGyroCheckBox.Checked = true;
                 xMagCheckBox.Checked = yMagCheckBox.Checked = zMagCheckBox.Checked = true;
+                vabsCheckBox.Checked = vaccCheckBox.Checked = true;
                 themesComboBox.SelectedIndex = 1;
             }
             else if (themesComboBox.SelectedIndex == 2)
@@ -650,6 +670,7 @@ namespace SimpleExample
                 xAccCheckBox.Checked = true; yAccCheckBox.Checked = zAccCheckBox.Checked = false;
                 xGyroCheckBox.Checked = yGyroCheckBox.Checked = false; zGyroCheckBox.Checked = true;
                 xMagCheckBox.Checked = yMagCheckBox.Checked = zMagCheckBox.Checked = false;
+                vabsCheckBox.Checked = vaccCheckBox.Checked = true;
                 themesComboBox.SelectedIndex = 2;
             }
             else if (themesComboBox.SelectedIndex == 3)
@@ -657,6 +678,7 @@ namespace SimpleExample
                 xAccCheckBox.Checked = true; yAccCheckBox.Checked = zAccCheckBox.Checked = false;
                 xGyroCheckBox.Checked = yGyroCheckBox.Checked = false; zGyroCheckBox.Checked = true;
                 xMagCheckBox.Checked = yMagCheckBox.Checked = true; zMagCheckBox.Checked = false;
+                vabsCheckBox.Checked = vaccCheckBox.Checked = true;
                 themesComboBox.SelectedIndex = 3;
             }
         }
@@ -674,6 +696,11 @@ namespace SimpleExample
         private void checkBox_CheckedChanged(object sender, EventArgs e)
         {
             themesComboBox.SelectedIndex = 0;
+        }
+
+        private void divisionsNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            IMUchart.ChartAreas[0].AxisY.Interval = (IMUchart.ChartAreas[0].AxisY.Maximum - IMUchart.ChartAreas[0].AxisY.Minimum) / (int)divisionsNumericUpDown.Value;
         }
     }
 }

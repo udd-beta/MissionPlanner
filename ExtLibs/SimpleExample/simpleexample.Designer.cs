@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.CMB_comport = new System.Windows.Forms.ComboBox();
             this.cmb_baudrate = new System.Windows.Forms.ComboBox();
             this.but_connect = new System.Windows.Forms.Button();
@@ -141,8 +141,11 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.IMUchart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.divisionsNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.divisionsLabel = new System.Windows.Forms.Label();
+            this.vaccCheckBox = new System.Windows.Forms.CheckBox();
+            this.vabsCheckBox = new System.Windows.Forms.CheckBox();
             this.themesComboBox = new System.Windows.Forms.ComboBox();
-            this.themesLabel = new System.Windows.Forms.Label();
             this.maxYNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.maxYLabel = new System.Windows.Forms.Label();
             this.minYNumericUpDown = new System.Windows.Forms.NumericUpDown();
@@ -166,6 +169,7 @@
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.IMUchart)).BeginInit();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.divisionsNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxYNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.minYNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.diapasonNumericUpDown)).BeginInit();
@@ -1164,24 +1168,27 @@
             // 
             // IMUchart
             // 
-            chartArea6.Name = "ChartArea1";
-            this.IMUchart.ChartAreas.Add(chartArea6);
+            chartArea1.Name = "ChartArea1";
+            this.IMUchart.ChartAreas.Add(chartArea1);
             this.IMUchart.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend6.Name = "Legend1";
-            this.IMUchart.Legends.Add(legend6);
+            legend1.Name = "Legend1";
+            this.IMUchart.Legends.Add(legend1);
             this.IMUchart.Location = new System.Drawing.Point(0, 71);
             this.IMUchart.Name = "IMUchart";
-            series6.ChartArea = "ChartArea1";
-            series6.Legend = "Legend1";
-            series6.Name = "Series1";
-            this.IMUchart.Series.Add(series6);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.IMUchart.Series.Add(series1);
             this.IMUchart.Size = new System.Drawing.Size(876, 456);
             this.IMUchart.TabIndex = 0;
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.divisionsNumericUpDown);
+            this.panel2.Controls.Add(this.divisionsLabel);
+            this.panel2.Controls.Add(this.vaccCheckBox);
+            this.panel2.Controls.Add(this.vabsCheckBox);
             this.panel2.Controls.Add(this.themesComboBox);
-            this.panel2.Controls.Add(this.themesLabel);
             this.panel2.Controls.Add(this.maxYNumericUpDown);
             this.panel2.Controls.Add(this.maxYLabel);
             this.panel2.Controls.Add(this.minYNumericUpDown);
@@ -1203,23 +1210,63 @@
             this.panel2.Size = new System.Drawing.Size(876, 71);
             this.panel2.TabIndex = 1;
             // 
+            // divisionsNumericUpDown
+            // 
+            this.divisionsNumericUpDown.Location = new System.Drawing.Point(589, 4);
+            this.divisionsNumericUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.divisionsNumericUpDown.Name = "divisionsNumericUpDown";
+            this.divisionsNumericUpDown.Size = new System.Drawing.Size(62, 22);
+            this.divisionsNumericUpDown.TabIndex = 21;
+            this.divisionsNumericUpDown.Value = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
+            this.divisionsNumericUpDown.ValueChanged += new System.EventHandler(this.divisionsNumericUpDown_ValueChanged);
+            // 
+            // divisionsLabel
+            // 
+            this.divisionsLabel.AutoSize = true;
+            this.divisionsLabel.Location = new System.Drawing.Point(523, 4);
+            this.divisionsLabel.Name = "divisionsLabel";
+            this.divisionsLabel.Size = new System.Drawing.Size(59, 16);
+            this.divisionsLabel.TabIndex = 20;
+            this.divisionsLabel.Text = "Поділок";
+            // 
+            // vaccCheckBox
+            // 
+            this.vaccCheckBox.AutoSize = true;
+            this.vaccCheckBox.Location = new System.Drawing.Point(806, 34);
+            this.vaccCheckBox.Name = "vaccCheckBox";
+            this.vaccCheckBox.Size = new System.Drawing.Size(58, 20);
+            this.vaccCheckBox.TabIndex = 19;
+            this.vaccCheckBox.Text = "vacc";
+            this.vaccCheckBox.UseVisualStyleBackColor = true;
+            this.vaccCheckBox.CheckStateChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            // 
+            // vabsCheckBox
+            // 
+            this.vabsCheckBox.AutoSize = true;
+            this.vabsCheckBox.Location = new System.Drawing.Point(743, 34);
+            this.vabsCheckBox.Name = "vabsCheckBox";
+            this.vabsCheckBox.Size = new System.Drawing.Size(59, 20);
+            this.vabsCheckBox.TabIndex = 18;
+            this.vabsCheckBox.Text = "vabs";
+            this.vabsCheckBox.UseVisualStyleBackColor = true;
+            this.vabsCheckBox.CheckStateChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            // 
             // themesComboBox
             // 
             this.themesComboBox.FormattingEnabled = true;
-            this.themesComboBox.Location = new System.Drawing.Point(649, 28);
+            this.themesComboBox.Location = new System.Drawing.Point(661, 4);
             this.themesComboBox.Name = "themesComboBox";
             this.themesComboBox.Size = new System.Drawing.Size(207, 24);
             this.themesComboBox.TabIndex = 17;
             this.themesComboBox.SelectedIndexChanged += new System.EventHandler(this.themesComboBox_SelectedIndexChanged);
-            // 
-            // themesLabel
-            // 
-            this.themesLabel.AutoSize = true;
-            this.themesLabel.Location = new System.Drawing.Point(646, 4);
-            this.themesLabel.Name = "themesLabel";
-            this.themesLabel.Size = new System.Drawing.Size(127, 16);
-            this.themesLabel.TabIndex = 16;
-            this.themesLabel.Text = "Теми відображень";
             // 
             // maxYNumericUpDown
             // 
@@ -1228,7 +1275,7 @@
             0,
             0,
             0});
-            this.maxYNumericUpDown.Location = new System.Drawing.Point(574, 4);
+            this.maxYNumericUpDown.Location = new System.Drawing.Point(455, 4);
             this.maxYNumericUpDown.Maximum = new decimal(new int[] {
             2000,
             0,
@@ -1252,11 +1299,11 @@
             // maxYLabel
             // 
             this.maxYLabel.AutoSize = true;
-            this.maxYLabel.Location = new System.Drawing.Point(429, 4);
+            this.maxYLabel.Location = new System.Drawing.Point(375, 4);
             this.maxYLabel.Name = "maxYLabel";
-            this.maxYLabel.Size = new System.Drawing.Size(133, 16);
+            this.maxYLabel.Size = new System.Drawing.Size(74, 16);
             this.maxYLabel.TabIndex = 14;
-            this.maxYLabel.Text = "Видимий максимум";
+            this.maxYLabel.Text = "Максимум";
             // 
             // minYNumericUpDown
             // 
@@ -1265,7 +1312,7 @@
             0,
             0,
             0});
-            this.minYNumericUpDown.Location = new System.Drawing.Point(361, 4);
+            this.minYNumericUpDown.Location = new System.Drawing.Point(304, 4);
             this.minYNumericUpDown.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -1291,9 +1338,9 @@
             this.minYLabel.AutoSize = true;
             this.minYLabel.Location = new System.Drawing.Point(239, 4);
             this.minYLabel.Name = "minYLabel";
-            this.minYLabel.Size = new System.Drawing.Size(117, 16);
+            this.minYLabel.Size = new System.Drawing.Size(58, 16);
             this.minYLabel.TabIndex = 12;
-            this.minYLabel.Text = "Видимий мінімум";
+            this.minYLabel.Text = "Мінімум";
             // 
             // zMagCheckBox
             // 
@@ -1457,6 +1504,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.IMUchart)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.divisionsNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxYNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.minYNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.diapasonNumericUpDown)).EndInit();
@@ -1593,7 +1641,10 @@
         private System.Windows.Forms.CheckBox zAccCheckBox;
         private System.Windows.Forms.CheckBox yAccCheckBox;
         private System.Windows.Forms.ComboBox themesComboBox;
-        private System.Windows.Forms.Label themesLabel;
+        private System.Windows.Forms.CheckBox vaccCheckBox;
+        private System.Windows.Forms.CheckBox vabsCheckBox;
+        private System.Windows.Forms.NumericUpDown divisionsNumericUpDown;
+        private System.Windows.Forms.Label divisionsLabel;
     }
 }
 
