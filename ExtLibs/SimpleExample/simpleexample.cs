@@ -34,7 +34,7 @@ namespace SimpleExample
         double imuTime = 0;
         (double, double, double) positionViaGPS;
         (double, double, double) positionViaHUD;
-        //KalmanFilter filter;
+        KalmanFilter[] filtered = new KalmanFilter[12];
         double wayLength = 0;
         double initAccX = 0;
         double initAccY = 0;
@@ -60,11 +60,23 @@ namespace SimpleExample
         public simpleexample()
         {
             InitializeComponent();
+            initializeMainPanel();
+            initializeGrid();
+            initializeChart();
+        }
+
+        private void initializeMainPanel()
+        {
             CMB_comport.DataSource = SerialPort.GetPortNames();
             if (CMB_comport.Items.Count > 0)
                 CMB_comport.Text = CMB_comport.Items[0].ToString();
             if (cmb_baudrate.Items.Count > 0)
                 cmb_baudrate.Text = cmb_baudrate.Items[0].ToString();
+            tabControl.SelectedIndex = 2;
+        }
+
+        private void initializeGrid()
+        {
             IMUdataGridView.ColumnCount = colsCount;
             IMUdataGridView.RowCount = rowsCount;
             foreach (DataGridViewColumn column in IMUdataGridView.Columns)
@@ -88,41 +100,32 @@ namespace SimpleExample
             //IMUdataGridView.Rows[12].SetValues("time_usec", "fix_type", "lat", "lon", "alt", "eph", "epv", "vel", "cog", "satellites_visible", "alt_ellipsoid", "h_acc", "v_acc", "vel_acc", "hdg_acc", "yaw");
             IMUdataGridView.Rows[14].HeaderCell.Value = "VIBRATION";
             IMUdataGridView.Rows[14].SetValues("time_usec", "vibration_x", "vibration_y", "vibration_z", "clipping_0", "clipping_1", "clipping_2");
-            tabControl.SelectedIndex = 2;
             for (int i = 0; i < rowsCount; ++i)
                 for (int j = 0; j < colsCount; ++j)
                 {
                     tendency[i, j] = 0;
                     lastValues[i, j] = new List<double>();
                 }
+        }
+
+        private void initializeChart()
+        {
             string[] IMUnames = {"xacc", "yacc", "zacc", "xgyro", "ygyro", "zgyro", "xmag", "ymag", "zmag"};
             IMUchart.Series.Clear();
             int n = 0;
             foreach (string name in IMUnames)
             {
-                Series series = new Series(name);
-                series.ChartType = SeriesChartType.Line;
                 if (n < 3)
-                    series.Color = Color.FromArgb(255, 100 * n + 55, 0, 0);
+                    addNewSeries(name, SeriesChartType.Line, Color.FromArgb(255, 100 * n + 55, 0, 0));
                 else if (n < 6)
-                    series.Color = Color.FromArgb(255, 0, 100 * n - 245, 0);
+                    addNewSeries(name, SeriesChartType.Line, Color.FromArgb(255, 0, 100 * n - 245, 0));
                 else
-                    series.Color = Color.FromArgb(255, 0, 0, 100 * n - 545);
+                    addNewSeries(name, SeriesChartType.Line, Color.FromArgb(255, 0, 0, 100 * n - 545));
                 ++n;
-                IMUchart.Series.Add(series);
             }
-            Series vabsSeries = new Series("vabs");
-            vabsSeries.ChartType = SeriesChartType.Line;
-            vabsSeries.Color = Color.FromArgb(255, 0, 155, 155);
-            IMUchart.Series.Add(vabsSeries);
-            Series vaccSeries = new Series("vacc");
-            vaccSeries.ChartType = SeriesChartType.Line;
-            vaccSeries.Color = Color.FromArgb(255, 155, 155, 0);
-            IMUchart.Series.Add(vaccSeries);
-            Series dirSeries = new Series("dir");
-            dirSeries.ChartType = SeriesChartType.Line;
-            dirSeries.Color = Color.FromArgb(255, 155, 0, 155);
-            IMUchart.Series.Add(dirSeries);
+            addNewSeries("vabs", SeriesChartType.Line, Color.FromArgb(255, 0, 155, 155));
+            addNewSeries("vacc", SeriesChartType.Line, Color.FromArgb(255, 155, 155, 0));
+            addNewSeries("dir", SeriesChartType.Line, Color.FromArgb(255, 155, 0, 155));
             IMUchart.ChartAreas[0].AxisX.MajorGrid.LineDashStyle = ChartDashStyle.Dash;
             IMUchart.ChartAreas[0].AxisY.MajorGrid.LineDashStyle = ChartDashStyle.Dash;
             IMUchart.ChartAreas[0].AxisY.Maximum = (double)maxYNumericUpDown.Value;
@@ -132,6 +135,14 @@ namespace SimpleExample
             foreach (string item in themes)
                 themesComboBox.Items.Add(item);
             themesComboBox.SelectedIndex = 0;
+        }
+
+        private void addNewSeries(string name, SeriesChartType type, Color color)
+        {
+            Series series = new Series(name);
+            series.ChartType = type;
+            series.Color = color;
+            IMUchart.Series.Add(series);
         }
 
         private void but_connect_Click(object sender, EventArgs e)
@@ -244,7 +255,6 @@ namespace SimpleExample
                 System.Threading.Thread.Sleep(1);
             }
         }
-
         private void updateCell(int row, int col, double inValue)
         {
             var list = lastValues[row, col];
@@ -370,7 +380,7 @@ namespace SimpleExample
                 double vacc = 0;
                 var count = IMUchart.Series[10].Points.Count;
                 if (count > 0 && Math.Abs(prevAcc - data.xacc) > 2)
-                    vacc = IMUchart.Series[10].Points[count - 1].YValues[0] + (data.xacc - lastConstAcc) / 2;
+                    vacc = IMUchart.Series[10].Points[count - 1].YValues[0] + data.xacc / 2;//(data.xacc - lastConstAcc) / 2;
                 else
                     lastConstAcc = data.xacc;
                 prevAcc = data.xacc;
