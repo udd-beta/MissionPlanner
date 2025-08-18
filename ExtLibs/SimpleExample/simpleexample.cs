@@ -44,6 +44,7 @@ namespace SimpleExample
         double maxAcc = 0;
         double maxGyro = 0;
         double sumAcc = 0;
+        double vacc = 0;
         const int rowsCount = 16;
         const int colsCount = 16;
         const int avgsCount = 10;
@@ -73,6 +74,16 @@ namespace SimpleExample
             if (cmb_baudrate.Items.Count > 0)
                 cmb_baudrate.Text = cmb_baudrate.Items[0].ToString();
             tabControl.SelectedIndex = 2;
+            hideStateNotification();
+        }
+
+        private void hideStateNotification()
+        {
+            vibrationLabel.Visible = false;
+            backwardLabel.Visible = false;
+            forwardLabel.Visible = false;
+            rightLabel.Visible = false;
+            leftLabel.Visible = false;
         }
 
         private void initializeGrid()
@@ -157,6 +168,7 @@ namespace SimpleExample
             if (serialPort1.IsOpen)
             {
                 serialPort1.Close();
+                hideStateNotification();
                 return;
             }
 
@@ -398,12 +410,14 @@ namespace SimpleExample
                 if (yMagCheckBox.Checked) updatePairOfSeries(7, data.time_usec, data.ymag);
                 if (zMagCheckBox.Checked) updatePairOfSeries(8, data.time_usec, data.zmag);
                 if (vabsCheckBox.Checked) updatePairOfSeries(9, data.time_usec, Math.Abs(data.zgyro));
-                double vacc = 0;
                 var count = IMUchart.Series[10 * 2].Points.Count;
-                if (count > 0 && Math.Abs(prevAcc - data.xacc) > 2)
-                    vacc = IMUchart.Series[10 * 2].Points[count - 1].YValues[0] + data.xacc / 2;//(data.xacc - lastConstAcc) / 2;
+                if (count > 0 && Math.Abs(prevAcc - data.xacc) > 4)
+                    vacc += (data.xacc + Math.Abs(lastConstAcc)) / 2;
                 else
+                {
+                    vacc = 0;
                     lastConstAcc = data.xacc;
+                }
                 prevAcc = data.xacc;
                 if (vaccCheckBox.Checked) updatePairOfSeries(10, data.time_usec, vacc);
             }
@@ -559,6 +573,43 @@ namespace SimpleExample
 
             fillTable(e);
             fillChart(e);
+            updateVibration();
+            updateTranslation();
+            updateRotation();
+        }
+
+        private void updateVibration()
+        {
+            vibrationLabel.Visible = false;
+            if (IMUdataGridView.Rows[15].Cells[3].Value == null)
+                return;
+            double vibrationLimit = 0.2;
+            if (Convert.ToDouble(IMUdataGridView.Rows[15].Cells[1].Value) > vibrationLimit &&
+                Convert.ToDouble(IMUdataGridView.Rows[15].Cells[2].Value) > vibrationLimit &&
+                Convert.ToDouble(IMUdataGridView.Rows[15].Cells[3].Value) > vibrationLimit)
+                vibrationLabel.Visible = true;
+        }
+
+        private void updateTranslation()
+        {
+            forwardLabel.Visible = backwardLabel.Visible = false;
+            var value = IMUdataGridView.Rows[7].Cells[1].Value;
+            if (value == null)
+                return;
+            double translationLimit = 5;
+            forwardLabel.Visible = vacc > translationLimit;
+            backwardLabel.Visible = vacc < -translationLimit;
+        }
+
+        private void updateRotation()
+        {
+            rightLabel.Visible = leftLabel.Visible = false;
+            var value = IMUdataGridView.Rows[7].Cells[6].Value;
+            double rotationLimit = 500;
+            if (value == null || Math.Abs(Convert.ToDouble(value)) < rotationLimit)
+                return;
+            rightLabel.Visible = Convert.ToDouble(value) > rotationLimit == forwardLabel.Visible;
+            leftLabel.Visible = !rightLabel.Visible;
         }
 
         T readsomedata<T>(byte sysid,byte compid,int timeout = 2000)

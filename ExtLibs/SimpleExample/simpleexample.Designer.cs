@@ -141,6 +141,7 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.IMUchart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.dirCheckBox = new System.Windows.Forms.CheckBox();
             this.divisionsNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.divisionsLabel = new System.Windows.Forms.Label();
             this.vaccCheckBox = new System.Windows.Forms.CheckBox();
@@ -162,7 +163,11 @@
             this.diapasonNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.stepLabel = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.dirCheckBox = new System.Windows.Forms.CheckBox();
+            this.forwardLabel = new System.Windows.Forms.Label();
+            this.leftLabel = new System.Windows.Forms.Label();
+            this.vibrationLabel = new System.Windows.Forms.Label();
+            this.rightLabel = new System.Windows.Forms.Label();
+            this.backwardLabel = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -1213,6 +1218,17 @@
             this.panel2.Size = new System.Drawing.Size(876, 71);
             this.panel2.TabIndex = 1;
             // 
+            // dirCheckBox
+            // 
+            this.dirCheckBox.AutoSize = true;
+            this.dirCheckBox.Location = new System.Drawing.Point(689, 34);
+            this.dirCheckBox.Name = "dirCheckBox";
+            this.dirCheckBox.Size = new System.Drawing.Size(44, 20);
+            this.dirCheckBox.TabIndex = 22;
+            this.dirCheckBox.Text = "dir";
+            this.dirCheckBox.UseVisualStyleBackColor = true;
+            this.dirCheckBox.CheckStateChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            // 
             // divisionsNumericUpDown
             // 
             this.divisionsNumericUpDown.Location = new System.Drawing.Point(589, 4);
@@ -1477,6 +1493,11 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.backwardLabel);
+            this.panel1.Controls.Add(this.rightLabel);
+            this.panel1.Controls.Add(this.forwardLabel);
+            this.panel1.Controls.Add(this.leftLabel);
+            this.panel1.Controls.Add(this.vibrationLabel);
             this.panel1.Controls.Add(this.cmb_baudrate);
             this.panel1.Controls.Add(this.CMB_comport);
             this.panel1.Controls.Add(this.but_mission);
@@ -1488,16 +1509,55 @@
             this.panel1.Size = new System.Drawing.Size(884, 82);
             this.panel1.TabIndex = 115;
             // 
-            // dirCheckBox
+            // forwardLabel
             // 
-            this.dirCheckBox.AutoSize = true;
-            this.dirCheckBox.Location = new System.Drawing.Point(689, 34);
-            this.dirCheckBox.Name = "dirCheckBox";
-            this.dirCheckBox.Size = new System.Drawing.Size(44, 20);
-            this.dirCheckBox.TabIndex = 22;
-            this.dirCheckBox.Text = "dir";
-            this.dirCheckBox.UseVisualStyleBackColor = true;
-            this.dirCheckBox.CheckStateChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            this.forwardLabel.AutoSize = true;
+            this.forwardLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.forwardLabel.Location = new System.Drawing.Point(709, 31);
+            this.forwardLabel.Name = "forwardLabel";
+            this.forwardLabel.Size = new System.Drawing.Size(113, 20);
+            this.forwardLabel.TabIndex = 7;
+            this.forwardLabel.Text = "Прямий хід";
+            // 
+            // leftLabel
+            // 
+            this.leftLabel.AutoSize = true;
+            this.leftLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.leftLabel.Location = new System.Drawing.Point(709, 53);
+            this.leftLabel.Name = "leftLabel";
+            this.leftLabel.Size = new System.Drawing.Size(143, 20);
+            this.leftLabel.TabIndex = 6;
+            this.leftLabel.Text = "Лівий поворот";
+            // 
+            // vibrationLabel
+            // 
+            this.vibrationLabel.AutoSize = true;
+            this.vibrationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.vibrationLabel.Location = new System.Drawing.Point(709, 9);
+            this.vibrationLabel.Name = "vibrationLabel";
+            this.vibrationLabel.Size = new System.Drawing.Size(87, 20);
+            this.vibrationLabel.TabIndex = 5;
+            this.vibrationLabel.Text = "Вібрація";
+            // 
+            // rightLabel
+            // 
+            this.rightLabel.AutoSize = true;
+            this.rightLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rightLabel.Location = new System.Drawing.Point(709, 51);
+            this.rightLabel.Name = "rightLabel";
+            this.rightLabel.Size = new System.Drawing.Size(161, 20);
+            this.rightLabel.TabIndex = 8;
+            this.rightLabel.Text = "Правий поворот";
+            // 
+            // backwardLabel
+            // 
+            this.backwardLabel.AutoSize = true;
+            this.backwardLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.backwardLabel.Location = new System.Drawing.Point(709, 31);
+            this.backwardLabel.Name = "backwardLabel";
+            this.backwardLabel.Size = new System.Drawing.Size(106, 20);
+            this.backwardLabel.TabIndex = 9;
+            this.backwardLabel.Text = "Задній хід";
             // 
             // simpleexample
             // 
@@ -1523,6 +1583,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.minYNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.diapasonNumericUpDown)).EndInit();
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1660,6 +1721,11 @@
         private System.Windows.Forms.NumericUpDown divisionsNumericUpDown;
         private System.Windows.Forms.Label divisionsLabel;
         private System.Windows.Forms.CheckBox dirCheckBox;
+        private System.Windows.Forms.Label vibrationLabel;
+        private System.Windows.Forms.Label forwardLabel;
+        private System.Windows.Forms.Label leftLabel;
+        private System.Windows.Forms.Label rightLabel;
+        private System.Windows.Forms.Label backwardLabel;
     }
 }
 
