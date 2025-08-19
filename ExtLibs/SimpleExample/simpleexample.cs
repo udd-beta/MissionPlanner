@@ -385,13 +385,10 @@ namespace SimpleExample
             const double msToS = 0.001;
             var series = IMUchart.Series[id];
             series.Points.AddXY(Math.Round(time * msToS * msToS, 1), value);
-
-            if (series.Points.Count > diapasonNumericUpDown.Value)
-            {
+            while (series.Points.Count > diapasonNumericUpDown.Value)
                 series.Points.RemoveAt(0);
-                IMUchart.ChartAreas[0].AxisX.Minimum = series.Points[0].XValue;
-                IMUchart.ChartAreas[0].AxisX.Maximum = series.Points[(int)diapasonNumericUpDown.Value - 1].XValue;
-            }
+            IMUchart.ChartAreas[0].AxisX.Minimum = series.Points[0].XValue;
+            IMUchart.ChartAreas[0].AxisX.Maximum = series.Points[series.Points.Count - 1].XValue;
         }
 
         private void fillChart(ProgressChangedEventArgs e)

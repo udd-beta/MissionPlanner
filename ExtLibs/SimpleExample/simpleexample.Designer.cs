@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.CMB_comport = new System.Windows.Forms.ComboBox();
             this.cmb_baudrate = new System.Windows.Forms.ComboBox();
             this.but_connect = new System.Windows.Forms.Button();
@@ -1174,17 +1174,17 @@
             // 
             // IMUchart
             // 
-            chartArea2.Name = "ChartArea1";
-            this.IMUchart.ChartAreas.Add(chartArea2);
+            chartArea4.Name = "ChartArea1";
+            this.IMUchart.ChartAreas.Add(chartArea4);
             this.IMUchart.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend2.Name = "Legend1";
-            this.IMUchart.Legends.Add(legend2);
+            legend4.Name = "Legend1";
+            this.IMUchart.Legends.Add(legend4);
             this.IMUchart.Location = new System.Drawing.Point(0, 71);
             this.IMUchart.Name = "IMUchart";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.IMUchart.Series.Add(series2);
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            this.IMUchart.Series.Add(series4);
             this.IMUchart.Size = new System.Drawing.Size(876, 456);
             this.IMUchart.TabIndex = 0;
             this.IMUchart.Text = " ";
