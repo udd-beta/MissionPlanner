@@ -51,6 +51,7 @@ namespace SimpleExample
         int[,] tendency = new int[rowsCount, colsCount];
         List<double>[,] lastValues = new List<double>[rowsCount, colsCount];
         string[] themes = {"Користувацький набір", "Повний набір", "Прямий хід + зворотній хід", "Прямо + розворот + назад", "Компас + швидкість поворотів"};
+        string[] IMUnames = { "xAcc", "yAcc", "zAcc", "xGyro", "yGyro", "zGyro", "xMag", "yMag", "zMag", "vAbs", "vAcc", "dir" };
         double lastConstAcc = 0;
         double prevAcc = 0;
         const double msToS = 0.001;
@@ -121,7 +122,6 @@ namespace SimpleExample
 
         private void initializeChart()
         {
-            string[] IMUnames = {"xacc", "yacc", "zacc", "xgyro", "ygyro", "zgyro", "xmag", "ymag", "zmag"};
             IMUchart.Series.Clear();
             int n = 0;
             foreach (string name in IMUnames)
@@ -130,13 +130,15 @@ namespace SimpleExample
                     addPairOfSeries(name, Color.FromArgb(255, 100 * n + 55, 0, 0));
                 else if (n < 6)
                     addPairOfSeries(name, Color.FromArgb(255, 0, 100 * n - 245, 0));
-                else
+                else if (n < 9)
                     addPairOfSeries(name, Color.FromArgb(255, 0, 0, 100 * n - 545));
+                else
+                    break;
                 ++n;
             }
-            addPairOfSeries("vabs", Color.FromArgb(255, 0, 155, 155));
-            addPairOfSeries("vacc", Color.FromArgb(255, 155, 155, 0));
-            addPairOfSeries("dir", Color.FromArgb(255, 155, 0, 155));
+            addPairOfSeries(IMUnames[n++], Color.FromArgb(255, 0, 155, 155));
+            addPairOfSeries(IMUnames[n++], Color.FromArgb(255, 155, 155, 0));
+            addPairOfSeries(IMUnames[n++], Color.FromArgb(255, 155, 0, 155));
             IMUchart.ChartAreas[0].AxisX.MajorGrid.LineDashStyle = ChartDashStyle.Dash;
             IMUchart.ChartAreas[0].AxisY.MajorGrid.LineDashStyle = ChartDashStyle.Dash;
             IMUchart.ChartAreas[0].AxisY.Maximum = (double)maxYNumericUpDown.Value;
@@ -146,6 +148,10 @@ namespace SimpleExample
             foreach (string item in themes)
                 themesComboBox.Items.Add(item);
             themesComboBox.SelectedIndex = 0;
+            IMUchart.ChartAreas[0].CursorX.AutoScroll = true;
+            IMUchart.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
+            IMUchart.ChartAreas[0].AxisX.ScaleView.SizeType = DateTimeIntervalType.Number;
+            IMUchart.ChartAreas[0].AxisX.ScrollBar.ButtonStyle = ScrollBarButtonStyles.SmallScroll;
         }
 
         private void addPairOfSeries(string name, Color color)
@@ -159,6 +165,7 @@ namespace SimpleExample
             Series series = new Series(name);
             series.ChartType = type;
             series.Color = color;
+            series.Enabled = false;
             IMUchart.Series.Add(series);
         }
 
@@ -385,8 +392,16 @@ namespace SimpleExample
             const double msToS = 0.001;
             var series = IMUchart.Series[id];
             series.Points.AddXY(Math.Round(time * msToS * msToS, 1), value);
-            while (series.Points.Count > diapasonNumericUpDown.Value)
-                series.Points.RemoveAt(0);
+        }
+
+        private void rescaleChart()
+        {
+            var series = IMUchart.Series[0];
+            if (series.Points.Count == 0)
+                return;
+            var begin = series.Points[Math.Max(0, series.Points.Count - (int)diapasonNumericUpDown.Value)].XValue;
+            var end = series.Points[series.Points.Count - 1].XValue;
+            IMUchart.ChartAreas[0].AxisX.ScaleView.Zoom(begin, end);
             IMUchart.ChartAreas[0].AxisX.Minimum = series.Points[0].XValue;
             IMUchart.ChartAreas[0].AxisX.Maximum = series.Points[series.Points.Count - 1].XValue;
         }
@@ -397,16 +412,16 @@ namespace SimpleExample
             if (userData.GetType() == typeof(mavlink_raw_imu_t))
             {
                 var data = (mavlink_raw_imu_t)userData;
-                if (xAccCheckBox.Checked) updatePairOfSeries(0, data.time_usec, data.xacc);
-                if (yAccCheckBox.Checked) updatePairOfSeries(1, data.time_usec, data.yacc);
-                if (zAccCheckBox.Checked) updatePairOfSeries(2, data.time_usec, data.zacc);
-                if (xGyroCheckBox.Checked) updatePairOfSeries(3, data.time_usec, data.xgyro);
-                if (yGyroCheckBox.Checked) updatePairOfSeries(4, data.time_usec, data.ygyro);
-                if (zGyroCheckBox.Checked) updatePairOfSeries(5, data.time_usec, data.zgyro);
-                if (xMagCheckBox.Checked) updatePairOfSeries(6, data.time_usec, data.xmag);
-                if (yMagCheckBox.Checked) updatePairOfSeries(7, data.time_usec, data.ymag);
-                if (zMagCheckBox.Checked) updatePairOfSeries(8, data.time_usec, data.zmag);
-                if (vabsCheckBox.Checked) updatePairOfSeries(9, data.time_usec, Math.Abs(data.zgyro));
+                updatePairOfSeries(0, data.time_usec, data.xacc);
+                updatePairOfSeries(1, data.time_usec, data.yacc);
+                updatePairOfSeries(2, data.time_usec, data.zacc);
+                updatePairOfSeries(3, data.time_usec, data.xgyro);
+                updatePairOfSeries(4, data.time_usec, data.ygyro);
+                updatePairOfSeries(5, data.time_usec, data.zgyro);
+                updatePairOfSeries(6, data.time_usec, data.xmag);
+                updatePairOfSeries(7, data.time_usec, data.ymag);
+                updatePairOfSeries(8, data.time_usec, data.zmag);
+                updatePairOfSeries(9, data.time_usec, Math.Abs(data.zgyro));
                 var count = IMUchart.Series[10 * 2].Points.Count;
                 if (count > 0 && Math.Abs(prevAcc - data.xacc) > 4)
                     vacc += (data.xacc + Math.Abs(lastConstAcc)) / 2;
@@ -416,12 +431,13 @@ namespace SimpleExample
                     lastConstAcc = data.xacc;
                 }
                 prevAcc = data.xacc;
-                if (vaccCheckBox.Checked) updatePairOfSeries(10, data.time_usec, vacc);
+                updatePairOfSeries(10, data.time_usec, vacc);
+                rescaleChart();
             }
             else if (userData.GetType() == typeof(mavlink_global_position_int_t))
             {
                 var data = (mavlink_global_position_int_t)userData;
-                if (dirCheckBox.Checked) updatePairOfSeries(11, data.time_boot_ms / msToS, data.hdg * cmToM);
+                updatePairOfSeries(11, data.time_boot_ms / msToS, data.hdg * cmToM);
             }
         }
 
@@ -793,11 +809,32 @@ namespace SimpleExample
         private void checkBox_CheckedChanged(object sender, EventArgs e)
         {
             themesComboBox.SelectedIndex = 0;
+            if (sender is CheckBox)
+            {
+                var checkBox = sender as CheckBox;
+                bool showSeries = checkBox.Checked;
+                int id = 0;
+                foreach (string name in IMUnames)
+                {
+                    if (checkBox.Name.StartsWith(name))
+                    {
+                        IMUchart.Series[id++].Enabled = showSeries;
+                        IMUchart.Series[id++].Enabled = showSeries;
+                        break;
+                    }
+                    id += 2;
+                }
+            }
         }
 
         private void divisionsNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             IMUchart.ChartAreas[0].AxisY.Interval = (IMUchart.ChartAreas[0].AxisY.Maximum - IMUchart.ChartAreas[0].AxisY.Minimum) / (int)divisionsNumericUpDown.Value;
+        }
+
+        private void diapasonNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            rescaleChart();
         }
     }
 }
