@@ -886,6 +886,34 @@ namespace SimpleExample
             }
         }
 
+        private void additionalCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is CheckBox)
+            {
+                var checkBox = sender as CheckBox;
+                bool showSeries = checkBox.Checked;
+                int shiftId = 0;
+                if (checkBox.Name == "originalCheckBox") shiftId = 0;
+                else if (checkBox.Name == "originalSumCheckBox") shiftId = 1;
+                else if (checkBox.Name == "originalSum10CheckBox") shiftId = 2;
+                else if (checkBox.Name == "originalAvgCheckBox") shiftId = 3;
+                else if (checkBox.Name == "originalAvg10CheckBox") shiftId = 4;
+                else if (checkBox.Name == "absoluteCheckBox") shiftId = 5;
+                else if (checkBox.Name == "absoluteSumCheckBox") shiftId = 6;
+                else if (checkBox.Name == "absoluteSum10CheckBox") shiftId = 7;
+                else if (checkBox.Name == "absoluteAvgCheckBox") shiftId = 8;
+                else if (checkBox.Name == "absoluteAvg10CheckBox") shiftId = 9;
+                int id = 0;
+                foreach (string name in IMUnames)
+                {
+                    var mainCheckBox = this.Controls.Find(name + "CheckBox", true)[0] as CheckBox;
+                    if (mainCheckBox.Checked)
+                        IMUchart.Series[id + shiftId].Enabled = showSeries;
+                    id += IMUnames.Count();
+                }
+            }
+        }
+
         private void divisionsNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             IMUchart.ChartAreas[0].AxisY.Interval = (IMUchart.ChartAreas[0].AxisY.Maximum - IMUchart.ChartAreas[0].AxisY.Minimum) / (int)divisionsNumericUpDown.Value;

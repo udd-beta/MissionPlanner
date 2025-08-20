@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.CMB_comport = new System.Windows.Forms.ComboBox();
             this.cmb_baudrate = new System.Windows.Forms.ComboBox();
             this.but_connect = new System.Windows.Forms.Button();
@@ -1184,17 +1184,17 @@
             // 
             // IMUchart
             // 
-            chartArea2.Name = "ChartArea1";
-            this.IMUchart.ChartAreas.Add(chartArea2);
+            chartArea3.Name = "ChartArea1";
+            this.IMUchart.ChartAreas.Add(chartArea3);
             this.IMUchart.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend2.Name = "Legend1";
-            this.IMUchart.Legends.Add(legend2);
+            legend3.Name = "Legend1";
+            this.IMUchart.Legends.Add(legend3);
             this.IMUchart.Location = new System.Drawing.Point(0, 122);
             this.IMUchart.Name = "IMUchart";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.IMUchart.Series.Add(series2);
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.IMUchart.Series.Add(series3);
             this.IMUchart.Size = new System.Drawing.Size(876, 405);
             this.IMUchart.TabIndex = 0;
             this.IMUchart.Text = " ";
@@ -1256,6 +1256,7 @@
             this.absoluteSum10CheckBox.TabIndex = 33;
             this.absoluteSum10CheckBox.Text = "sum10";
             this.absoluteSum10CheckBox.UseVisualStyleBackColor = true;
+            this.absoluteSum10CheckBox.CheckStateChanged += new System.EventHandler(this.additionalCheckBox_CheckedChanged);
             // 
             // absoluteSumCheckBox
             // 
@@ -1266,6 +1267,7 @@
             this.absoluteSumCheckBox.TabIndex = 32;
             this.absoluteSumCheckBox.Text = "sum";
             this.absoluteSumCheckBox.UseVisualStyleBackColor = true;
+            this.absoluteSumCheckBox.CheckStateChanged += new System.EventHandler(this.additionalCheckBox_CheckedChanged);
             // 
             // absoluteAvg10CheckBox
             // 
@@ -1276,6 +1278,7 @@
             this.absoluteAvg10CheckBox.TabIndex = 31;
             this.absoluteAvg10CheckBox.Text = "avg10";
             this.absoluteAvg10CheckBox.UseVisualStyleBackColor = true;
+            this.absoluteAvg10CheckBox.CheckStateChanged += new System.EventHandler(this.additionalCheckBox_CheckedChanged);
             // 
             // absoluteAvgCheckBox
             // 
@@ -1286,6 +1289,7 @@
             this.absoluteAvgCheckBox.TabIndex = 30;
             this.absoluteAvgCheckBox.Text = "avg";
             this.absoluteAvgCheckBox.UseVisualStyleBackColor = true;
+            this.absoluteAvgCheckBox.CheckStateChanged += new System.EventHandler(this.additionalCheckBox_CheckedChanged);
             // 
             // absoluteCheckBox
             // 
@@ -1296,6 +1300,7 @@
             this.absoluteCheckBox.TabIndex = 29;
             this.absoluteCheckBox.Text = "as is";
             this.absoluteCheckBox.UseVisualStyleBackColor = true;
+            this.absoluteCheckBox.CheckStateChanged += new System.EventHandler(this.additionalCheckBox_CheckedChanged);
             // 
             // originalsLabel
             // 
@@ -1315,6 +1320,7 @@
             this.originalSum10CheckBox.TabIndex = 27;
             this.originalSum10CheckBox.Text = "sum10";
             this.originalSum10CheckBox.UseVisualStyleBackColor = true;
+            this.originalSum10CheckBox.CheckStateChanged += new System.EventHandler(this.additionalCheckBox_CheckedChanged);
             // 
             // originalSumCheckBox
             // 
@@ -1325,6 +1331,7 @@
             this.originalSumCheckBox.TabIndex = 26;
             this.originalSumCheckBox.Text = "sum";
             this.originalSumCheckBox.UseVisualStyleBackColor = true;
+            this.originalSumCheckBox.CheckStateChanged += new System.EventHandler(this.additionalCheckBox_CheckedChanged);
             // 
             // originalAvg10CheckBox
             // 
@@ -1335,6 +1342,7 @@
             this.originalAvg10CheckBox.TabIndex = 25;
             this.originalAvg10CheckBox.Text = "avg10";
             this.originalAvg10CheckBox.UseVisualStyleBackColor = true;
+            this.originalAvg10CheckBox.CheckStateChanged += new System.EventHandler(this.additionalCheckBox_CheckedChanged);
             // 
             // originalAvgCheckBox
             // 
@@ -1345,6 +1353,7 @@
             this.originalAvgCheckBox.TabIndex = 24;
             this.originalAvgCheckBox.Text = "avg";
             this.originalAvgCheckBox.UseVisualStyleBackColor = true;
+            this.originalAvgCheckBox.CheckStateChanged += new System.EventHandler(this.additionalCheckBox_CheckedChanged);
             // 
             // originalCheckBox
             // 
@@ -1357,6 +1366,7 @@
             this.originalCheckBox.TabIndex = 23;
             this.originalCheckBox.Text = "as is";
             this.originalCheckBox.UseVisualStyleBackColor = true;
+            this.originalCheckBox.CheckStateChanged += new System.EventHandler(this.additionalCheckBox_CheckedChanged);
             // 
             // dirCheckBox
             // 
