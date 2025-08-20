@@ -51,8 +51,10 @@ namespace SimpleExample
         const int avgsCount = 10;
         int[,] tendency = new int[rowsCount, colsCount];
         List<double>[,] lastValues = new List<double>[rowsCount, colsCount];
-        string[] themes = {"Користувацький набір", "Повний набір", "Прямий хід + зворотній хід", "Прямо + розворот + назад", "Показати всі суми", "Приховати всі суми" };
+        string[] themes = {"Користувацький набір", "Повний набір", "Прямий хід + зворотній хід", "Прямо + розворот + назад", "Показати всі суми", "Приховати всі суми"};
         string[] IMUnames = { "xAcc", "yAcc", "zAcc", "xGyro", "yGyro", "zGyro", "xMag", "yMag", "zMag", "dir" };
+        string[] mathNames = {"originalCheckBox", "originalSumCheckBox", "originalSum10CheckBox", "originalAvgCheckBox", "originalAvg10CheckBox",
+            "absoluteCheckBox", "absoluteSumCheckBox", "absoluteSum10CheckBox", "absoluteAvgCheckBox", "absoluteAvg10CheckBox"};
         double[] sums;
         double[] sumsAbs;
         (double, double)[] sums10;
@@ -862,25 +864,13 @@ namespace SimpleExample
                         id += IMUnames.Count();
                         continue;
                     }
-                    if (originalCheckBox.Checked) IMUchart.Series[id].Enabled = showSeries;
-                    ++id;
-                    if (originalSumCheckBox.Checked) IMUchart.Series[id].Enabled = showSeries;
-                    ++id;
-                    if (originalSum10CheckBox.Checked) IMUchart.Series[id].Enabled = showSeries;
-                    ++id;
-                    if (originalAvgCheckBox.Checked) IMUchart.Series[id].Enabled = showSeries;
-                    ++id;
-                    if (originalAvg10CheckBox.Checked) IMUchart.Series[id].Enabled = showSeries;
-                    ++id;
-                    if (absoluteCheckBox.Checked) IMUchart.Series[id].Enabled = showSeries;
-                    ++id;
-                    if (absoluteSumCheckBox.Checked) IMUchart.Series[id].Enabled = showSeries;
-                    ++id;
-                    if (absoluteSum10CheckBox.Checked) IMUchart.Series[id].Enabled = showSeries;
-                    ++id;
-                    if (absoluteAvgCheckBox.Checked) IMUchart.Series[id].Enabled = showSeries;
-                    ++id;
-                    if (absoluteAvg10CheckBox.Checked) IMUchart.Series[id].Enabled = showSeries;
+                    foreach (string mathName in mathNames)
+                    {
+                        var mathCheckBox = this.Controls.Find(mathName, true)[0] as CheckBox;
+                        if (mathCheckBox.Checked)
+                            IMUchart.Series[id].Enabled = showSeries;
+                        ++id;
+                    }
                     break;
                 }
             }
@@ -893,16 +883,12 @@ namespace SimpleExample
                 var checkBox = sender as CheckBox;
                 bool showSeries = checkBox.Checked;
                 int shiftId = 0;
-                if (checkBox.Name == "originalCheckBox") shiftId = 0;
-                else if (checkBox.Name == "originalSumCheckBox") shiftId = 1;
-                else if (checkBox.Name == "originalSum10CheckBox") shiftId = 2;
-                else if (checkBox.Name == "originalAvgCheckBox") shiftId = 3;
-                else if (checkBox.Name == "originalAvg10CheckBox") shiftId = 4;
-                else if (checkBox.Name == "absoluteCheckBox") shiftId = 5;
-                else if (checkBox.Name == "absoluteSumCheckBox") shiftId = 6;
-                else if (checkBox.Name == "absoluteSum10CheckBox") shiftId = 7;
-                else if (checkBox.Name == "absoluteAvgCheckBox") shiftId = 8;
-                else if (checkBox.Name == "absoluteAvg10CheckBox") shiftId = 9;
+                foreach (string name in mathNames)
+                {
+                    if (checkBox.Name == name)
+                        break;
+                    ++shiftId;
+                }
                 int id = 0;
                 foreach (string name in IMUnames)
                 {
