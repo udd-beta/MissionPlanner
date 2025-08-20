@@ -8,6 +8,7 @@ using System.IO.Ports;
 using System.Linq;
 using System.Net.Sockets;
 using System.Security.Claims;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -50,8 +51,13 @@ namespace SimpleExample
         const int avgsCount = 10;
         int[,] tendency = new int[rowsCount, colsCount];
         List<double>[,] lastValues = new List<double>[rowsCount, colsCount];
-        string[] themes = {"Користувацький набір", "Повний набір", "Прямий хід + зворотній хід", "Прямо + розворот + назад", "Компас + швидкість поворотів"};
-        string[] IMUnames = { "xAcc", "yAcc", "zAcc", "xGyro", "yGyro", "zGyro", "xMag", "yMag", "zMag", "vAbs", "vAcc", "dir" };
+        string[] themes = {"Користувацький набір", "Повний набір", "Прямий хід + зворотній хід", "Прямо + розворот + назад", "Показати всі суми", "Приховати всі суми" };
+        string[] IMUnames = { "xAcc", "yAcc", "zAcc", "xGyro", "yGyro", "zGyro", "xMag", "yMag", "zMag", "dir" };
+        double[] sums;
+        double[] sumsAbs;
+        (double, double)[] sums10;
+        (double, double)[] sumsAbs10;
+        const int lastObserved = 10;
         double lastConstAcc = 0;
         double prevAcc = 0;
         const double msToS = 0.001;
@@ -124,21 +130,27 @@ namespace SimpleExample
         {
             IMUchart.Series.Clear();
             int n = 0;
+            sums = new double[IMUnames.Count()];
+            sumsAbs = new double[IMUnames.Count()];
+            sums10 = new (double, double)[IMUnames.Count()];
+            sumsAbs10 = new (double, double)[IMUnames.Count()];
             foreach (string name in IMUnames)
             {
                 if (n < 3)
-                    addPairOfSeries(name, Color.FromArgb(255, 100 * n + 55, 0, 0));
+                    addPackOfSeries(name, Color.FromArgb(255, 100 * n + 55, 0, 0));
                 else if (n < 6)
-                    addPairOfSeries(name, Color.FromArgb(255, 0, 100 * n - 245, 0));
+                    addPackOfSeries(name, Color.FromArgb(255, 0, 100 * n - 245, 0));
                 else if (n < 9)
-                    addPairOfSeries(name, Color.FromArgb(255, 0, 0, 100 * n - 545));
+                    addPackOfSeries(name, Color.FromArgb(255, 0, 0, 100 * n - 545));
                 else
                     break;
+                sums[n] = sumsAbs[n] = 0;
+                sums10[n] = sumsAbs10[n] = (0, 0);
                 ++n;
             }
-            addPairOfSeries(IMUnames[n++], Color.FromArgb(255, 0, 155, 155));
-            addPairOfSeries(IMUnames[n++], Color.FromArgb(255, 155, 155, 0));
-            addPairOfSeries(IMUnames[n++], Color.FromArgb(255, 155, 0, 155));
+            //addPackOfSeries(IMUnames[n++], Color.FromArgb(255, 0, 155, 155));
+            //addPackOfSeries(IMUnames[n++], Color.FromArgb(255, 155, 155, 0));
+            addPackOfSeries(IMUnames[n], Color.FromArgb(255, 155, 0, 155));
             IMUchart.ChartAreas[0].AxisX.MajorGrid.LineDashStyle = ChartDashStyle.Dash;
             IMUchart.ChartAreas[0].AxisY.MajorGrid.LineDashStyle = ChartDashStyle.Dash;
             IMUchart.ChartAreas[0].AxisY.Maximum = (double)maxYNumericUpDown.Value;
@@ -154,16 +166,26 @@ namespace SimpleExample
             IMUchart.ChartAreas[0].AxisX.ScrollBar.ButtonStyle = ScrollBarButtonStyles.SmallScroll;
         }
 
-        private void addPairOfSeries(string name, Color color)
+        private void addPackOfSeries(string name, Color color)
         {
-            addNewSeries(name, SeriesChartType.Line, color);
-            addNewSeries(name + "f", SeriesChartType.Point, color);
+            addNewSeries(name, ChartDashStyle.Solid, 2, color);
+            addNewSeries(name + "Sum", ChartDashStyle.Dash, 2, color);
+            addNewSeries(name + "Sum10", ChartDashStyle.DashDot, 2, color);
+            addNewSeries(name + "Avg", ChartDashStyle.DashDotDot, 2,color);
+            addNewSeries(name + "Avg10", ChartDashStyle.Dot, 2, color);
+            addNewSeries(name + "Abs", ChartDashStyle.Solid, 3, color);
+            addNewSeries(name + "AbsSum", ChartDashStyle.Dash, 3, color);
+            addNewSeries(name + "AbsSum10", ChartDashStyle.DashDot, 3, color);
+            addNewSeries(name + "AbsAvg", ChartDashStyle.DashDotDot, 3, color);
+            addNewSeries(name + "AbsAvg10", ChartDashStyle.Dot, 3, color);
         }
 
-        private void addNewSeries(string name, SeriesChartType type, Color color)
+        private void addNewSeries(string name, ChartDashStyle style, int width, Color color)
         {
             Series series = new Series(name);
-            series.ChartType = type;
+            series.ChartType = SeriesChartType.Line;
+            series.BorderWidth = width;
+            series.BorderDashStyle = style;
             series.Color = color;
             series.Enabled = false;
             IMUchart.Series.Add(series);
@@ -372,19 +394,30 @@ namespace SimpleExample
             }
         }
 
-        private void updatePairOfSeries(int id, double time, double value)
+        private void updatePackOfSeries(int id, double time, double value)
         {
-            var idPure = id * 2;
-            updateChart(idPure, time, value);
-            var idFiltered = idPure + 1;
-            var series = IMUchart.Series[idFiltered];
-            if (series.Points.Count == 0)
-            {
-                filtered[id] = new KalmanFilter(value, value * 0.1, value * 0.001, value * 0.001);
-                updateChart(idFiltered, time, value);
-            }
+
+            int seriesCount = IMUnames.Count();
+            var currentId = id * seriesCount;
+            updateHalfPackOfSeries(id, ref currentId, time, value, ref sums, ref sums10);
+            updateHalfPackOfSeries(id, ref currentId, time, Math.Abs(value), ref sumsAbs, ref sumsAbs10);
+        }
+
+        private void updateHalfPackOfSeries(int id, ref int currentId, double time, double value, ref double[] s, ref (double, double)[] s10)
+        {
+            int pointsCount = IMUchart.Series[currentId].Points.Count;
+            updateChart(currentId++, time, value);
+            s[id] += value;
+            updateChart(currentId++, time, s[id]);
+            if (pointsCount == 0)
+                s10[id] = (value, value);
+            else if (pointsCount <= lastObserved)
+                s10[id].Item1 += value;
             else
-                updateChart(idFiltered, time, filtered[id].process(value));
+                s10[id] = (s10[id].Item1 - s10[id].Item2 + value, value);
+            updateChart(currentId++, time, s10[id].Item1);
+            updateChart(currentId++, time, s[id] / (pointsCount + 1));
+            updateChart(currentId++, time, s10[id].Item1 / Math.Min(pointsCount + 1, lastObserved));
         }
 
         private void updateChart(int id, double time, double value)
@@ -412,32 +445,32 @@ namespace SimpleExample
             if (userData.GetType() == typeof(mavlink_raw_imu_t))
             {
                 var data = (mavlink_raw_imu_t)userData;
-                updatePairOfSeries(0, data.time_usec, data.xacc);
-                updatePairOfSeries(1, data.time_usec, data.yacc);
-                updatePairOfSeries(2, data.time_usec, data.zacc);
-                updatePairOfSeries(3, data.time_usec, data.xgyro);
-                updatePairOfSeries(4, data.time_usec, data.ygyro);
-                updatePairOfSeries(5, data.time_usec, data.zgyro);
-                updatePairOfSeries(6, data.time_usec, data.xmag);
-                updatePairOfSeries(7, data.time_usec, data.ymag);
-                updatePairOfSeries(8, data.time_usec, data.zmag);
-                updatePairOfSeries(9, data.time_usec, Math.Abs(data.zgyro));
-                var count = IMUchart.Series[10 * 2].Points.Count;
-                if (count > 0 && Math.Abs(prevAcc - data.xacc) > 4)
-                    vacc += (data.xacc + Math.Abs(lastConstAcc)) / 2;
-                else
-                {
-                    vacc = 0;
-                    lastConstAcc = data.xacc;
-                }
-                prevAcc = data.xacc;
-                updatePairOfSeries(10, data.time_usec, vacc);
+                updatePackOfSeries(0, data.time_usec, data.xacc);
+                updatePackOfSeries(1, data.time_usec, data.yacc);
+                updatePackOfSeries(2, data.time_usec, data.zacc);
+                updatePackOfSeries(3, data.time_usec, data.xgyro);
+                updatePackOfSeries(4, data.time_usec, data.ygyro);
+                updatePackOfSeries(5, data.time_usec, data.zgyro);
+                updatePackOfSeries(6, data.time_usec, data.xmag);
+                updatePackOfSeries(7, data.time_usec, data.ymag);
+                updatePackOfSeries(8, data.time_usec, data.zmag);
+                //updatePairOfSeries(9, data.time_usec, Math.Abs(data.zgyro));
+                //var count = IMUchart.Series[10 * 2].Points.Count;
+                //if (count > 0 && Math.Abs(prevAcc - data.xacc) > 4)
+                //    vacc -= (data.xacc + data.yacc * Math.Sign(data.zgyro) + Math.Abs(lastConstAcc)) / 2; 
+                //else
+                //{
+                //    vacc = 0;
+                //    lastConstAcc = data.xacc;
+                //}
+                //prevAcc = data.xacc;
+                //updatePairOfSeries(10, data.time_usec, vacc);
                 rescaleChart();
             }
             else if (userData.GetType() == typeof(mavlink_global_position_int_t))
             {
                 var data = (mavlink_global_position_int_t)userData;
-                updatePairOfSeries(11, data.time_boot_ms / msToS, data.hdg * cmToM);
+                updatePackOfSeries(9, data.time_boot_ms / msToS, data.hdg * cmToM);
             }
         }
 
@@ -610,6 +643,8 @@ namespace SimpleExample
             if (value == null)
                 return;
             double translationLimit = 5;
+            if (vibrationLabel.Visible)
+                translationLimit *= Convert.ToDouble(IMUdataGridView.Rows[15].Cells[1].Value) * 100;
             forwardLabel.Visible = vacc > translationLimit;
             backwardLabel.Visible = vacc < -translationLimit;
         }
@@ -764,10 +799,10 @@ namespace SimpleExample
         {
             if (themesComboBox.SelectedIndex == 1)
             {
-                xAccCheckBox.Checked = yAccCheckBox.Checked = zAccCheckBox.Checked = true;
-                xGyroCheckBox.Checked = yGyroCheckBox.Checked = zGyroCheckBox.Checked = true;
-                xMagCheckBox.Checked = yMagCheckBox.Checked = zMagCheckBox.Checked = true;
-                dirCheckBox.Checked = vabsCheckBox.Checked = vaccCheckBox.Checked = true;
+                xAccCheckBox.Checked = yAccCheckBox.Checked = zAccCheckBox.Checked =
+                xGyroCheckBox.Checked = yGyroCheckBox.Checked = zGyroCheckBox.Checked =
+                xMagCheckBox.Checked = yMagCheckBox.Checked = zMagCheckBox.Checked =
+                dirCheckBox.Checked = true;
                 themesComboBox.SelectedIndex = 1;
             }
             else if (themesComboBox.SelectedIndex == 2)
@@ -775,7 +810,7 @@ namespace SimpleExample
                 xAccCheckBox.Checked = true; yAccCheckBox.Checked = zAccCheckBox.Checked = false;
                 xGyroCheckBox.Checked = yGyroCheckBox.Checked = false; zGyroCheckBox.Checked = true;
                 xMagCheckBox.Checked = yMagCheckBox.Checked = zMagCheckBox.Checked = false;
-                dirCheckBox.Checked = vabsCheckBox.Checked = vaccCheckBox.Checked = true;
+                dirCheckBox.Checked = true;
                 themesComboBox.SelectedIndex = 2;
             }
             else if (themesComboBox.SelectedIndex == 3)
@@ -783,16 +818,22 @@ namespace SimpleExample
                 xAccCheckBox.Checked = true; yAccCheckBox.Checked = zAccCheckBox.Checked = false;
                 xGyroCheckBox.Checked = yGyroCheckBox.Checked = false; zGyroCheckBox.Checked = true;
                 xMagCheckBox.Checked = yMagCheckBox.Checked = true; zMagCheckBox.Checked = false;
-                dirCheckBox.Checked = vabsCheckBox.Checked = vaccCheckBox.Checked = true;
+                dirCheckBox.Checked = true;
                 themesComboBox.SelectedIndex = 3;
             }
             else if (themesComboBox.SelectedIndex == 4)
             {
-                xAccCheckBox.Checked = yAccCheckBox.Checked = zAccCheckBox.Checked = false;
-                xGyroCheckBox.Checked = yGyroCheckBox.Checked = false; zGyroCheckBox.Checked = true;
-                xMagCheckBox.Checked = yMagCheckBox.Checked = zMagCheckBox.Checked = false;
-                dirCheckBox.Checked = true; vabsCheckBox.Checked = vaccCheckBox.Checked = false;
-                themesComboBox.SelectedIndex = 4;
+                originalCheckBox.Checked = originalSumCheckBox.Checked = originalSum10CheckBox.Checked =
+                originalAvgCheckBox.Checked = originalAvg10CheckBox.Checked =
+                absoluteCheckBox.Checked = absoluteSumCheckBox.Checked = absoluteSum10CheckBox.Checked =
+                absoluteAvgCheckBox.Checked = absoluteAvg10CheckBox.Checked = true;
+            }
+            else if (themesComboBox.SelectedIndex == 5)
+            {
+                originalCheckBox.Checked = true; originalSumCheckBox.Checked = originalSum10CheckBox.Checked =
+                originalAvgCheckBox.Checked = originalAvg10CheckBox.Checked =
+                absoluteCheckBox.Checked = absoluteSumCheckBox.Checked = absoluteSum10CheckBox.Checked =
+                absoluteAvgCheckBox.Checked = absoluteAvg10CheckBox.Checked = false;
             }
         }
 
@@ -816,13 +857,31 @@ namespace SimpleExample
                 int id = 0;
                 foreach (string name in IMUnames)
                 {
-                    if (checkBox.Name.StartsWith(name))
+                    if (!checkBox.Name.StartsWith(name))
                     {
-                        IMUchart.Series[id++].Enabled = showSeries;
-                        IMUchart.Series[id++].Enabled = showSeries;
-                        break;
+                        id += IMUnames.Count();
+                        continue;
                     }
-                    id += 2;
+                    if (originalCheckBox.Checked) IMUchart.Series[id].Enabled = showSeries;
+                    ++id;
+                    if (originalSumCheckBox.Checked) IMUchart.Series[id].Enabled = showSeries;
+                    ++id;
+                    if (originalSum10CheckBox.Checked) IMUchart.Series[id].Enabled = showSeries;
+                    ++id;
+                    if (originalAvgCheckBox.Checked) IMUchart.Series[id].Enabled = showSeries;
+                    ++id;
+                    if (originalAvg10CheckBox.Checked) IMUchart.Series[id].Enabled = showSeries;
+                    ++id;
+                    if (absoluteCheckBox.Checked) IMUchart.Series[id].Enabled = showSeries;
+                    ++id;
+                    if (absoluteSumCheckBox.Checked) IMUchart.Series[id].Enabled = showSeries;
+                    ++id;
+                    if (absoluteSum10CheckBox.Checked) IMUchart.Series[id].Enabled = showSeries;
+                    ++id;
+                    if (absoluteAvgCheckBox.Checked) IMUchart.Series[id].Enabled = showSeries;
+                    ++id;
+                    if (absoluteAvg10CheckBox.Checked) IMUchart.Series[id].Enabled = showSeries;
+                    break;
                 }
             }
         }

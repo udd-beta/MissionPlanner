@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.CMB_comport = new System.Windows.Forms.ComboBox();
             this.cmb_baudrate = new System.Windows.Forms.ComboBox();
             this.but_connect = new System.Windows.Forms.Button();
@@ -141,11 +141,21 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.IMUchart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.absoluteLabel = new System.Windows.Forms.Label();
+            this.absoluteSum10CheckBox = new System.Windows.Forms.CheckBox();
+            this.absoluteSumCheckBox = new System.Windows.Forms.CheckBox();
+            this.absoluteAvg10CheckBox = new System.Windows.Forms.CheckBox();
+            this.absoluteAvgCheckBox = new System.Windows.Forms.CheckBox();
+            this.absoluteCheckBox = new System.Windows.Forms.CheckBox();
+            this.originalsLabel = new System.Windows.Forms.Label();
+            this.originalSum10CheckBox = new System.Windows.Forms.CheckBox();
+            this.originalSumCheckBox = new System.Windows.Forms.CheckBox();
+            this.originalAvg10CheckBox = new System.Windows.Forms.CheckBox();
+            this.originalAvgCheckBox = new System.Windows.Forms.CheckBox();
+            this.originalCheckBox = new System.Windows.Forms.CheckBox();
             this.dirCheckBox = new System.Windows.Forms.CheckBox();
             this.divisionsNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.divisionsLabel = new System.Windows.Forms.Label();
-            this.vaccCheckBox = new System.Windows.Forms.CheckBox();
-            this.vabsCheckBox = new System.Windows.Forms.CheckBox();
             this.themesComboBox = new System.Windows.Forms.ComboBox();
             this.maxYNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.maxYLabel = new System.Windows.Forms.Label();
@@ -163,11 +173,11 @@
             this.diapasonNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.stepLabel = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.backwardLabel = new System.Windows.Forms.Label();
+            this.rightLabel = new System.Windows.Forms.Label();
             this.forwardLabel = new System.Windows.Forms.Label();
             this.leftLabel = new System.Windows.Forms.Label();
             this.vibrationLabel = new System.Windows.Forms.Label();
-            this.rightLabel = new System.Windows.Forms.Label();
-            this.backwardLabel = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -1174,28 +1184,38 @@
             // 
             // IMUchart
             // 
-            chartArea5.Name = "ChartArea1";
-            this.IMUchart.ChartAreas.Add(chartArea5);
+            chartArea2.Name = "ChartArea1";
+            this.IMUchart.ChartAreas.Add(chartArea2);
             this.IMUchart.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend5.Name = "Legend1";
-            this.IMUchart.Legends.Add(legend5);
-            this.IMUchart.Location = new System.Drawing.Point(0, 71);
+            legend2.Name = "Legend1";
+            this.IMUchart.Legends.Add(legend2);
+            this.IMUchart.Location = new System.Drawing.Point(0, 122);
             this.IMUchart.Name = "IMUchart";
-            series5.ChartArea = "ChartArea1";
-            series5.Legend = "Legend1";
-            series5.Name = "Series1";
-            this.IMUchart.Series.Add(series5);
-            this.IMUchart.Size = new System.Drawing.Size(876, 456);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.IMUchart.Series.Add(series2);
+            this.IMUchart.Size = new System.Drawing.Size(876, 405);
             this.IMUchart.TabIndex = 0;
             this.IMUchart.Text = " ";
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.absoluteLabel);
+            this.panel2.Controls.Add(this.absoluteSum10CheckBox);
+            this.panel2.Controls.Add(this.absoluteSumCheckBox);
+            this.panel2.Controls.Add(this.absoluteAvg10CheckBox);
+            this.panel2.Controls.Add(this.absoluteAvgCheckBox);
+            this.panel2.Controls.Add(this.absoluteCheckBox);
+            this.panel2.Controls.Add(this.originalsLabel);
+            this.panel2.Controls.Add(this.originalSum10CheckBox);
+            this.panel2.Controls.Add(this.originalSumCheckBox);
+            this.panel2.Controls.Add(this.originalAvg10CheckBox);
+            this.panel2.Controls.Add(this.originalAvgCheckBox);
+            this.panel2.Controls.Add(this.originalCheckBox);
             this.panel2.Controls.Add(this.dirCheckBox);
             this.panel2.Controls.Add(this.divisionsNumericUpDown);
             this.panel2.Controls.Add(this.divisionsLabel);
-            this.panel2.Controls.Add(this.vaccCheckBox);
-            this.panel2.Controls.Add(this.vabsCheckBox);
             this.panel2.Controls.Add(this.themesComboBox);
             this.panel2.Controls.Add(this.maxYNumericUpDown);
             this.panel2.Controls.Add(this.maxYLabel);
@@ -1215,13 +1235,133 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(876, 71);
+            this.panel2.Size = new System.Drawing.Size(876, 122);
             this.panel2.TabIndex = 1;
+            // 
+            // absoluteLabel
+            // 
+            this.absoluteLabel.AutoSize = true;
+            this.absoluteLabel.Location = new System.Drawing.Point(465, 61);
+            this.absoluteLabel.Name = "absoluteLabel";
+            this.absoluteLabel.Size = new System.Drawing.Size(53, 16);
+            this.absoluteLabel.TabIndex = 34;
+            this.absoluteLabel.Text = "Модулі";
+            // 
+            // absoluteSum10CheckBox
+            // 
+            this.absoluteSum10CheckBox.AutoSize = true;
+            this.absoluteSum10CheckBox.Location = new System.Drawing.Point(664, 59);
+            this.absoluteSum10CheckBox.Name = "absoluteSum10CheckBox";
+            this.absoluteSum10CheckBox.Size = new System.Drawing.Size(68, 20);
+            this.absoluteSum10CheckBox.TabIndex = 33;
+            this.absoluteSum10CheckBox.Text = "sum10";
+            this.absoluteSum10CheckBox.UseVisualStyleBackColor = true;
+            // 
+            // absoluteSumCheckBox
+            // 
+            this.absoluteSumCheckBox.AutoSize = true;
+            this.absoluteSumCheckBox.Location = new System.Drawing.Point(601, 59);
+            this.absoluteSumCheckBox.Name = "absoluteSumCheckBox";
+            this.absoluteSumCheckBox.Size = new System.Drawing.Size(54, 20);
+            this.absoluteSumCheckBox.TabIndex = 32;
+            this.absoluteSumCheckBox.Text = "sum";
+            this.absoluteSumCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // absoluteAvg10CheckBox
+            // 
+            this.absoluteAvg10CheckBox.AutoSize = true;
+            this.absoluteAvg10CheckBox.Location = new System.Drawing.Point(803, 58);
+            this.absoluteAvg10CheckBox.Name = "absoluteAvg10CheckBox";
+            this.absoluteAvg10CheckBox.Size = new System.Drawing.Size(66, 20);
+            this.absoluteAvg10CheckBox.TabIndex = 31;
+            this.absoluteAvg10CheckBox.Text = "avg10";
+            this.absoluteAvg10CheckBox.UseVisualStyleBackColor = true;
+            // 
+            // absoluteAvgCheckBox
+            // 
+            this.absoluteAvgCheckBox.AutoSize = true;
+            this.absoluteAvgCheckBox.Location = new System.Drawing.Point(740, 58);
+            this.absoluteAvgCheckBox.Name = "absoluteAvgCheckBox";
+            this.absoluteAvgCheckBox.Size = new System.Drawing.Size(52, 20);
+            this.absoluteAvgCheckBox.TabIndex = 30;
+            this.absoluteAvgCheckBox.Text = "avg";
+            this.absoluteAvgCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // absoluteCheckBox
+            // 
+            this.absoluteCheckBox.AutoSize = true;
+            this.absoluteCheckBox.Location = new System.Drawing.Point(537, 59);
+            this.absoluteCheckBox.Name = "absoluteCheckBox";
+            this.absoluteCheckBox.Size = new System.Drawing.Size(57, 20);
+            this.absoluteCheckBox.TabIndex = 29;
+            this.absoluteCheckBox.Text = "as is";
+            this.absoluteCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // originalsLabel
+            // 
+            this.originalsLabel.AutoSize = true;
+            this.originalsLabel.Location = new System.Drawing.Point(450, 36);
+            this.originalsLabel.Name = "originalsLabel";
+            this.originalsLabel.Size = new System.Drawing.Size(74, 16);
+            this.originalsLabel.TabIndex = 28;
+            this.originalsLabel.Text = "Оригінали";
+            // 
+            // originalSum10CheckBox
+            // 
+            this.originalSum10CheckBox.AutoSize = true;
+            this.originalSum10CheckBox.Location = new System.Drawing.Point(664, 34);
+            this.originalSum10CheckBox.Name = "originalSum10CheckBox";
+            this.originalSum10CheckBox.Size = new System.Drawing.Size(68, 20);
+            this.originalSum10CheckBox.TabIndex = 27;
+            this.originalSum10CheckBox.Text = "sum10";
+            this.originalSum10CheckBox.UseVisualStyleBackColor = true;
+            // 
+            // originalSumCheckBox
+            // 
+            this.originalSumCheckBox.AutoSize = true;
+            this.originalSumCheckBox.Location = new System.Drawing.Point(601, 34);
+            this.originalSumCheckBox.Name = "originalSumCheckBox";
+            this.originalSumCheckBox.Size = new System.Drawing.Size(54, 20);
+            this.originalSumCheckBox.TabIndex = 26;
+            this.originalSumCheckBox.Text = "sum";
+            this.originalSumCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // originalAvg10CheckBox
+            // 
+            this.originalAvg10CheckBox.AutoSize = true;
+            this.originalAvg10CheckBox.Location = new System.Drawing.Point(803, 33);
+            this.originalAvg10CheckBox.Name = "originalAvg10CheckBox";
+            this.originalAvg10CheckBox.Size = new System.Drawing.Size(66, 20);
+            this.originalAvg10CheckBox.TabIndex = 25;
+            this.originalAvg10CheckBox.Text = "avg10";
+            this.originalAvg10CheckBox.UseVisualStyleBackColor = true;
+            // 
+            // originalAvgCheckBox
+            // 
+            this.originalAvgCheckBox.AutoSize = true;
+            this.originalAvgCheckBox.Location = new System.Drawing.Point(740, 33);
+            this.originalAvgCheckBox.Name = "originalAvgCheckBox";
+            this.originalAvgCheckBox.Size = new System.Drawing.Size(52, 20);
+            this.originalAvgCheckBox.TabIndex = 24;
+            this.originalAvgCheckBox.Text = "avg";
+            this.originalAvgCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // originalCheckBox
+            // 
+            this.originalCheckBox.AutoSize = true;
+            this.originalCheckBox.Checked = true;
+            this.originalCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.originalCheckBox.Location = new System.Drawing.Point(537, 34);
+            this.originalCheckBox.Name = "originalCheckBox";
+            this.originalCheckBox.Size = new System.Drawing.Size(57, 20);
+            this.originalCheckBox.TabIndex = 23;
+            this.originalCheckBox.Text = "as is";
+            this.originalCheckBox.UseVisualStyleBackColor = true;
             // 
             // dirCheckBox
             // 
             this.dirCheckBox.AutoSize = true;
-            this.dirCheckBox.Location = new System.Drawing.Point(689, 34);
+            this.dirCheckBox.Location = new System.Drawing.Point(229, 36);
             this.dirCheckBox.Name = "dirCheckBox";
             this.dirCheckBox.Size = new System.Drawing.Size(44, 20);
             this.dirCheckBox.TabIndex = 22;
@@ -1255,28 +1395,6 @@
             this.divisionsLabel.Size = new System.Drawing.Size(59, 16);
             this.divisionsLabel.TabIndex = 20;
             this.divisionsLabel.Text = "Поділок";
-            // 
-            // vaccCheckBox
-            // 
-            this.vaccCheckBox.AutoSize = true;
-            this.vaccCheckBox.Location = new System.Drawing.Point(806, 34);
-            this.vaccCheckBox.Name = "vaccCheckBox";
-            this.vaccCheckBox.Size = new System.Drawing.Size(58, 20);
-            this.vaccCheckBox.TabIndex = 19;
-            this.vaccCheckBox.Text = "vacc";
-            this.vaccCheckBox.UseVisualStyleBackColor = true;
-            this.vaccCheckBox.CheckStateChanged += new System.EventHandler(this.checkBox_CheckedChanged);
-            // 
-            // vabsCheckBox
-            // 
-            this.vabsCheckBox.AutoSize = true;
-            this.vabsCheckBox.Location = new System.Drawing.Point(743, 34);
-            this.vabsCheckBox.Name = "vabsCheckBox";
-            this.vabsCheckBox.Size = new System.Drawing.Size(59, 20);
-            this.vabsCheckBox.TabIndex = 18;
-            this.vabsCheckBox.Text = "vabs";
-            this.vabsCheckBox.UseVisualStyleBackColor = true;
-            this.vabsCheckBox.CheckStateChanged += new System.EventHandler(this.checkBox_CheckedChanged);
             // 
             // themesComboBox
             // 
@@ -1364,7 +1482,7 @@
             // zMagCheckBox
             // 
             this.zMagCheckBox.AutoSize = true;
-            this.zMagCheckBox.Location = new System.Drawing.Point(512, 33);
+            this.zMagCheckBox.Location = new System.Drawing.Point(134, 85);
             this.zMagCheckBox.Name = "zMagCheckBox";
             this.zMagCheckBox.Size = new System.Drawing.Size(62, 20);
             this.zMagCheckBox.TabIndex = 11;
@@ -1375,7 +1493,7 @@
             // yMagCheckBox
             // 
             this.yMagCheckBox.AutoSize = true;
-            this.yMagCheckBox.Location = new System.Drawing.Point(449, 33);
+            this.yMagCheckBox.Location = new System.Drawing.Point(71, 85);
             this.yMagCheckBox.Name = "yMagCheckBox";
             this.yMagCheckBox.Size = new System.Drawing.Size(63, 20);
             this.yMagCheckBox.TabIndex = 10;
@@ -1386,7 +1504,7 @@
             // xMagCheckBox
             // 
             this.xMagCheckBox.AutoSize = true;
-            this.xMagCheckBox.Location = new System.Drawing.Point(386, 33);
+            this.xMagCheckBox.Location = new System.Drawing.Point(8, 85);
             this.xMagCheckBox.Name = "xMagCheckBox";
             this.xMagCheckBox.Size = new System.Drawing.Size(62, 20);
             this.xMagCheckBox.TabIndex = 9;
@@ -1397,7 +1515,7 @@
             // zGyroCheckBox
             // 
             this.zGyroCheckBox.AutoSize = true;
-            this.zGyroCheckBox.Location = new System.Drawing.Point(323, 33);
+            this.zGyroCheckBox.Location = new System.Drawing.Point(134, 59);
             this.zGyroCheckBox.Name = "zGyroCheckBox";
             this.zGyroCheckBox.Size = new System.Drawing.Size(62, 20);
             this.zGyroCheckBox.TabIndex = 8;
@@ -1408,7 +1526,7 @@
             // yGyroCheckBox
             // 
             this.yGyroCheckBox.AutoSize = true;
-            this.yGyroCheckBox.Location = new System.Drawing.Point(260, 33);
+            this.yGyroCheckBox.Location = new System.Drawing.Point(71, 59);
             this.yGyroCheckBox.Name = "yGyroCheckBox";
             this.yGyroCheckBox.Size = new System.Drawing.Size(63, 20);
             this.yGyroCheckBox.TabIndex = 7;
@@ -1419,7 +1537,7 @@
             // xGyroCheckBox
             // 
             this.xGyroCheckBox.AutoSize = true;
-            this.xGyroCheckBox.Location = new System.Drawing.Point(197, 33);
+            this.xGyroCheckBox.Location = new System.Drawing.Point(8, 59);
             this.xGyroCheckBox.Name = "xGyroCheckBox";
             this.xGyroCheckBox.Size = new System.Drawing.Size(62, 20);
             this.xGyroCheckBox.TabIndex = 6;
@@ -1510,6 +1628,26 @@
             this.panel1.Size = new System.Drawing.Size(884, 82);
             this.panel1.TabIndex = 115;
             // 
+            // backwardLabel
+            // 
+            this.backwardLabel.AutoSize = true;
+            this.backwardLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.backwardLabel.Location = new System.Drawing.Point(709, 31);
+            this.backwardLabel.Name = "backwardLabel";
+            this.backwardLabel.Size = new System.Drawing.Size(106, 20);
+            this.backwardLabel.TabIndex = 9;
+            this.backwardLabel.Text = "Задній хід";
+            // 
+            // rightLabel
+            // 
+            this.rightLabel.AutoSize = true;
+            this.rightLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rightLabel.Location = new System.Drawing.Point(709, 51);
+            this.rightLabel.Name = "rightLabel";
+            this.rightLabel.Size = new System.Drawing.Size(161, 20);
+            this.rightLabel.TabIndex = 8;
+            this.rightLabel.Text = "Правий поворот";
+            // 
             // forwardLabel
             // 
             this.forwardLabel.AutoSize = true;
@@ -1539,26 +1677,6 @@
             this.vibrationLabel.Size = new System.Drawing.Size(87, 20);
             this.vibrationLabel.TabIndex = 5;
             this.vibrationLabel.Text = "Вібрація";
-            // 
-            // rightLabel
-            // 
-            this.rightLabel.AutoSize = true;
-            this.rightLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rightLabel.Location = new System.Drawing.Point(709, 51);
-            this.rightLabel.Name = "rightLabel";
-            this.rightLabel.Size = new System.Drawing.Size(161, 20);
-            this.rightLabel.TabIndex = 8;
-            this.rightLabel.Text = "Правий поворот";
-            // 
-            // backwardLabel
-            // 
-            this.backwardLabel.AutoSize = true;
-            this.backwardLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.backwardLabel.Location = new System.Drawing.Point(709, 31);
-            this.backwardLabel.Name = "backwardLabel";
-            this.backwardLabel.Size = new System.Drawing.Size(106, 20);
-            this.backwardLabel.TabIndex = 9;
-            this.backwardLabel.Text = "Задній хід";
             // 
             // simpleexample
             // 
@@ -1717,8 +1835,6 @@
         private System.Windows.Forms.CheckBox zAccCheckBox;
         private System.Windows.Forms.CheckBox yAccCheckBox;
         private System.Windows.Forms.ComboBox themesComboBox;
-        private System.Windows.Forms.CheckBox vaccCheckBox;
-        private System.Windows.Forms.CheckBox vabsCheckBox;
         private System.Windows.Forms.NumericUpDown divisionsNumericUpDown;
         private System.Windows.Forms.Label divisionsLabel;
         private System.Windows.Forms.CheckBox dirCheckBox;
@@ -1727,6 +1843,18 @@
         private System.Windows.Forms.Label leftLabel;
         private System.Windows.Forms.Label rightLabel;
         private System.Windows.Forms.Label backwardLabel;
+        private System.Windows.Forms.Label absoluteLabel;
+        private System.Windows.Forms.CheckBox absoluteSum10CheckBox;
+        private System.Windows.Forms.CheckBox absoluteSumCheckBox;
+        private System.Windows.Forms.CheckBox absoluteAvg10CheckBox;
+        private System.Windows.Forms.CheckBox absoluteAvgCheckBox;
+        private System.Windows.Forms.CheckBox absoluteCheckBox;
+        private System.Windows.Forms.Label originalsLabel;
+        private System.Windows.Forms.CheckBox originalSum10CheckBox;
+        private System.Windows.Forms.CheckBox originalSumCheckBox;
+        private System.Windows.Forms.CheckBox originalAvg10CheckBox;
+        private System.Windows.Forms.CheckBox originalAvgCheckBox;
+        private System.Windows.Forms.CheckBox originalCheckBox;
     }
 }
 
