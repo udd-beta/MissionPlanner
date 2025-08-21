@@ -141,6 +141,7 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.IMUchart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.normaCheckBox = new System.Windows.Forms.CheckBox();
             this.absoluteLabel = new System.Windows.Forms.Label();
             this.absoluteSum10CheckBox = new System.Windows.Forms.CheckBox();
             this.absoluteSumCheckBox = new System.Windows.Forms.CheckBox();
@@ -178,7 +179,15 @@
             this.forwardLabel = new System.Windows.Forms.Label();
             this.leftLabel = new System.Windows.Forms.Label();
             this.vibrationLabel = new System.Windows.Forms.Label();
-            this.normaCheckBox = new System.Windows.Forms.CheckBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -191,12 +200,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.minYNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.diapasonNumericUpDown)).BeginInit();
             this.panel1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // CMB_comport
             // 
             this.CMB_comport.FormattingEnabled = true;
-            this.CMB_comport.Location = new System.Drawing.Point(16, 24);
+            this.CMB_comport.Location = new System.Drawing.Point(16, 33);
             this.CMB_comport.Margin = new System.Windows.Forms.Padding(4);
             this.CMB_comport.Name = "CMB_comport";
             this.CMB_comport.Size = new System.Drawing.Size(160, 24);
@@ -214,7 +224,7 @@
             "38400",
             "57600",
             "115200"});
-            this.cmb_baudrate.Location = new System.Drawing.Point(186, 23);
+            this.cmb_baudrate.Location = new System.Drawing.Point(186, 32);
             this.cmb_baudrate.Margin = new System.Windows.Forms.Padding(4);
             this.cmb_baudrate.Name = "cmb_baudrate";
             this.cmb_baudrate.Size = new System.Drawing.Size(160, 24);
@@ -222,7 +232,7 @@
             // 
             // but_connect
             // 
-            this.but_connect.Location = new System.Drawing.Point(356, 23);
+            this.but_connect.Location = new System.Drawing.Point(356, 32);
             this.but_connect.Margin = new System.Windows.Forms.Padding(4);
             this.but_connect.Name = "but_connect";
             this.but_connect.Size = new System.Drawing.Size(100, 28);
@@ -233,7 +243,7 @@
             // 
             // but_armdisarm
             // 
-            this.but_armdisarm.Location = new System.Drawing.Point(602, 23);
+            this.but_armdisarm.Location = new System.Drawing.Point(602, 32);
             this.but_armdisarm.Margin = new System.Windows.Forms.Padding(4);
             this.but_armdisarm.Name = "but_armdisarm";
             this.but_armdisarm.Size = new System.Drawing.Size(100, 28);
@@ -244,7 +254,7 @@
             // 
             // but_mission
             // 
-            this.but_mission.Location = new System.Drawing.Point(464, 23);
+            this.but_mission.Location = new System.Drawing.Point(464, 32);
             this.but_mission.Margin = new System.Windows.Forms.Padding(4);
             this.but_mission.Name = "but_mission";
             this.but_mission.Size = new System.Drawing.Size(129, 28);
@@ -1240,6 +1250,17 @@
             this.panel2.Size = new System.Drawing.Size(876, 122);
             this.panel2.TabIndex = 1;
             // 
+            // normaCheckBox
+            // 
+            this.normaCheckBox.AutoSize = true;
+            this.normaCheckBox.Location = new System.Drawing.Point(229, 85);
+            this.normaCheckBox.Name = "normaCheckBox";
+            this.normaCheckBox.Size = new System.Drawing.Size(130, 20);
+            this.normaCheckBox.TabIndex = 35;
+            this.normaCheckBox.Text = "Нормалізувати";
+            this.normaCheckBox.UseVisualStyleBackColor = true;
+            this.normaCheckBox.CheckedChanged += new System.EventHandler(this.normaCheckBox_CheckedChanged);
+            // 
             // absoluteLabel
             // 
             this.absoluteLabel.AutoSize = true;
@@ -1634,6 +1655,7 @@
             this.panel1.Controls.Add(this.but_mission);
             this.panel1.Controls.Add(this.but_connect);
             this.panel1.Controls.Add(this.but_armdisarm);
+            this.panel1.Controls.Add(this.menuStrip1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
@@ -1690,16 +1712,73 @@
             this.vibrationLabel.TabIndex = 5;
             this.vibrationLabel.Text = "Вібрація";
             // 
-            // normaCheckBox
+            // menuStrip1
             // 
-            this.normaCheckBox.AutoSize = true;
-            this.normaCheckBox.Location = new System.Drawing.Point(229, 85);
-            this.normaCheckBox.Name = "normaCheckBox";
-            this.normaCheckBox.Size = new System.Drawing.Size(130, 20);
-            this.normaCheckBox.TabIndex = 35;
-            this.normaCheckBox.Text = "Нормалізувати";
-            this.normaCheckBox.UseVisualStyleBackColor = true;
-            this.normaCheckBox.CheckedChanged += new System.EventHandler(this.normaCheckBox_CheckedChanged);
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.файлToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(884, 30);
+            this.menuStrip1.TabIndex = 10;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // файлToolStripMenuItem
+            // 
+            this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripMenuItem,
+            this.saveToolStripMenuItem,
+            this.clearToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.exitToolStripMenuItem});
+            this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
+            this.файлToolStripMenuItem.Size = new System.Drawing.Size(59, 26);
+            this.файлToolStripMenuItem.Text = "Файл";
+            // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.openToolStripMenuItem.Text = "Завантажити";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveToolStripMenuItem.Text = "Зберегти";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // clearToolStripMenuItem
+            // 
+            this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.clearToolStripMenuItem.Text = "Очистити";
+            this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(221, 6);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.exitToolStripMenuItem.Text = "Вийти";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // saveFileDialog
+            // 
+            this.saveFileDialog.FileName = "NewLog.fcl";
+            this.saveFileDialog.Filter = "Flying Controler Log files|*.fcl";
+            this.saveFileDialog.Title = "Зберегти дані з польотного котролера";
+            // 
+            // openFileDialog
+            // 
+            this.openFileDialog.FileName = "NewLog.fcl";
+            this.openFileDialog.Filter = "Flying Controler Log files|*.fcl";
+            this.openFileDialog.Title = "Відкрити збережені дані з польотного котролера";
             // 
             // simpleexample
             // 
@@ -1708,6 +1787,7 @@
             this.ClientSize = new System.Drawing.Size(884, 638);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.panel1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "simpleexample";
             this.Text = "Дані з польотного контролера";
@@ -1726,6 +1806,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.diapasonNumericUpDown)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1879,6 +1961,15 @@
         private System.Windows.Forms.CheckBox originalAvgCheckBox;
         private System.Windows.Forms.CheckBox originalCheckBox;
         private System.Windows.Forms.CheckBox normaCheckBox;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
     }
 }
 

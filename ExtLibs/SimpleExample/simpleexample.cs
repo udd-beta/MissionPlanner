@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
+using System.IO;
 using System.IO.Ports;
 using System.Linq;
 using System.Net.Sockets;
@@ -421,9 +422,6 @@ namespace SimpleExample
         private void updateHalfPackOfSeries(int id, ref int currentId, double time, double value, ref double[] s, ref (double, List<double>)[] s10)
         {
             int pointsCount = IMUchart.Series[currentId].Points.Count;
-            updateChart(currentId++, time, value);
-            s[id] += value;
-            updateChart(currentId++, time, s[id]);
             if (pointsCount == 0)
             {
                 s10[id].Item1 = 0;
@@ -444,6 +442,9 @@ namespace SimpleExample
                 s10[id].Item1 += value;
                 s10[id].Item2.Add(value);
             }
+            s[id] += value;
+            updateChart(currentId++, time, value);
+            updateChart(currentId++, time, s[id]);
             updateChart(currentId++, time, s10[id].Item1);
             updateChart(currentId++, time, s[id] / (pointsCount + 1));
             updateChart(currentId++, time, s10[id].Item1 / Math.Min(pointsCount + 1, lastObserved));
@@ -942,6 +943,106 @@ namespace SimpleExample
             if (!normaCheckBox.Checked)
                 for (int i = 0; i < prevConst.Length; ++i)
                     prevConst[i] = 0;
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog.ShowDialog() != DialogResult.OK)
+                return;
+            BinaryReader In;
+            try
+            {
+                In = new BinaryReader(new FileStream(openFileDialog.FileName, FileMode.Open));
+            }
+            catch (FileNotFoundException exc)
+            {
+                MessageBox.Show(exc.Message, "Файл не знайдено");
+                return;
+            }
+            try
+            {
+                double version = In.ReadDouble();
+                if (version != 1.0)
+                    throw new IOException("Непідтримувана версія");
+                int seriesCount = In.ReadInt32();
+                for (int i = 0; i < seriesCount; ++i)
+                {
+                    string name = In.ReadString();
+                    if (IMUchart.Series.Count > i)
+                        IMUchart.Series[i].Points.Clear();
+                    else
+                        IMUchart.Series.Add(name);
+                    int pointsCount = In.ReadInt32();
+                    for (int j = 0; j < pointsCount; ++j)
+                    {
+                        double x = In.ReadDouble();
+                        double y = In.ReadDouble();
+                        IMUchart.Series[i].Points.AddXY(x, y);
+                    }
+                }
+                while (seriesCount < IMUchart.Series.Count)
+                    IMUchart.Series.RemoveAt(seriesCount);
+                rescaleChart();
+            }
+            catch (IOException exc)
+            {
+                MessageBox.Show(exc.Message, "Помилка читання файлу");
+            }
+            finally
+            {
+                In.Close();
+            }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialog.ShowDialog() != DialogResult.OK)
+                return;
+            BinaryWriter Out;
+            try
+            {
+                Out = new BinaryWriter(new FileStream(saveFileDialog.FileName, FileMode.Create));
+            }
+            catch (IOException exc)
+            {
+                MessageBox.Show(exc.Message, "Помилка підготовки до запису");
+                return;
+            }
+            try
+            {
+                const double version = 1.0;
+                Out.Write(version);
+                Out.Write(IMUchart.Series.Count);
+                foreach (var series in IMUchart.Series)
+                {
+                    Out.Write(series.Name);
+                    Out.Write(series.Points.Count);
+                    foreach (var point in series.Points)
+                    {
+                        Out.Write(point.XValue);
+                        Out.Write(point.YValues[0]);
+                    }
+                }
+            }
+            catch (IOException exc)
+            {
+                MessageBox.Show(exc.Message, "Помилка запису даних");
+            }
+            finally
+            {
+                Out.Close();
+            }
+        }
+
+        private void clearToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (var series in IMUchart.Series)
+                series.Points.Clear();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }
