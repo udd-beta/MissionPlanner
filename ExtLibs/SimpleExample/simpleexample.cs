@@ -57,8 +57,10 @@ namespace SimpleExample
             "absoluteCheckBox", "absoluteSumCheckBox", "absoluteSum10CheckBox", "absoluteAvgCheckBox", "absoluteAvg10CheckBox"};
         double[] sums;
         double[] sumsAbs;
-        (double, double)[] sums10;
-        (double, double)[] sumsAbs10;
+        (double, List<double>)[] sums10;
+        (double, List<double>)[] sumsAbs10;
+        double[] prevValues;
+        double[] prevConst;
         const int lastObserved = 10;
         double lastConstAcc = 0;
         double prevAcc = 0;
@@ -134,8 +136,10 @@ namespace SimpleExample
             int n = 0;
             sums = new double[IMUnames.Count()];
             sumsAbs = new double[IMUnames.Count()];
-            sums10 = new (double, double)[IMUnames.Count()];
-            sumsAbs10 = new (double, double)[IMUnames.Count()];
+            sums10 = new (double, List<double>)[IMUnames.Count()];
+            sumsAbs10 = new (double, List<double>)[IMUnames.Count()];
+            prevValues = new double[IMUnames.Count()];
+            prevConst = new double[IMUnames.Count()];
             foreach (string name in IMUnames)
             {
                 if (n < 3)
@@ -146,8 +150,6 @@ namespace SimpleExample
                     addPackOfSeries(name, Color.FromArgb(255, 0, 0, 100 * n - 545));
                 else
                     break;
-                sums[n] = sumsAbs[n] = 0;
-                sums10[n] = sumsAbs10[n] = (0, 0);
                 ++n;
             }
             //addPackOfSeries(IMUnames[n++], Color.FromArgb(255, 0, 155, 155));
@@ -396,27 +398,52 @@ namespace SimpleExample
             }
         }
 
-        private void updatePackOfSeries(int id, double time, double value)
+        private bool areEqual(double value1, double value2)
         {
-
-            int seriesCount = IMUnames.Count();
-            var currentId = id * seriesCount;
-            updateHalfPackOfSeries(id, ref currentId, time, value, ref sums, ref sums10);
-            updateHalfPackOfSeries(id, ref currentId, time, Math.Abs(value), ref sumsAbs, ref sumsAbs10);
+            return normaCheckBox.Checked && Math.Abs(value1 - value2) < Math.Abs(value1) * 0.1;
         }
 
-        private void updateHalfPackOfSeries(int id, ref int currentId, double time, double value, ref double[] s, ref (double, double)[] s10)
+        private void updatePackOfSeries(int id, double time, double value)
+        {
+            int seriesCount = IMUnames.Count();
+            var currentId = id * seriesCount;
+            var correctedValue = value - prevConst[id];
+            if (areEqual(value, prevValues[id]))
+            {
+                correctedValue = 0;
+                prevConst[id] = value;
+            }
+            updateHalfPackOfSeries(id, ref currentId, time, correctedValue, ref sums, ref sums10);
+            updateHalfPackOfSeries(id, ref currentId, time, Math.Abs(correctedValue), ref sumsAbs, ref sumsAbs10);
+            prevValues[id] = value;
+        }
+
+        private void updateHalfPackOfSeries(int id, ref int currentId, double time, double value, ref double[] s, ref (double, List<double>)[] s10)
         {
             int pointsCount = IMUchart.Series[currentId].Points.Count;
             updateChart(currentId++, time, value);
             s[id] += value;
             updateChart(currentId++, time, s[id]);
             if (pointsCount == 0)
-                s10[id] = (value, value);
-            else if (pointsCount <= lastObserved)
-                s10[id].Item1 += value;
+            {
+                s10[id].Item1 = 0;
+                s10[id].Item2 = new List<double>();
+            }
+            else if (s10[id].Item2.Count >= lastObserved)
+            {
+                s10[id].Item1 -= s10[id].Item2[0];
+                s10[id].Item2.RemoveAt(0);
+            }
+            if (areEqual(prevConst[id], prevValues[id]))
+            {
+                s10[id].Item1 = 0;
+                s10[id].Item2.Clear();
+            }
             else
-                s10[id] = (s10[id].Item1 - s10[id].Item2 + value, value);
+            {
+                s10[id].Item1 += value;
+                s10[id].Item2.Add(value);
+            }
             updateChart(currentId++, time, s10[id].Item1);
             updateChart(currentId++, time, s[id] / (pointsCount + 1));
             updateChart(currentId++, time, s10[id].Item1 / Math.Min(pointsCount + 1, lastObserved));
@@ -908,6 +935,13 @@ namespace SimpleExample
         private void diapasonNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             rescaleChart();
+        }
+
+        private void normaCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!normaCheckBox.Checked)
+                for (int i = 0; i < prevConst.Length; ++i)
+                    prevConst[i] = 0;
         }
     }
 }

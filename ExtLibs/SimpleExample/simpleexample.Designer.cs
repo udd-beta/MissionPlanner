@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.CMB_comport = new System.Windows.Forms.ComboBox();
             this.cmb_baudrate = new System.Windows.Forms.ComboBox();
             this.but_connect = new System.Windows.Forms.Button();
@@ -178,6 +178,7 @@
             this.forwardLabel = new System.Windows.Forms.Label();
             this.leftLabel = new System.Windows.Forms.Label();
             this.vibrationLabel = new System.Windows.Forms.Label();
+            this.normaCheckBox = new System.Windows.Forms.CheckBox();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -1184,23 +1185,24 @@
             // 
             // IMUchart
             // 
-            chartArea3.Name = "ChartArea1";
-            this.IMUchart.ChartAreas.Add(chartArea3);
+            chartArea2.Name = "ChartArea1";
+            this.IMUchart.ChartAreas.Add(chartArea2);
             this.IMUchart.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend3.Name = "Legend1";
-            this.IMUchart.Legends.Add(legend3);
+            legend2.Name = "Legend1";
+            this.IMUchart.Legends.Add(legend2);
             this.IMUchart.Location = new System.Drawing.Point(0, 122);
             this.IMUchart.Name = "IMUchart";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.IMUchart.Series.Add(series3);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.IMUchart.Series.Add(series2);
             this.IMUchart.Size = new System.Drawing.Size(876, 405);
             this.IMUchart.TabIndex = 0;
             this.IMUchart.Text = " ";
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.normaCheckBox);
             this.panel2.Controls.Add(this.absoluteLabel);
             this.panel2.Controls.Add(this.absoluteSum10CheckBox);
             this.panel2.Controls.Add(this.absoluteSumCheckBox);
@@ -1688,6 +1690,17 @@
             this.vibrationLabel.TabIndex = 5;
             this.vibrationLabel.Text = "Вібрація";
             // 
+            // normaCheckBox
+            // 
+            this.normaCheckBox.AutoSize = true;
+            this.normaCheckBox.Location = new System.Drawing.Point(229, 85);
+            this.normaCheckBox.Name = "normaCheckBox";
+            this.normaCheckBox.Size = new System.Drawing.Size(130, 20);
+            this.normaCheckBox.TabIndex = 35;
+            this.normaCheckBox.Text = "Нормалізувати";
+            this.normaCheckBox.UseVisualStyleBackColor = true;
+            this.normaCheckBox.CheckedChanged += new System.EventHandler(this.normaCheckBox_CheckedChanged);
+            // 
             // simpleexample
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1865,6 +1878,7 @@
         private System.Windows.Forms.CheckBox originalAvg10CheckBox;
         private System.Windows.Forms.CheckBox originalAvgCheckBox;
         private System.Windows.Forms.CheckBox originalCheckBox;
+        private System.Windows.Forms.CheckBox normaCheckBox;
     }
 }
 
