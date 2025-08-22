@@ -401,14 +401,14 @@ namespace SimpleExample
 
         private bool areEqual(double value1, double value2)
         {
-            return normaCheckBox.Checked && Math.Abs(value1 - value2) < Math.Abs(value1) * 0.1;
+            return normaCheckBox.Checked && Math.Abs(value1 - value2) < Math.Max(3, Math.Abs(value1) * 0.1);
         }
 
         private void updatePackOfSeries(int id, double time, double value)
         {
             int seriesCount = IMUnames.Count();
             var currentId = id * seriesCount;
-            var correctedValue = value - prevConst[id];
+            var correctedValue = value - prevValues[id];
             if (areEqual(value, prevValues[id]))
             {
                 correctedValue = 0;
@@ -432,7 +432,7 @@ namespace SimpleExample
                 s10[id].Item1 -= s10[id].Item2[0];
                 s10[id].Item2.RemoveAt(0);
             }
-            if (areEqual(prevConst[id], prevValues[id]))
+            if (value == 0 && areEqual(prevConst[id], prevValues[id]))
             {
                 s10[id].Item1 = 0;
                 s10[id].Item2.Clear();
@@ -441,8 +441,8 @@ namespace SimpleExample
             {
                 s10[id].Item1 += value;
                 s10[id].Item2.Add(value);
+                s[id] += value;
             }
-            s[id] += value;
             updateChart(currentId++, time, value);
             updateChart(currentId++, time, s[id]);
             updateChart(currentId++, time, s10[id].Item1);
