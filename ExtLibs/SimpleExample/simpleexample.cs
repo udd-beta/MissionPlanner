@@ -52,6 +52,7 @@ namespace SimpleExample
         const int avgsCount = 10;
         int[,] tendency = new int[rowsCount, colsCount];
         List<double>[,] lastValues = new List<double>[rowsCount, colsCount];
+        const string title = "Дані з польотного контролера";
         string[] themes = {"Користувацький набір", "Повний набір", "Прямий хід + зворотній хід", "Прямо + розворот + назад", "Показати всі суми", "Приховати всі суми"};
         string[] IMUnames = { "xAcc", "yAcc", "zAcc", "xGyro", "yGyro", "zGyro", "xMag", "yMag", "zMag", "dir" };
         string[] mathNames = {"originalCheckBox", "originalSumCheckBox", "originalSum10CheckBox", "originalAvgCheckBox", "originalAvg10CheckBox",
@@ -80,6 +81,7 @@ namespace SimpleExample
 
         private void initializeMainPanel()
         {
+            Text = title;
             CMB_comport.DataSource = SerialPort.GetPortNames();
             if (CMB_comport.Items.Count > 0)
                 CMB_comport.Text = CMB_comport.Items[0].ToString();
@@ -205,6 +207,9 @@ namespace SimpleExample
                 hideStateNotification();
                 return;
             }
+
+            if (!Text.StartsWith("*"))
+                Text = "*" + Text;
 
             // set the comport options
             serialPort1.PortName = CMB_comport.Text;
@@ -960,6 +965,8 @@ namespace SimpleExample
                 MessageBox.Show(exc.Message, "Файл не знайдено");
                 return;
             }
+            if (serialPort1.IsOpen)
+                serialPort1.Close();
             try
             {
                 double version = In.ReadDouble();
@@ -993,6 +1000,7 @@ namespace SimpleExample
             {
                 In.Close();
             }
+            Text = title + " - " + openFileDialog.FileName;
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1009,6 +1017,8 @@ namespace SimpleExample
                 MessageBox.Show(exc.Message, "Помилка підготовки до запису");
                 return;
             }
+            if (serialPort1.IsOpen)
+                serialPort1.Close();
             try
             {
                 const double version = 1.0;
@@ -1033,6 +1043,7 @@ namespace SimpleExample
             {
                 Out.Close();
             }
+            Text = title + " - " + saveFileDialog.FileName;
         }
 
         private void clearToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1044,6 +1055,16 @@ namespace SimpleExample
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void simpleexample_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (Text.StartsWith("*"))
+            {
+                serialPort1.Close();
+                if (MessageBox.Show("Бажаєте зберегти дані?", "Пропозиція збереження") == DialogResult.OK)
+                    saveToolStripMenuItem_Click(sender, e);
+            }
         }
     }
 }

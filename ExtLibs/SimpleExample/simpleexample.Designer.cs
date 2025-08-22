@@ -1719,7 +1719,7 @@
             this.файлToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(884, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(884, 28);
             this.menuStrip1.TabIndex = 10;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -1732,7 +1732,7 @@
             this.toolStripMenuItem1,
             this.exitToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            this.файлToolStripMenuItem.Size = new System.Drawing.Size(59, 26);
+            this.файлToolStripMenuItem.Size = new System.Drawing.Size(59, 24);
             this.файлToolStripMenuItem.Text = "Файл";
             // 
             // openToolStripMenuItem
@@ -1746,7 +1746,7 @@
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.saveToolStripMenuItem.Text = "Зберегти";
+            this.saveToolStripMenuItem.Text = "Зберегти як";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // clearToolStripMenuItem
@@ -1791,6 +1791,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "simpleexample";
             this.Text = "Дані з польотного контролера";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.simpleexample_FormClosed);
             this.tabControl.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
