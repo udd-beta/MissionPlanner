@@ -401,7 +401,7 @@ namespace SimpleExample
 
         private bool areEqual(double value1, double value2)
         {
-            return normaCheckBox.Checked && Math.Abs(value1 - value2) < Math.Max(3, Math.Abs(value1) * 0.1);
+            return normaCheckBox.Checked && Math.Abs(value1 - value2) < Math.Max(10, Math.Abs(value1) * 0.2);
         }
 
         private void updatePackOfSeries(int id, double time, double value)
@@ -436,6 +436,7 @@ namespace SimpleExample
             {
                 s10[id].Item1 = 0;
                 s10[id].Item2.Clear();
+                s[id] = 0;
             }
             else
             {
@@ -485,15 +486,15 @@ namespace SimpleExample
                 updatePackOfSeries(7, data.time_usec, data.ymag);
                 updatePackOfSeries(8, data.time_usec, data.zmag);
                 //updatePairOfSeries(9, data.time_usec, Math.Abs(data.zgyro));
-                //var count = IMUchart.Series[10 * 2].Points.Count;
-                //if (count > 0 && Math.Abs(prevAcc - data.xacc) > 4)
-                //    vacc -= (data.xacc + data.yacc * Math.Sign(data.zgyro) + Math.Abs(lastConstAcc)) / 2; 
-                //else
-                //{
-                //    vacc = 0;
-                //    lastConstAcc = data.xacc;
-                //}
-                //prevAcc = data.xacc;
+                var count = IMUchart.Series[10 * 2].Points.Count;
+                if (count > 0 && Math.Abs(prevAcc - data.xacc) > 4)
+                    vacc -= (data.xacc + data.yacc * Math.Sign(data.zgyro) + Math.Abs(lastConstAcc)) / 2; 
+                else
+                {
+                    vacc = 0;
+                    lastConstAcc = data.xacc;
+                }
+                prevAcc = data.xacc;
                 //updatePairOfSeries(10, data.time_usec, vacc);
                 rescaleChart();
             }
