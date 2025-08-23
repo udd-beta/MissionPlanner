@@ -406,15 +406,15 @@ namespace SimpleExample
 
         private bool areEqual(double value1, double value2)
         {
-            return normaCheckBox.Checked && Math.Abs(value1 - value2) < Math.Max(10, Math.Abs(value1) * 0.2);
+            return Math.Abs(value1 - value2) < Math.Max(10, Math.Abs(value1) * 0.2);
         }
 
         private void updatePackOfSeries(int id, double time, double value)
         {
             int seriesCount = IMUnames.Count();
             var currentId = id * seriesCount;
-            var correctedValue = value - prevValues[id];
-            if (areEqual(value, prevValues[id]))
+            var correctedValue = value - prevConst[id];
+            if (normaCheckBox.Checked && areEqual(prevValues[id], value))
             {
                 correctedValue = 0;
                 prevConst[id] = value;
@@ -437,7 +437,7 @@ namespace SimpleExample
                 s10[id].Item1 -= s10[id].Item2[0];
                 s10[id].Item2.RemoveAt(0);
             }
-            if (value == 0 && areEqual(prevConst[id], prevValues[id]))
+            if (areEqual(prevValues[id], value))
             {
                 s10[id].Item1 = 0;
                 s10[id].Item2.Clear();
@@ -445,15 +445,20 @@ namespace SimpleExample
             }
             else
             {
+                if (pointsCount > 0 && s10[id].Item2.Count == 0)
+                {
+                    s10[id].Item1 += prevValues[id];
+                    s10[id].Item2.Add(prevValues[id]);
+                }
                 s10[id].Item1 += value;
                 s10[id].Item2.Add(value);
                 s[id] += value;
             }
             updateChart(currentId++, time, value);
             updateChart(currentId++, time, s[id]);
-            updateChart(currentId++, time, s10[id].Item1);
+            updateChart(currentId++, time, s10[id].Item2.Count > 0 ? s10[id].Item1 : value);
             updateChart(currentId++, time, s[id] / (pointsCount + 1));
-            updateChart(currentId++, time, s10[id].Item1 / Math.Min(pointsCount + 1, lastObserved));
+            updateChart(currentId++, time, s10[id].Item2.Count > 0 ? s10[id].Item1 / s10[id].Item2.Count : value);
         }
 
         private void updateChart(int id, double time, double value)
@@ -1062,7 +1067,7 @@ namespace SimpleExample
             if (Text.StartsWith("*"))
             {
                 serialPort1.Close();
-                if (MessageBox.Show("Бажаєте зберегти дані?", "Пропозиція збереження") == DialogResult.OK)
+                if (MessageBox.Show("Бажаєте зберегти дані?", "Пропозиція збереження", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     saveToolStripMenuItem_Click(sender, e);
             }
         }
