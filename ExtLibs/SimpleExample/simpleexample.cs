@@ -57,8 +57,8 @@ namespace SimpleExample
         string[] IMUnames = { "xAcc", "yAcc", "zAcc", "xGyro", "yGyro", "zGyro", "xMag", "yMag", "zMag", "dir" };
         string[] mathNames = {"originalCheckBox", "originalSumCheckBox", "originalSum10CheckBox", "originalAvgCheckBox", "originalAvg10CheckBox",
             "absoluteCheckBox", "absoluteSumCheckBox", "absoluteSum10CheckBox", "absoluteAvgCheckBox", "absoluteAvg10CheckBox"};
-        double[] sums;
-        double[] sumsAbs;
+        (double, int)[] sums;
+        (double, int)[] sumsAbs;
         (double, List<double>)[] sums10;
         (double, List<double>)[] sumsAbs10;
         double[] prevValues;
@@ -137,8 +137,8 @@ namespace SimpleExample
         {
             IMUchart.Series.Clear();
             int n = 0;
-            sums = new double[IMUnames.Count()];
-            sumsAbs = new double[IMUnames.Count()];
+            sums = new (double, int)[IMUnames.Count()];
+            sumsAbs = new (double, int)[IMUnames.Count()];
             sums10 = new (double, List<double>)[IMUnames.Count()];
             sumsAbs10 = new (double, List<double>)[IMUnames.Count()];
             prevValues = new double[IMUnames.Count()];
@@ -424,41 +424,30 @@ namespace SimpleExample
             prevValues[id] = value;
         }
 
-        private void updateHalfPackOfSeries(int id, ref int currentId, double time, double value, ref double[] s, ref (double, List<double>)[] s10)
+        private void updateHalfPackOfSeries(int id, ref int currentId, double time, double value, ref (double, int)[] s, ref (double, List<double>)[] s10)
         {
-            int pointsCount = IMUchart.Series[currentId].Points.Count;
-            if (pointsCount == 0)
+            if (IMUchart.Series[currentId].Points.Count == 0 || areEqual(prevValues[id] - prevConst[id], value))
             {
-                s10[id].Item1 = 0;
-                s10[id].Item2 = new List<double>();
-            }
-            else if (s10[id].Item2.Count >= lastObserved)
-            {
-                s10[id].Item1 -= s10[id].Item2[0];
-                s10[id].Item2.RemoveAt(0);
-            }
-            if (areEqual(prevValues[id], value))
-            {
-                s10[id].Item1 = 0;
-                s10[id].Item2.Clear();
-                s[id] = 0;
+                s10[id] = (value, new List<double> { value });
+                s[id] = (value, 1);
             }
             else
             {
-                if (pointsCount > 0 && s10[id].Item2.Count == 0)
-                {
-                    s10[id].Item1 += prevValues[id];
-                    s10[id].Item2.Add(prevValues[id]);
-                }
                 s10[id].Item1 += value;
                 s10[id].Item2.Add(value);
-                s[id] += value;
+                s[id].Item1 += value;
+                s[id].Item2++;
+                if (s10[id].Item2.Count > lastObserved)
+                {
+                    s10[id].Item1 -= s10[id].Item2[0];
+                    s10[id].Item2.RemoveAt(0);
+                }
             }
             updateChart(currentId++, time, value);
-            updateChart(currentId++, time, s[id]);
-            updateChart(currentId++, time, s10[id].Item2.Count > 0 ? s10[id].Item1 : value);
-            updateChart(currentId++, time, s[id] / (pointsCount + 1));
-            updateChart(currentId++, time, s10[id].Item2.Count > 0 ? s10[id].Item1 / s10[id].Item2.Count : value);
+            updateChart(currentId++, time, s[id].Item1);
+            updateChart(currentId++, time, s10[id].Item1);
+            updateChart(currentId++, time, s[id].Item1 / s[id].Item2);
+            updateChart(currentId++, time, s10[id].Item1 / s10[id].Item2.Count);
         }
 
         private void updateChart(int id, double time, double value)
