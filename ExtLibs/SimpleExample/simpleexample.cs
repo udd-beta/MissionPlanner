@@ -54,9 +54,10 @@ namespace SimpleExample
         List<double>[,] lastValues = new List<double>[rowsCount, colsCount];
         const string title = "Дані з польотного контролера";
         string[] themes = {"Користувацький набір", "Повний набір", "Прямий хід + зворотній хід", "Прямо + розворот + назад", "Показати всі суми", "Приховати всі суми"};
-        string[] IMUnames = { "xAcc", "yAcc", "zAcc", "xGyro", "yGyro", "zGyro", "xMag", "yMag", "zMag", "dir" };
+        string[] IMUnames = {"xAcc", "yAcc", "zAcc", "xGyro", "yGyro", "zGyro", "xMag", "yMag", "zMag", "dir", "velo"};
         string[] mathNames = {"originalCheckBox", "originalSumCheckBox", "originalSum10CheckBox", "originalAvgCheckBox", "originalAvg10CheckBox",
             "absoluteCheckBox", "absoluteSumCheckBox", "absoluteSum10CheckBox", "absoluteAvgCheckBox", "absoluteAvg10CheckBox"};
+        const int baseSeriesCount = 9;
         (double, int)[] sums;
         (double, int)[] sumsAbs;
         (double, List<double>)[] sums10;
@@ -70,6 +71,8 @@ namespace SimpleExample
         const double mmToM = 0.001;
         const double cmToM = 0.01;
         const double mgToMs = 0.001 / 9.80665;
+        double[] vibration = {0, 0, 0};
+        double commonVibration = 0;
 
         public simpleexample()
         {
@@ -137,12 +140,12 @@ namespace SimpleExample
         {
             IMUchart.Series.Clear();
             int n = 0;
-            sums = new (double, int)[IMUnames.Count()];
-            sumsAbs = new (double, int)[IMUnames.Count()];
-            sums10 = new (double, List<double>)[IMUnames.Count()];
-            sumsAbs10 = new (double, List<double>)[IMUnames.Count()];
-            prevValues = new double[IMUnames.Count()];
-            prevConst = new double[IMUnames.Count()];
+            sums = new (double, int)[baseSeriesCount];
+            sumsAbs = new (double, int)[baseSeriesCount];
+            sums10 = new (double, List<double>)[baseSeriesCount];
+            sumsAbs10 = new (double, List<double>)[baseSeriesCount];
+            prevValues = new double[baseSeriesCount];
+            prevConst = new double[baseSeriesCount];
             foreach (string name in IMUnames)
             {
                 if (n < 3)
@@ -155,9 +158,7 @@ namespace SimpleExample
                     break;
                 ++n;
             }
-            //addPackOfSeries(IMUnames[n++], Color.FromArgb(255, 0, 155, 155));
-            //addPackOfSeries(IMUnames[n++], Color.FromArgb(255, 155, 155, 0));
-            addPackOfSeries(IMUnames[n], Color.FromArgb(255, 155, 0, 155));
+            addSingleSeries();
             IMUchart.ChartAreas[0].AxisX.MajorGrid.LineDashStyle = ChartDashStyle.Dash;
             IMUchart.ChartAreas[0].AxisY.MajorGrid.LineDashStyle = ChartDashStyle.Dash;
             IMUchart.ChartAreas[0].AxisY.Maximum = (double)maxYNumericUpDown.Value;
@@ -185,6 +186,17 @@ namespace SimpleExample
             addNewSeries(name + "AbsSum10", ChartDashStyle.DashDot, 3, color);
             addNewSeries(name + "AbsAvg", ChartDashStyle.DashDotDot, 3, color);
             addNewSeries(name + "AbsAvg10", ChartDashStyle.Dot, 3, color);
+        }
+
+        private void addSingleSeries()
+        {
+            int nameId = baseSeriesCount;
+            int seriesId = nameId * mathNames.Count();
+            addNewSeries(IMUnames[nameId++], ChartDashStyle.Solid, 2, Color.FromArgb(255, 155, 0, 155));
+            IMUchart.Series[seriesId++].Enabled = dirCheckBox.Checked;
+            addNewSeries(IMUnames[nameId++], ChartDashStyle.Solid, 2, Color.FromArgb(255, 155, 155, 0)); ;
+            IMUchart.Series[seriesId++].Enabled = veloCheckBox.Checked;
+            //addNewSeries(IMUnames[nameId], ChartDashStyle.Solid, 2, Color.FromArgb(255, 0, 155, 155));
         }
 
         private void addNewSeries(string name, ChartDashStyle style, int width, Color color)
@@ -406,15 +418,27 @@ namespace SimpleExample
 
         private bool areEqual(double value1, double value2)
         {
-            return Math.Abs(value1 - value2) < Math.Max(10, Math.Abs(value1) * 0.2);
+            return Math.Abs(value1 - value2) < Math.Max(10, Math.Max(Math.Abs(value1), Math.Abs(value2)) * 0.2);
         }
 
         private void updatePackOfSeries(int id, double time, double value)
         {
-            int seriesCount = IMUnames.Count();
-            var currentId = id * seriesCount;
+            if (id >= baseSeriesCount)
+            {
+                var baseCount = baseSeriesCount * mathNames.Length;
+                updateChart(id - baseSeriesCount + baseCount, time, value);
+                return;
+            }
+            if (noiseCheckBox.Checked)
+            {
+                const double noiseLimit = 0.5;
+                var noiseLevel = commonVibration;// vibration[id % 3];
+                if (noiseLevel > noiseLimit)
+                    value /= (noiseLevel - noiseLimit) * 1000;
+            }
+            var currentId = id * mathNames.Length;
             var correctedValue = value - prevConst[id];
-            if (normaCheckBox.Checked && areEqual(prevValues[id], value))
+            if (zeroCheckBox.Checked && areEqual(prevValues[id], value))
             {
                 correctedValue = 0;
                 prevConst[id] = value;
@@ -490,22 +514,30 @@ namespace SimpleExample
                 updatePackOfSeries(7, data.time_usec, data.ymag);
                 updatePackOfSeries(8, data.time_usec, data.zmag);
                 //updatePairOfSeries(9, data.time_usec, Math.Abs(data.zgyro));
-                var count = IMUchart.Series[10 * 2].Points.Count;
+                var count = IMUchart.Series[0].Points.Count;
                 if (count > 0 && Math.Abs(prevAcc - data.xacc) > 4)
-                    vacc -= (data.xacc + data.yacc * Math.Sign(data.zgyro) + Math.Abs(lastConstAcc)) / 2; 
+                    vacc -= (data.xacc + data.yacc * Math.Sign(data.zgyro) + Math.Abs(lastConstAcc)) / 2;
                 else
                 {
                     vacc = 0;
                     lastConstAcc = data.xacc;
                 }
                 prevAcc = data.xacc;
-                //updatePairOfSeries(10, data.time_usec, vacc);
+                updatePackOfSeries(10, data.time_usec, vacc);
                 rescaleChart();
             }
             else if (userData.GetType() == typeof(mavlink_global_position_int_t))
             {
                 var data = (mavlink_global_position_int_t)userData;
                 updatePackOfSeries(9, data.time_boot_ms / msToS, data.hdg * cmToM);
+            }
+            else if (userData.GetType() == typeof(mavlink_vibration_t))
+            {
+                var data = (mavlink_vibration_t)userData;
+                vibration[0] = data.vibration_x;
+                vibration[1] = data.vibration_y;
+                vibration[2] = data.vibration_z;
+                commonVibration = vibration[0] * vibration[0] + vibration[1] * vibration[1] + vibration[2] * vibration[2];
             }
         }
 
@@ -837,7 +869,7 @@ namespace SimpleExample
                 xAccCheckBox.Checked = yAccCheckBox.Checked = zAccCheckBox.Checked =
                 xGyroCheckBox.Checked = yGyroCheckBox.Checked = zGyroCheckBox.Checked =
                 xMagCheckBox.Checked = yMagCheckBox.Checked = zMagCheckBox.Checked =
-                dirCheckBox.Checked = true;
+                dirCheckBox.Checked = veloCheckBox.Checked = true;
                 themesComboBox.SelectedIndex = 1;
             }
             else if (themesComboBox.SelectedIndex == 2)
@@ -845,7 +877,7 @@ namespace SimpleExample
                 xAccCheckBox.Checked = true; yAccCheckBox.Checked = zAccCheckBox.Checked = false;
                 xGyroCheckBox.Checked = yGyroCheckBox.Checked = false; zGyroCheckBox.Checked = true;
                 xMagCheckBox.Checked = yMagCheckBox.Checked = zMagCheckBox.Checked = false;
-                dirCheckBox.Checked = true;
+                dirCheckBox.Checked = veloCheckBox.Checked = true;
                 themesComboBox.SelectedIndex = 2;
             }
             else if (themesComboBox.SelectedIndex == 3)
@@ -853,7 +885,7 @@ namespace SimpleExample
                 xAccCheckBox.Checked = true; yAccCheckBox.Checked = zAccCheckBox.Checked = false;
                 xGyroCheckBox.Checked = yGyroCheckBox.Checked = false; zGyroCheckBox.Checked = true;
                 xMagCheckBox.Checked = yMagCheckBox.Checked = true; zMagCheckBox.Checked = false;
-                dirCheckBox.Checked = true;
+                dirCheckBox.Checked = veloCheckBox.Checked = true;
                 themesComboBox.SelectedIndex = 3;
             }
             else if (themesComboBox.SelectedIndex == 4)
@@ -894,16 +926,23 @@ namespace SimpleExample
                 {
                     if (!checkBox.Name.StartsWith(name))
                     {
-                        id += IMUnames.Count();
+                        if (id < baseSeriesCount * mathNames.Count())
+                            id += mathNames.Count();
+                        else
+                            ++id;
                         continue;
                     }
-                    foreach (string mathName in mathNames)
-                    {
-                        var mathCheckBox = this.Controls.Find(mathName, true)[0] as CheckBox;
-                        if (mathCheckBox.Checked)
-                            IMUchart.Series[id].Enabled = showSeries;
-                        ++id;
-                    }
+                    if (id < baseSeriesCount * mathNames.Count())
+                        foreach (string mathName in mathNames)
+                        {
+                            var mathCheckBox = this.Controls.Find(mathName, true)[0] as CheckBox;
+                            if (mathCheckBox.Checked)
+                                IMUchart.Series[id].Enabled = showSeries;
+                            ++id;
+
+                        }
+                    else
+                        IMUchart.Series[id].Enabled = showSeries;
                     break;
                 }
             }
@@ -925,10 +964,12 @@ namespace SimpleExample
                 int id = 0;
                 foreach (string name in IMUnames)
                 {
+                    if (id >= baseSeriesCount * mathNames.Count())
+                        break;
                     var mainCheckBox = this.Controls.Find(name + "CheckBox", true)[0] as CheckBox;
                     if (mainCheckBox.Checked)
                         IMUchart.Series[id + shiftId].Enabled = showSeries;
-                    id += IMUnames.Count();
+                    id += mathNames.Count();
                 }
             }
         }
@@ -943,9 +984,9 @@ namespace SimpleExample
             rescaleChart();
         }
 
-        private void normaCheckBox_CheckedChanged(object sender, EventArgs e)
+        private void zeroCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (!normaCheckBox.Checked)
+            if (!zeroCheckBox.Checked)
                 for (int i = 0; i < prevConst.Length; ++i)
                     prevConst[i] = 0;
         }
@@ -1047,8 +1088,15 @@ namespace SimpleExample
 
         private void clearToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            foreach (var series in IMUchart.Series)
-                series.Points.Clear();
+            Text = title;
+            if (serialPort1.IsOpen)
+                serialPort1.Close();
+            int baseCount = baseSeriesCount * mathNames.Count();
+            for (int id = 0; id < baseCount; ++id)
+                IMUchart.Series[id].Points.Clear();
+            while (baseCount < IMUchart.Series.Count)
+                IMUchart.Series.RemoveAt(baseCount);
+            addSingleSeries();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)

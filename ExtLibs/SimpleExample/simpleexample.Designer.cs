@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.CMB_comport = new System.Windows.Forms.ComboBox();
             this.cmb_baudrate = new System.Windows.Forms.ComboBox();
             this.but_connect = new System.Windows.Forms.Button();
@@ -141,7 +141,8 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.IMUchart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.normaCheckBox = new System.Windows.Forms.CheckBox();
+            this.noiseCheckBox = new System.Windows.Forms.CheckBox();
+            this.zeroCheckBox = new System.Windows.Forms.CheckBox();
             this.absoluteLabel = new System.Windows.Forms.Label();
             this.absoluteSum10CheckBox = new System.Windows.Forms.CheckBox();
             this.absoluteSumCheckBox = new System.Windows.Forms.CheckBox();
@@ -188,6 +189,7 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.veloCheckBox = new System.Windows.Forms.CheckBox();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -1195,24 +1197,26 @@
             // 
             // IMUchart
             // 
-            chartArea2.Name = "ChartArea1";
-            this.IMUchart.ChartAreas.Add(chartArea2);
+            chartArea3.Name = "ChartArea1";
+            this.IMUchart.ChartAreas.Add(chartArea3);
             this.IMUchart.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend2.Name = "Legend1";
-            this.IMUchart.Legends.Add(legend2);
+            legend3.Name = "Legend1";
+            this.IMUchart.Legends.Add(legend3);
             this.IMUchart.Location = new System.Drawing.Point(0, 122);
             this.IMUchart.Name = "IMUchart";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.IMUchart.Series.Add(series2);
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.IMUchart.Series.Add(series3);
             this.IMUchart.Size = new System.Drawing.Size(876, 405);
             this.IMUchart.TabIndex = 0;
             this.IMUchart.Text = " ";
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.normaCheckBox);
+            this.panel2.Controls.Add(this.veloCheckBox);
+            this.panel2.Controls.Add(this.noiseCheckBox);
+            this.panel2.Controls.Add(this.zeroCheckBox);
             this.panel2.Controls.Add(this.absoluteLabel);
             this.panel2.Controls.Add(this.absoluteSum10CheckBox);
             this.panel2.Controls.Add(this.absoluteSumCheckBox);
@@ -1250,16 +1254,26 @@
             this.panel2.Size = new System.Drawing.Size(876, 122);
             this.panel2.TabIndex = 1;
             // 
-            // normaCheckBox
+            // noiseCheckBox
             // 
-            this.normaCheckBox.AutoSize = true;
-            this.normaCheckBox.Location = new System.Drawing.Point(229, 85);
-            this.normaCheckBox.Name = "normaCheckBox";
-            this.normaCheckBox.Size = new System.Drawing.Size(130, 20);
-            this.normaCheckBox.TabIndex = 35;
-            this.normaCheckBox.Text = "Нормалізувати";
-            this.normaCheckBox.UseVisualStyleBackColor = true;
-            this.normaCheckBox.CheckedChanged += new System.EventHandler(this.normaCheckBox_CheckedChanged);
+            this.noiseCheckBox.AutoSize = true;
+            this.noiseCheckBox.Location = new System.Drawing.Point(273, 85);
+            this.noiseCheckBox.Name = "noiseCheckBox";
+            this.noiseCheckBox.Size = new System.Drawing.Size(161, 20);
+            this.noiseCheckBox.TabIndex = 36;
+            this.noiseCheckBox.Text = "Компенсувати шуми";
+            this.noiseCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // zeroCheckBox
+            // 
+            this.zeroCheckBox.AutoSize = true;
+            this.zeroCheckBox.Location = new System.Drawing.Point(273, 61);
+            this.zeroCheckBox.Name = "zeroCheckBox";
+            this.zeroCheckBox.Size = new System.Drawing.Size(164, 20);
+            this.zeroCheckBox.TabIndex = 35;
+            this.zeroCheckBox.Text = "Занулити константи";
+            this.zeroCheckBox.UseVisualStyleBackColor = true;
+            this.zeroCheckBox.CheckedChanged += new System.EventHandler(this.zeroCheckBox_CheckedChanged);
             // 
             // absoluteLabel
             // 
@@ -1738,33 +1752,33 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
             this.openToolStripMenuItem.Text = "Завантажити";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
             this.saveToolStripMenuItem.Text = "Зберегти як";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // clearToolStripMenuItem
             // 
             this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-            this.clearToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
             this.clearToolStripMenuItem.Text = "Очистити";
             this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(221, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(179, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
             this.exitToolStripMenuItem.Text = "Вийти";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -1779,6 +1793,17 @@
             this.openFileDialog.FileName = "NewLog.fcl";
             this.openFileDialog.Filter = "Flying Controler Log files|*.fcl";
             this.openFileDialog.Title = "Відкрити збережені дані з польотного котролера";
+            // 
+            // veloCheckBox
+            // 
+            this.veloCheckBox.AutoSize = true;
+            this.veloCheckBox.Location = new System.Drawing.Point(279, 36);
+            this.veloCheckBox.Name = "veloCheckBox";
+            this.veloCheckBox.Size = new System.Drawing.Size(55, 20);
+            this.veloCheckBox.TabIndex = 37;
+            this.veloCheckBox.Text = "velo";
+            this.veloCheckBox.UseVisualStyleBackColor = true;
+            this.veloCheckBox.CheckStateChanged += new System.EventHandler(this.checkBox_CheckedChanged);
             // 
             // simpleexample
             // 
@@ -1961,7 +1986,7 @@
         private System.Windows.Forms.CheckBox originalAvg10CheckBox;
         private System.Windows.Forms.CheckBox originalAvgCheckBox;
         private System.Windows.Forms.CheckBox originalCheckBox;
-        private System.Windows.Forms.CheckBox normaCheckBox;
+        private System.Windows.Forms.CheckBox zeroCheckBox;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
@@ -1971,6 +1996,8 @@
         private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.CheckBox noiseCheckBox;
+        private System.Windows.Forms.CheckBox veloCheckBox;
     }
 }
 
