@@ -424,6 +424,11 @@ namespace SimpleExample
             prevValues[id] = value;
         }
 
+        private double progressionSum(int n)
+        {
+            return 0.5 * (n + 1) * n;
+        }
+
         private void updateHalfPackOfSeries(int id, ref int currentId, double time, double value, ref (double, int)[] s, ref (double, List<double>)[] s10)
         {
             if (IMUchart.Series[currentId].Points.Count == 0 || areEqual(prevValues[id] - prevConst[id], value))
@@ -433,21 +438,21 @@ namespace SimpleExample
             }
             else
             {
-                s10[id].Item1 += value;
+                s10[id].Item1 = value;
                 s10[id].Item2.Add(value);
                 s[id].Item1 += value;
                 s[id].Item2++;
                 if (s10[id].Item2.Count > lastObserved)
-                {
-                    s10[id].Item1 -= s10[id].Item2[0];
                     s10[id].Item2.RemoveAt(0);
-                }
+                int n = s10[id].Item2.Count;
+                for (int i = 1; i < n; ++i)
+                    s10[id].Item1 += s10[id].Item2[i - 1] * i / n;
             }
             updateChart(currentId++, time, value);
             updateChart(currentId++, time, s[id].Item1);
             updateChart(currentId++, time, s10[id].Item1);
             updateChart(currentId++, time, s[id].Item1 / s[id].Item2);
-            updateChart(currentId++, time, s10[id].Item1 / s10[id].Item2.Count);
+            updateChart(currentId++, time, s10[id].Item1 * 2 / (s10[id].Item2.Count + 1));
         }
 
         private void updateChart(int id, double time, double value)
