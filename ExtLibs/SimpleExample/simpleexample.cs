@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.IO;
@@ -36,7 +37,7 @@ namespace SimpleExample
         double imuTime = 0;
         (double, double, double) positionViaGPS;
         (double, double, double) positionViaHUD;
-        KalmanFilter[] filtered = new KalmanFilter[12];
+        KalmanFilter[] filtered = new KalmanFilter[9];
         double wayLength = 0;
         double initAccX = 0;
         double initAccY = 0;
@@ -622,15 +623,15 @@ namespace SimpleExample
                 ymagTextBox.Text = Math.Round(mmToM * data.ymag, 1).ToString();
                 zmagTextBox.Text = Math.Round(mmToM * data.zmag, 1).ToString();
 
-                //fxaccTextBox.Text = Math.Round(mgToMs * filter.process(data.xacc), 3).ToString();
-                //fyaccTextBox.Text = Math.Round(mgToMs * filter.process(data.yacc), 3).ToString();
-                //fzaccTextBox.Text = Math.Round(mgToMs * filter.process(data.zacc), 3).ToString();
-                //fxgyroTextBox.Text = Math.Round(mmToM * filter.process(data.xgyro), 1).ToString();
-                //fygyroTextBox.Text = Math.Round(mmToM * filter.process(data.ygyro), 1).ToString();
-                //fzgyroTextBox.Text = Math.Round(mmToM * filter.process(data.zgyro), 1).ToString();
-                //fxmagTextBox.Text = Math.Round(mmToM * filter.process(data.xmag), 1).ToString();
-                //fymagTextBox.Text = Math.Round(mmToM * filter.process(data.ymag), 1).ToString();
-                //fzmagTextBox.Text = Math.Round(mmToM * filter.process(data.zmag), 1).ToString();
+                fxaccTextBox.Text = Math.Round(mgToMs * processKalman(0, data.xacc), 3).ToString();
+                fyaccTextBox.Text = Math.Round(mgToMs * processKalman(1, data.yacc), 3).ToString();
+                fzaccTextBox.Text = Math.Round(mgToMs * processKalman(2, data.zacc), 3).ToString();
+                fxgyroTextBox.Text = Math.Round(mmToM * processKalman(3, data.xgyro), 1).ToString();
+                fygyroTextBox.Text = Math.Round(mmToM * processKalman(4, data.ygyro), 1).ToString();
+                fzgyroTextBox.Text = Math.Round(mmToM * processKalman(5, data.zgyro), 1).ToString();
+                fxmagTextBox.Text = Math.Round(mmToM * processKalman(6, data.xmag), 1).ToString();
+                fymagTextBox.Text = Math.Round(mmToM * processKalman(7, data.ymag), 1).ToString();
+                fzmagTextBox.Text = Math.Round(mmToM * processKalman(8, data.zmag), 1).ToString();
 
                 if (imuTime == 0)
                 {
@@ -689,6 +690,16 @@ namespace SimpleExample
             updateVibration();
             updateTranslation();
             updateRotation();
+        }
+
+        private double processKalman(int id, double value)
+        {
+            if (IMUchart.Series[0].Points.Count == 0)
+            { 
+                filtered[id] = new KalmanFilter(value, value * 0.1, value * 0.001, value * 0.001);
+                return value;
+            }
+            return filtered[id].process(value);
         }
 
         private void updateVibration()
