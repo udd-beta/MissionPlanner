@@ -1021,22 +1021,25 @@ namespace SimpleExample
             try
             {
                 double version = In.ReadDouble();
-                if (version != 1.0)
+                if (version > 1.1)
                     throw new IOException("Непідтримувана версія");
                 int seriesCount = In.ReadInt32();
+                int baseCount = baseSeriesCount * mathNames.Count();
                 for (int i = 0; i < seriesCount; ++i)
                 {
                     string name = In.ReadString();
+                    bool addSeries = i < baseCount || name == "dir" || name == "velo";
                     if (IMUchart.Series.Count > i)
                         IMUchart.Series[i].Points.Clear();
-                    else
+                    else if (addSeries)
                         IMUchart.Series.Add(name);
                     int pointsCount = In.ReadInt32();
                     for (int j = 0; j < pointsCount; ++j)
                     {
                         double x = In.ReadDouble();
                         double y = In.ReadDouble();
-                        IMUchart.Series[i].Points.AddXY(x, y);
+                        if (addSeries)
+                            IMUchart.Series[i].Points.AddXY(x, y);
                     }
                 }
                 while (seriesCount < IMUchart.Series.Count)
@@ -1072,7 +1075,7 @@ namespace SimpleExample
                 serialPort1.Close();
             try
             {
-                const double version = 1.0;
+                const double version = 1.1;
                 Out.Write(version);
                 Out.Write(IMUchart.Series.Count);
                 foreach (var series in IMUchart.Series)
