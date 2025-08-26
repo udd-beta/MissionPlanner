@@ -74,6 +74,7 @@ namespace SimpleExample
         const double mgToMs = 0.001 / 9.80665;
         double[] vibration = {0, 0, 0};
         double commonVibration = 0;
+        List<(double, double, double, double, double, double)> way;
 
         public simpleexample()
         {
@@ -93,6 +94,7 @@ namespace SimpleExample
                 cmb_baudrate.Text = cmb_baudrate.Items[0].ToString();
             tabControl.SelectedIndex = 2;
             hideStateNotification();
+            way = new List<(double, double, double, double, double, double)>();
         }
 
         private void hideStateNotification()
@@ -384,6 +386,7 @@ namespace SimpleExample
             {
                 var data = (mavlink_global_position_int_t)userData;
                 updateCell(3, 0, data.time_boot_ms); updateCell(3, 1, data.lat); updateCell(3, 2, data.lon); updateCell(3, 3, data.alt); updateCell(3, 4, data.relative_alt); updateCell(3, 5, data.vx); updateCell(3, 6, data.vy); updateCell(3, 7, data.vz); updateCell(3, 8, data.hdg);
+                way.Add((data.lat, data.lon, data.alt, data.vx, data.vy, data.vz));
             }
             else if (userData.GetType() == typeof(mavlink_vfr_hud_t))
             {
