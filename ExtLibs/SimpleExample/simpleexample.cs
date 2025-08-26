@@ -514,16 +514,7 @@ namespace SimpleExample
                 updatePackOfSeries(6, data.time_usec, data.xmag);
                 updatePackOfSeries(7, data.time_usec, data.ymag);
                 updatePackOfSeries(8, data.time_usec, data.zmag);
-                //updatePairOfSeries(9, data.time_usec, Math.Abs(data.zgyro));
-                var count = IMUchart.Series[0].Points.Count;
-                if (count > 0 && Math.Abs(prevAcc - data.xacc) > 4)
-                    vacc -= (data.xacc + data.yacc * Math.Sign(data.zgyro) + Math.Abs(lastConstAcc)) / 2;
-                else
-                {
-                    vacc = 0;
-                    lastConstAcc = data.xacc;
-                }
-                prevAcc = data.xacc;
+                updateVelocity(data);
                 updatePackOfSeries(10, data.time_usec, vacc);
                 rescaleChart();
             }
@@ -542,7 +533,30 @@ namespace SimpleExample
             }
         }
 
+        private void updateVelocity(mavlink_raw_imu_t data)
+        {
+            if (areEqual(prevConst[0], data.xacc) && areEqual(prevConst[1], data.yacc) && areEqual(prevConst[5], data.zgyro))
+                vacc = 0;
+            else
+            {
+                var xacc = sums[0].Item1 / sums[0].Item2;// data.xacc - prevConst[0];
+                var yacc = sums[1].Item1 / sums[1].Item2;// data.yacc - prevConst[1];
+                var zgyro = sums[5].Item1 / sums[5].Item2;// data.zgyro - prevConst[5];
+                vacc += (zgyro != 0 ? xacc - 2 * yacc / zgyro : xacc) / 2;
+            }
+        }
+
         private void bgw_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            fillData(e);
+            fillTable(e);
+            fillChart(e);
+            updateVibration();
+            updateTranslation();
+            updateRotation();
+        }
+
+        private void fillData(ProgressChangedEventArgs e)
         {
             var userData = e.UserState;
             if (userData.GetType() == typeof(mavlink_global_position_int_t))
@@ -684,12 +698,6 @@ namespace SimpleExample
                 rawLonTextBox.Text = data.lon.ToString();
                 rawAltTextBox.Text = data.alt.ToString();
             }
-
-            fillTable(e);
-            fillChart(e);
-            updateVibration();
-            updateTranslation();
-            updateRotation();
         }
 
         private double processKalman(int id, double value)
