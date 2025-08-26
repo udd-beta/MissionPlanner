@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.CMB_comport = new System.Windows.Forms.ComboBox();
             this.cmb_baudrate = new System.Windows.Forms.ComboBox();
             this.but_connect = new System.Windows.Forms.Button();
@@ -141,6 +141,7 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.IMUchart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.veloCheckBox = new System.Windows.Forms.CheckBox();
             this.noiseCheckBox = new System.Windows.Forms.CheckBox();
             this.zeroCheckBox = new System.Windows.Forms.CheckBox();
             this.absoluteLabel = new System.Windows.Forms.Label();
@@ -189,7 +190,7 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.veloCheckBox = new System.Windows.Forms.CheckBox();
+            this.rootCheckBox = new System.Windows.Forms.CheckBox();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -1197,23 +1198,24 @@
             // 
             // IMUchart
             // 
-            chartArea3.Name = "ChartArea1";
-            this.IMUchart.ChartAreas.Add(chartArea3);
+            chartArea1.Name = "ChartArea1";
+            this.IMUchart.ChartAreas.Add(chartArea1);
             this.IMUchart.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend3.Name = "Legend1";
-            this.IMUchart.Legends.Add(legend3);
+            legend1.Name = "Legend1";
+            this.IMUchart.Legends.Add(legend1);
             this.IMUchart.Location = new System.Drawing.Point(0, 122);
             this.IMUchart.Name = "IMUchart";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.IMUchart.Series.Add(series3);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.IMUchart.Series.Add(series1);
             this.IMUchart.Size = new System.Drawing.Size(876, 405);
             this.IMUchart.TabIndex = 0;
             this.IMUchart.Text = " ";
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.rootCheckBox);
             this.panel2.Controls.Add(this.veloCheckBox);
             this.panel2.Controls.Add(this.noiseCheckBox);
             this.panel2.Controls.Add(this.zeroCheckBox);
@@ -1253,6 +1255,17 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(876, 122);
             this.panel2.TabIndex = 1;
+            // 
+            // veloCheckBox
+            // 
+            this.veloCheckBox.AutoSize = true;
+            this.veloCheckBox.Location = new System.Drawing.Point(202, 57);
+            this.veloCheckBox.Name = "veloCheckBox";
+            this.veloCheckBox.Size = new System.Drawing.Size(55, 20);
+            this.veloCheckBox.TabIndex = 37;
+            this.veloCheckBox.Text = "velo";
+            this.veloCheckBox.UseVisualStyleBackColor = true;
+            this.veloCheckBox.CheckStateChanged += new System.EventHandler(this.checkBox_CheckedChanged);
             // 
             // noiseCheckBox
             // 
@@ -1408,7 +1421,7 @@
             // dirCheckBox
             // 
             this.dirCheckBox.AutoSize = true;
-            this.dirCheckBox.Location = new System.Drawing.Point(229, 36);
+            this.dirCheckBox.Location = new System.Drawing.Point(202, 34);
             this.dirCheckBox.Name = "dirCheckBox";
             this.dirCheckBox.Size = new System.Drawing.Size(44, 20);
             this.dirCheckBox.TabIndex = 22;
@@ -1733,7 +1746,7 @@
             this.файлToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(884, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(884, 30);
             this.menuStrip1.TabIndex = 10;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -1746,7 +1759,7 @@
             this.toolStripMenuItem1,
             this.exitToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            this.файлToolStripMenuItem.Size = new System.Drawing.Size(59, 24);
+            this.файлToolStripMenuItem.Size = new System.Drawing.Size(59, 26);
             this.файлToolStripMenuItem.Text = "Файл";
             // 
             // openToolStripMenuItem
@@ -1794,16 +1807,15 @@
             this.openFileDialog.Filter = "Flying Controler Log files|*.fcl";
             this.openFileDialog.Title = "Відкрити збережені дані з польотного котролера";
             // 
-            // veloCheckBox
+            // rootCheckBox
             // 
-            this.veloCheckBox.AutoSize = true;
-            this.veloCheckBox.Location = new System.Drawing.Point(279, 36);
-            this.veloCheckBox.Name = "veloCheckBox";
-            this.veloCheckBox.Size = new System.Drawing.Size(55, 20);
-            this.veloCheckBox.TabIndex = 37;
-            this.veloCheckBox.Text = "velo";
-            this.veloCheckBox.UseVisualStyleBackColor = true;
-            this.veloCheckBox.CheckStateChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            this.rootCheckBox.AutoSize = true;
+            this.rootCheckBox.Location = new System.Drawing.Point(273, 36);
+            this.rootCheckBox.Name = "rootCheckBox";
+            this.rootCheckBox.Size = new System.Drawing.Size(174, 20);
+            this.rootCheckBox.TabIndex = 38;
+            this.rootCheckBox.Text = "Закоренити значення";
+            this.rootCheckBox.UseVisualStyleBackColor = true;
             // 
             // simpleexample
             // 
@@ -1998,6 +2010,7 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.CheckBox noiseCheckBox;
         private System.Windows.Forms.CheckBox veloCheckBox;
+        private System.Windows.Forms.CheckBox rootCheckBox;
     }
 }
 

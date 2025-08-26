@@ -439,6 +439,8 @@ namespace SimpleExample
             }
             var currentId = id * mathNames.Length;
             var correctedValue = value - prevConst[id];
+            if (rootCheckBox.Checked)
+                correctedValue = Math.Sign(correctedValue) * Math.Pow(Math.Abs(30 * correctedValue), 0.5);
             if (zeroCheckBox.Checked && areEqual(prevValues[id], value))
             {
                 correctedValue = 0;
@@ -535,7 +537,7 @@ namespace SimpleExample
 
         private void updateVelocity(mavlink_raw_imu_t data)
         {
-            if (areEqual(prevConst[0], data.xacc) && areEqual(prevConst[1], data.yacc) && areEqual(prevConst[5], data.zgyro))
+            if (areEqual(prevConst[0], prevValues[0]) && areEqual(prevConst[1], prevValues[1]) && areEqual(prevConst[5], prevValues[5]))
                 vacc = 0;
             else
             {
@@ -728,7 +730,7 @@ namespace SimpleExample
             var value = IMUdataGridView.Rows[7].Cells[1].Value;
             if (value == null)
                 return;
-            double translationLimit = 5;
+            double translationLimit = 1;
             if (vibrationLabel.Visible)
                 translationLimit *= Convert.ToDouble(IMUdataGridView.Rows[15].Cells[1].Value) * 100;
             forwardLabel.Visible = vacc > translationLimit;
