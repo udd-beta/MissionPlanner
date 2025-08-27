@@ -104,6 +104,8 @@ namespace SimpleExample
             forwardLabel.Visible = false;
             rightLabel.Visible = false;
             leftLabel.Visible = false;
+            but_mission.Enabled = false;
+            but_armdisarm.Enabled = false;
         }
 
         private void initializeGrid()
@@ -216,25 +218,25 @@ namespace SimpleExample
         private void but_connect_Click(object sender, EventArgs e)
         {
             // if the port is open close it
-            if (serialPort1.IsOpen)
+            if (serialPort.IsOpen)
             {
-                serialPort1.Close();
+                serialPort.Close();
                 hideStateNotification();
                 return;
             }
-
+            but_mission.Enabled = but_armdisarm.Enabled = true;
             if (!Text.StartsWith("*"))
                 Text = "*" + Text;
 
             // set the comport options
-            serialPort1.PortName = CMB_comport.Text;
-            serialPort1.BaudRate = int.Parse(cmb_baudrate.Text);
+            serialPort.PortName = CMB_comport.Text;
+            serialPort.BaudRate = int.Parse(cmb_baudrate.Text);
 
             // open the comport
-            serialPort1.Open();
+            serialPort.Open();
 
             // set timeout to 2 seconds
-            serialPort1.ReadTimeout = 2000;
+            serialPort.ReadTimeout = 2000;
 
             BackgroundWorker bgw = new BackgroundWorker();
             bgw.WorkerReportsProgress = true;
@@ -254,7 +256,7 @@ namespace SimpleExample
 
         void bgw_DoWork(object sender, DoWorkEventArgs e)
         {
-            while (serialPort1.IsOpen)
+            while (serialPort.IsOpen)
             {
                 try
                 {
@@ -262,7 +264,7 @@ namespace SimpleExample
                     lock (readlock)
                     {
                         // read any valid packet from the port
-                        packet = mavlink.ReadPacket(serialPort1.BaseStream);
+                        packet = mavlink.ReadPacket(serialPort.BaseStream);
                         
                         // check its valid
                         if (packet == null || packet.data == null)
@@ -298,11 +300,11 @@ namespace SimpleExample
                                 target_system = sysid
                             });
 
-                        serialPort1.Write(buffer, 0, buffer.Length);
+                        serialPort.Write(buffer, 0, buffer.Length);
 
                         buffer = mavlink.GenerateMAVLinkPacket10(MAVLink.MAVLINK_MSG_ID.HEARTBEAT, hb);
 
-                        serialPort1.Write(buffer, 0, buffer.Length);
+                        serialPort.Write(buffer, 0, buffer.Length);
                     }
 
                     // from here we should check the the message is addressed to us
@@ -760,7 +762,7 @@ namespace SimpleExample
                 // read the current buffered bytes
                 while (DateTime.Now < deadline)
                 {
-                    var packet = mavlink.ReadPacket(serialPort1.BaseStream);
+                    var packet = mavlink.ReadPacket(serialPort.BaseStream);
 
                     // check its not null, and its addressed to us
                     if (packet == null || sysid != packet.sysid || compid != packet.compid)
@@ -800,7 +802,7 @@ namespace SimpleExample
 
             byte[] packet = mavlink.GenerateMAVLinkPacket10(MAVLink.MAVLINK_MSG_ID.COMMAND_LONG, req);
 
-            serialPort1.Write(packet, 0, packet.Length);
+            serialPort.Write(packet, 0, packet.Length);
 
             try
             {
@@ -822,68 +824,81 @@ namespace SimpleExample
 
         private void but_mission_Click(object sender, EventArgs e)
         {
-            MAVLink.mavlink_mission_count_t req = new MAVLink.mavlink_mission_count_t();
+            try
+            {
+                initMission();
+                sendMissionPoints();
+            }
+            catch (IOException exc)
+            {
+                MessageBox.Show(exc.Message, "Помилка надсилання місії");
+            }
+            finally
+            {
+                finalizeMission();
+            }
+        }
 
+        private void initMission()
+        {
+            if (way.Count() < 2)
+                throw new IOException("Недостатньо точок для побудови місії");
+            MAVLink.mavlink_mission_count_t req = new MAVLink.mavlink_mission_count_t();
             req.target_system = 1;
             req.target_component = 1;
-
-            // set wp count
-            req.count = 1;
-
+            req.count = (ushort)(way.Count() - 1);
             byte[] packet = mavlink.GenerateMAVLinkPacket10(MAVLink.MAVLINK_MSG_ID.MISSION_COUNT, req);
             Console.WriteLine("MISSION_COUNT send");
-            serialPort1.Write(packet, 0, packet.Length);
-
+            serialPort.Write(packet, 0, packet.Length);
             var ack = readsomedata<MAVLink.mavlink_mission_request_t>(sysid, compid);
-            if (ack.seq == 0)
+            if (ack.seq != 0)
+                throw new IOException("Польотний котролер не готовий до виконання місії");
+        }
+
+        private void sendMissionPoints()
+        {
+            var initialCount = way.Count();
+            while (way.Count() > 1)
             {
-                MAVLink.mavlink_mission_item_int_t req2 = new MAVLink.mavlink_mission_item_int_t();
-
-                req2.target_system = sysid;
-                req2.target_component = compid;
-
-                req2.command = (byte)MAVLink.MAV_CMD.WAYPOINT;
-
-                req2.current = 1;
-                req2.autocontinue = 0;
-
-                req2.frame = (byte)MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT;
-
-                req2.y = (int) (115 * 1.0e7);
-                req2.x = (int) (-35 * 1.0e7);
-
-                req2.z = (float) (2.34);
-
-                req2.param1 = 0;
-                req2.param2 = 0;
-                req2.param3 = 0;
-                req2.param4 = 0;
-
-                req2.seq = 0;
-
-                packet = mavlink.GenerateMAVLinkPacket10(MAVLink.MAVLINK_MSG_ID.MISSION_ITEM_INT, req2);
+                var lastPosition = way.Last();
+                way.RemoveAt(way.Count() - 1);
+                var currentPosition = way.Last();
+                MAVLink.mavlink_mission_item_int_t req = new MAVLink.mavlink_mission_item_int_t();
+                req.target_system = sysid;
+                req.target_component = compid;
+                req.command = (byte)MAVLink.MAV_CMD.WAYPOINT;
+                req.current = 1;
+                req.autocontinue = 0;
+                req.frame = (byte)MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT;
+                req.y = (int)(currentPosition.Item1 - lastPosition.Item1);
+                req.x = (int)(currentPosition.Item2 - lastPosition.Item2);
+                req.z = (float)(currentPosition.Item3 - lastPosition.Item3);
+                req.param1 = 0;
+                req.param2 = 0;
+                req.param3 = 0;
+                req.param4 = 0;
+                req.seq = 0;
+                byte[] packet = mavlink.GenerateMAVLinkPacket10(MAVLink.MAVLINK_MSG_ID.MISSION_ITEM_INT, req);
                 Console.WriteLine("MISSION_ITEM_INT send");
                 lock (readlock)
                 {
-                    serialPort1.Write(packet, 0, packet.Length);
-
-                    var ack2 = readsomedata<MAVLink.mavlink_mission_ack_t>(sysid, compid);
-                    if ((MAVLink.MAV_MISSION_RESULT) ack2.type != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
-                    {
-
-                    }
+                    serialPort.Write(packet, 0, packet.Length);
+                    var ack = readsomedata<MAVLink.mavlink_mission_ack_t>(sysid, compid);
+                    if ((MAVLink.MAV_MISSION_RESULT)ack.type != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
+                        throw new IOException("Польотний контролер не прийняв місію на кроці " + (initialCount - way.Count()).ToString());
                 }
-
-
-                MAVLink.mavlink_mission_ack_t req3 = new MAVLink.mavlink_mission_ack_t();
-                req3.target_system = 1;
-                req3.target_component = 1;
-                req3.type = 0;
-
-                packet = mavlink.GenerateMAVLinkPacket10(MAVLink.MAVLINK_MSG_ID.MISSION_ACK, req3);
-                Console.WriteLine("MISSION_ACK send");
-                serialPort1.Write(packet, 0, packet.Length);
             }
+        }
+
+        private void finalizeMission()
+        {
+            MAVLink.mavlink_mission_ack_t req = new MAVLink.mavlink_mission_ack_t();
+            req.target_system = 1;
+            req.target_component = 1;
+            req.type = 0;
+            byte[] packet = mavlink.GenerateMAVLinkPacket10(MAVLink.MAVLINK_MSG_ID.MISSION_ACK, req);
+            Console.WriteLine("MISSION_ACK send");
+            serialPort.Write(packet, 0, packet.Length);
         }
 
         private void themesComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -1029,8 +1044,8 @@ namespace SimpleExample
                 MessageBox.Show(exc.Message, "Файл не знайдено");
                 return;
             }
-            if (serialPort1.IsOpen)
-                serialPort1.Close();
+            if (serialPort.IsOpen)
+                serialPort.Close();
             try
             {
                 double version = In.ReadDouble();
@@ -1084,8 +1099,8 @@ namespace SimpleExample
                 MessageBox.Show(exc.Message, "Помилка підготовки до запису");
                 return;
             }
-            if (serialPort1.IsOpen)
-                serialPort1.Close();
+            if (serialPort.IsOpen)
+                serialPort.Close();
             try
             {
                 const double version = 1.1;
@@ -1116,8 +1131,8 @@ namespace SimpleExample
         private void clearToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Text = title;
-            if (serialPort1.IsOpen)
-                serialPort1.Close();
+            if (serialPort.IsOpen)
+                serialPort.Close();
             int baseCount = baseSeriesCount * mathNames.Count();
             for (int id = 0; id < baseCount; ++id)
                 IMUchart.Series[id].Points.Clear();
@@ -1135,7 +1150,7 @@ namespace SimpleExample
         {
             if (Text.StartsWith("*"))
             {
-                serialPort1.Close();
+                serialPort.Close();
                 if (MessageBox.Show("Бажаєте зберегти дані?", "Пропозиція збереження", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     saveToolStripMenuItem_Click(sender, e);
             }

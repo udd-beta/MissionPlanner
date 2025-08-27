@@ -36,7 +36,7 @@
             this.cmb_baudrate = new System.Windows.Forms.ComboBox();
             this.but_connect = new System.Windows.Forms.Button();
             this.but_armdisarm = new System.Windows.Forms.Button();
-            this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
+            this.serialPort = new System.IO.Ports.SerialPort(this.components);
             this.but_mission = new System.Windows.Forms.Button();
             this.z0Label = new System.Windows.Forms.Label();
             this.y0Label = new System.Windows.Forms.Label();
@@ -141,6 +141,7 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.IMUchart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.rootCheckBox = new System.Windows.Forms.CheckBox();
             this.veloCheckBox = new System.Windows.Forms.CheckBox();
             this.noiseCheckBox = new System.Windows.Forms.CheckBox();
             this.zeroCheckBox = new System.Windows.Forms.CheckBox();
@@ -190,7 +191,6 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.rootCheckBox = new System.Windows.Forms.CheckBox();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -1256,6 +1256,16 @@
             this.panel2.Size = new System.Drawing.Size(876, 122);
             this.panel2.TabIndex = 1;
             // 
+            // rootCheckBox
+            // 
+            this.rootCheckBox.AutoSize = true;
+            this.rootCheckBox.Location = new System.Drawing.Point(273, 36);
+            this.rootCheckBox.Name = "rootCheckBox";
+            this.rootCheckBox.Size = new System.Drawing.Size(174, 20);
+            this.rootCheckBox.TabIndex = 38;
+            this.rootCheckBox.Text = "Закоренити значення";
+            this.rootCheckBox.UseVisualStyleBackColor = true;
+            // 
             // veloCheckBox
             // 
             this.veloCheckBox.AutoSize = true;
@@ -1746,7 +1756,7 @@
             this.файлToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(884, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(884, 28);
             this.menuStrip1.TabIndex = 10;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -1759,7 +1769,7 @@
             this.toolStripMenuItem1,
             this.exitToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            this.файлToolStripMenuItem.Size = new System.Drawing.Size(59, 26);
+            this.файлToolStripMenuItem.Size = new System.Drawing.Size(59, 24);
             this.файлToolStripMenuItem.Text = "Файл";
             // 
             // openToolStripMenuItem
@@ -1807,16 +1817,6 @@
             this.openFileDialog.Filter = "Flying Controler Log files|*.fcl";
             this.openFileDialog.Title = "Відкрити збережені дані з польотного котролера";
             // 
-            // rootCheckBox
-            // 
-            this.rootCheckBox.AutoSize = true;
-            this.rootCheckBox.Location = new System.Drawing.Point(273, 36);
-            this.rootCheckBox.Name = "rootCheckBox";
-            this.rootCheckBox.Size = new System.Drawing.Size(174, 20);
-            this.rootCheckBox.TabIndex = 38;
-            this.rootCheckBox.Text = "Закоренити значення";
-            this.rootCheckBox.UseVisualStyleBackColor = true;
-            // 
             // simpleexample
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1856,7 +1856,7 @@
         private System.Windows.Forms.ComboBox cmb_baudrate;
         private System.Windows.Forms.Button but_connect;
         private System.Windows.Forms.Button but_armdisarm;
-        private System.IO.Ports.SerialPort serialPort1;
+        private System.IO.Ports.SerialPort serialPort;
         private System.Windows.Forms.Button but_mission;
         private System.Windows.Forms.Label z0Label;
         private System.Windows.Forms.Label y0Label;
