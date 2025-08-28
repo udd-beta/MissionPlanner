@@ -388,7 +388,8 @@ namespace SimpleExample
             {
                 var data = (mavlink_global_position_int_t)userData;
                 updateCell(3, 0, data.time_boot_ms); updateCell(3, 1, data.lat); updateCell(3, 2, data.lon); updateCell(3, 3, data.alt); updateCell(3, 4, data.relative_alt); updateCell(3, 5, data.vx); updateCell(3, 6, data.vy); updateCell(3, 7, data.vz); updateCell(3, 8, data.hdg);
-                way.Add((data.lat, data.lon, data.alt, data.vx, data.vy, data.vz));
+                if (but_mission.Enabled)
+                    way.Add((data.lat, data.lon, data.alt, data.vx, data.vy, data.vz));
             }
             else if (userData.GetType() == typeof(mavlink_vfr_hud_t))
             {
@@ -826,6 +827,7 @@ namespace SimpleExample
         {
             try
             {
+                but_mission.Enabled = false;
                 initMission();
                 sendMissionPoints();
             }
@@ -836,6 +838,7 @@ namespace SimpleExample
             finally
             {
                 finalizeMission();
+                but_mission.Enabled = true;
             }
         }
 
@@ -844,48 +847,47 @@ namespace SimpleExample
             if (way.Count() < 2)
                 throw new IOException("Недостатньо точок для побудови місії");
             MAVLink.mavlink_mission_count_t req = new MAVLink.mavlink_mission_count_t();
-            req.target_system = 1;
-            req.target_component = 1;
-            req.count = (ushort)(way.Count() - 1);
+            req.target_system = sysid;
+            req.target_component = compid;
+            req.count = 1;// (ushort)(way.Count() - 1); //temporary commented
             byte[] packet = mavlink.GenerateMAVLinkPacket10(MAVLink.MAVLINK_MSG_ID.MISSION_COUNT, req);
             Console.WriteLine("MISSION_COUNT send");
             serialPort.Write(packet, 0, packet.Length);
-            var ack = readsomedata<MAVLink.mavlink_mission_request_t>(sysid, compid);
-            if (ack.seq != 0)
-                throw new IOException("Польотний котролер не готовий до виконання місії");
         }
 
         private void sendMissionPoints()
         {
-            var initialCount = way.Count();
-            while (way.Count() > 1)
+            MAVLink.mavlink_mission_item_int_t req = new MAVLink.mavlink_mission_item_int_t();
+            req.target_system = sysid;
+            req.target_component = compid;
+            req.command = (byte)MAVLink.MAV_CMD.WAYPOINT;
+            req.current = 1;
+            req.autocontinue = 1;
+            req.frame = (byte)MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT;
+            req.param1 = 0;
+            req.param2 = 0;
+            req.param3 = 0;
+            req.param4 = 0;
+            req.seq = 0;
+            //while (way.Count() > 1) //temporary commented
             {
+                var ackReq = readsomedata<MAVLink.mavlink_mission_request_t>(sysid, compid);
+                if (ackReq.seq != req.seq)
+                    throw new IOException("Польотний котролер не готовий до прийому точки " + req.seq.ToString());
                 var lastPosition = way.Last();
                 way.RemoveAt(way.Count() - 1);
                 var currentPosition = way.Last();
-                MAVLink.mavlink_mission_item_int_t req = new MAVLink.mavlink_mission_item_int_t();
-                req.target_system = sysid;
-                req.target_component = compid;
-                req.command = (byte)MAVLink.MAV_CMD.WAYPOINT;
-                req.current = 1;
-                req.autocontinue = 0;
-                req.frame = (byte)MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT;
                 req.y = (int)(currentPosition.Item1 - lastPosition.Item1);
                 req.x = (int)(currentPosition.Item2 - lastPosition.Item2);
                 req.z = (float)(currentPosition.Item3 - lastPosition.Item3);
-                req.param1 = 0;
-                req.param2 = 0;
-                req.param3 = 0;
-                req.param4 = 0;
-                req.seq = 0;
                 byte[] packet = mavlink.GenerateMAVLinkPacket10(MAVLink.MAVLINK_MSG_ID.MISSION_ITEM_INT, req);
                 Console.WriteLine("MISSION_ITEM_INT send");
                 lock (readlock)
                 {
                     serialPort.Write(packet, 0, packet.Length);
-                    var ack = readsomedata<MAVLink.mavlink_mission_ack_t>(sysid, compid);
-                    if ((MAVLink.MAV_MISSION_RESULT)ack.type != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
-                        throw new IOException("Польотний контролер не прийняв місію на кроці " + (initialCount - way.Count()).ToString());
+                    var ackRes = readsomedata<MAVLink.mavlink_mission_ack_t>(sysid, compid);
+                    if ((MAVLink.MAV_MISSION_RESULT)ackRes.type != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
+                        throw new IOException("Польотний контролер не прийняв місію на кроці " + req.seq.ToString());
                 }
             }
         }
@@ -893,8 +895,8 @@ namespace SimpleExample
         private void finalizeMission()
         {
             MAVLink.mavlink_mission_ack_t req = new MAVLink.mavlink_mission_ack_t();
-            req.target_system = 1;
-            req.target_component = 1;
+            req.target_system = sysid;
+            req.target_component = compid;
             req.type = 0;
             byte[] packet = mavlink.GenerateMAVLinkPacket10(MAVLink.MAVLINK_MSG_ID.MISSION_ACK, req);
             Console.WriteLine("MISSION_ACK send");
