@@ -12,6 +12,7 @@ using System.Net.Sockets;
 using System.Security.Claims;
 using System.Security.Policy;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -74,7 +75,7 @@ namespace SimpleExample
         const double mgToMs = 0.001 / 9.80665;
         double[] vibration = {0, 0, 0};
         double commonVibration = 0;
-        List<(double, double, double, double, double, double)> way;
+        List<mavlink_global_position_int_t> way;
 
         public simpleexample()
         {
@@ -94,7 +95,7 @@ namespace SimpleExample
                 cmb_baudrate.Text = cmb_baudrate.Items[0].ToString();
             tabControl.SelectedIndex = 2;
             hideStateNotification();
-            way = new List<(double, double, double, double, double, double)>();
+            way = new List<mavlink_global_position_int_t>();
         }
 
         private void hideStateNotification()
@@ -389,7 +390,7 @@ namespace SimpleExample
                 var data = (mavlink_global_position_int_t)userData;
                 updateCell(3, 0, data.time_boot_ms); updateCell(3, 1, data.lat); updateCell(3, 2, data.lon); updateCell(3, 3, data.alt); updateCell(3, 4, data.relative_alt); updateCell(3, 5, data.vx); updateCell(3, 6, data.vy); updateCell(3, 7, data.vz); updateCell(3, 8, data.hdg);
                 if (but_mission.Enabled)
-                    way.Add((data.lat, data.lon, data.alt, data.vx, data.vy, data.vz));
+                    way.Add(data);
             }
             else if (userData.GetType() == typeof(mavlink_vfr_hud_t))
             {
@@ -883,9 +884,9 @@ namespace SimpleExample
                     throw new IOException("Польотний котролер не готовий до прийому точки " + req.seq.ToString());
                 var lastPosition = way.Last();
                 way.RemoveAt(way.Count() - 1);
-                req.x = (int)lastPosition.Item1;
-                req.y = (int)lastPosition.Item2;
-                req.z = (float)lastPosition.Item3;
+                req.x = (int)lastPosition.lat;
+                req.y = (int)lastPosition.lon;
+                req.z = (float)lastPosition.alt;
                 byte[] packet = mavlink.GenerateMAVLinkPacket10(MAVLINK_MSG_ID.MISSION_ITEM_INT, req);
                 Console.WriteLine("MISSION_ITEM_INT send");
                 lock (readlock)
@@ -911,6 +912,7 @@ namespace SimpleExample
 
         private void sendShiftedPoints()
         {
+            int step = 1;
             while (way.Count() > 1)
             {
                 var lastPosition = way.Last();
@@ -921,12 +923,15 @@ namespace SimpleExample
                 req.target_component = compid;
                 req.coordinate_frame = (byte)MAV_FRAME.LOCAL_NED;
                 req.type_mask = 0b0000111111111000; // (only positions enabled)
-                req.x = (float)(currentPosition.Item1 - lastPosition.Item1);
-                req.y = (float)(currentPosition.Item2 - lastPosition.Item2);
-                req.z = -(float)(currentPosition.Item3 - lastPosition.Item3);
+                req.x = currentPosition.lat - lastPosition.lat;
+                req.y = currentPosition.lon - lastPosition.lon;
+                req.z = lastPosition.alt - currentPosition.alt;
+                int delay = (int)(lastPosition.time_boot_ms - currentPosition.time_boot_ms);
                 byte[] packet = mavlink.GenerateMAVLinkPacket10(MAVLINK_MSG_ID.POSITION_TARGET_LOCAL_NED, req);
-                Console.WriteLine("POSITION_TARGET_LOCAL_NED sent");
+                Console.WriteLine("POSITION_TARGET_LOCAL_NED sent " + step.ToString() + " of " + (step + way.Count()).ToString());
                 serialPort.Write(packet, 0, packet.Length);
+                Thread.Sleep(delay);
+                ++step;
             }
         }
 
@@ -1168,6 +1173,7 @@ namespace SimpleExample
             while (baseCount < IMUchart.Series.Count)
                 IMUchart.Series.RemoveAt(baseCount);
             addSingleSeries();
+            way.Clear();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
