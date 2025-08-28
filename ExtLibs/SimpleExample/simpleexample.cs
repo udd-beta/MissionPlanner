@@ -825,45 +825,52 @@ namespace SimpleExample
 
         private void but_mission_Click(object sender, EventArgs e)
         {
+            const bool useGPS = false;
             try
             {
                 but_mission.Enabled = false;
-                initMission();
-                sendMissionPoints();
+                if (way.Count() < 2)
+                    throw new IOException("Недостатньо точок для побудови маршруту");
+                if (useGPS)
+                {
+                    initMission();
+                    sendMissionPoints();
+                }
+                else
+                    sendShiftedPoints();
             }
             catch (IOException exc)
             {
-                MessageBox.Show(exc.Message, "Помилка надсилання місії");
+                MessageBox.Show(exc.Message, "Помилка надсилання даних польотному контролеру");
             }
             finally
             {
-                finalizeMission();
+                if (useGPS)
+                    finalizeMission();
                 but_mission.Enabled = true;
             }
         }
 
         private void initMission()
         {
-            if (way.Count() < 2)
-                throw new IOException("Недостатньо точок для побудови місії");
-            MAVLink.mavlink_mission_count_t req = new MAVLink.mavlink_mission_count_t();
+            mavlink_mission_count_t req = new mavlink_mission_count_t();
             req.target_system = sysid;
             req.target_component = compid;
             req.count = 1;// (ushort)(way.Count() - 1); //temporary commented
-            byte[] packet = mavlink.GenerateMAVLinkPacket10(MAVLink.MAVLINK_MSG_ID.MISSION_COUNT, req);
+            byte[] packet = mavlink.GenerateMAVLinkPacket10(MAVLINK_MSG_ID.MISSION_COUNT, req);
             Console.WriteLine("MISSION_COUNT send");
             serialPort.Write(packet, 0, packet.Length);
         }
 
         private void sendMissionPoints()
         {
-            MAVLink.mavlink_mission_item_int_t req = new MAVLink.mavlink_mission_item_int_t();
+            mavlink_mission_item_int_t req = new mavlink_mission_item_int_t();
             req.target_system = sysid;
             req.target_component = compid;
-            req.command = (byte)MAVLink.MAV_CMD.WAYPOINT;
+            req.command = (byte)MAV_CMD.WAYPOINT;
             req.current = 1;
             req.autocontinue = 1;
-            req.frame = (byte)MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT;
+            req.frame = (byte)MAV_FRAME.GLOBAL_RELATIVE_ALT;
             req.param1 = 0;
             req.param2 = 0;
             req.param3 = 0;
@@ -871,22 +878,21 @@ namespace SimpleExample
             req.seq = 0;
             //while (way.Count() > 1) //temporary commented
             {
-                var ackReq = readsomedata<MAVLink.mavlink_mission_request_t>(sysid, compid);
+                var ackReq = readsomedata<mavlink_mission_request_t>(sysid, compid);
                 if (ackReq.seq != req.seq)
                     throw new IOException("Польотний котролер не готовий до прийому точки " + req.seq.ToString());
                 var lastPosition = way.Last();
                 way.RemoveAt(way.Count() - 1);
-                var currentPosition = way.Last();
-                req.y = (int)(currentPosition.Item1 - lastPosition.Item1);
-                req.x = (int)(currentPosition.Item2 - lastPosition.Item2);
-                req.z = (float)(currentPosition.Item3 - lastPosition.Item3);
-                byte[] packet = mavlink.GenerateMAVLinkPacket10(MAVLink.MAVLINK_MSG_ID.MISSION_ITEM_INT, req);
+                req.x = (int)lastPosition.Item1;
+                req.y = (int)lastPosition.Item2;
+                req.z = (float)lastPosition.Item3;
+                byte[] packet = mavlink.GenerateMAVLinkPacket10(MAVLINK_MSG_ID.MISSION_ITEM_INT, req);
                 Console.WriteLine("MISSION_ITEM_INT send");
                 lock (readlock)
                 {
                     serialPort.Write(packet, 0, packet.Length);
-                    var ackRes = readsomedata<MAVLink.mavlink_mission_ack_t>(sysid, compid);
-                    if ((MAVLink.MAV_MISSION_RESULT)ackRes.type != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
+                    var ackRes = readsomedata<mavlink_mission_ack_t>(sysid, compid);
+                    if ((MAV_MISSION_RESULT)ackRes.type != MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
                         throw new IOException("Польотний контролер не прийняв місію на кроці " + req.seq.ToString());
                 }
             }
@@ -894,13 +900,34 @@ namespace SimpleExample
 
         private void finalizeMission()
         {
-            MAVLink.mavlink_mission_ack_t req = new MAVLink.mavlink_mission_ack_t();
+            mavlink_mission_ack_t req = new mavlink_mission_ack_t();
             req.target_system = sysid;
             req.target_component = compid;
             req.type = 0;
-            byte[] packet = mavlink.GenerateMAVLinkPacket10(MAVLink.MAVLINK_MSG_ID.MISSION_ACK, req);
+            byte[] packet = mavlink.GenerateMAVLinkPacket10(MAVLINK_MSG_ID.MISSION_ACK, req);
             Console.WriteLine("MISSION_ACK send");
             serialPort.Write(packet, 0, packet.Length);
+        }
+
+        private void sendShiftedPoints()
+        {
+            while (way.Count() > 1)
+            {
+                var lastPosition = way.Last();
+                way.RemoveAt(way.Count() - 1);
+                var currentPosition = way.Last();
+                mavlink_set_position_target_local_ned_t req = new mavlink_set_position_target_local_ned_t();
+                req.target_system = sysid;
+                req.target_component = compid;
+                req.coordinate_frame = (byte)MAV_FRAME.LOCAL_NED;
+                req.type_mask = 0b0000111111111000; // (only positions enabled)
+                req.x = (float)(currentPosition.Item1 - lastPosition.Item1);
+                req.y = (float)(currentPosition.Item2 - lastPosition.Item2);
+                req.z = -(float)(currentPosition.Item3 - lastPosition.Item3);
+                byte[] packet = mavlink.GenerateMAVLinkPacket10(MAVLINK_MSG_ID.POSITION_TARGET_LOCAL_NED, req);
+                Console.WriteLine("POSITION_TARGET_LOCAL_NED sent");
+                serialPort.Write(packet, 0, packet.Length);
+            }
         }
 
         private void themesComboBox_SelectedIndexChanged(object sender, EventArgs e)
