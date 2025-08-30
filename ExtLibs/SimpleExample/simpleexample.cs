@@ -2,15 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.IO;
 using System.IO.Ports;
 using System.Linq;
-using System.Net.Sockets;
-using System.Security.Claims;
-using System.Security.Policy;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,7 +13,6 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using static MAVLink;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace SimpleExample
 {
@@ -131,7 +125,8 @@ namespace SimpleExample
             IMUdataGridView.Rows[10].HeaderCell.Value = "SCALED_IMU3";
             IMUdataGridView.Rows[10].SetValues("time_boot_ms", "xacc", "yacc", "zacc", "xgyro", "ygyro", "zgyro", "xmag", "ymag", "zmag");
             IMUdataGridView.Rows[12].HeaderCell.Value = "GPS_RAW_INT";
-            //IMUdataGridView.Rows[12].SetValues("time_usec", "fix_type", "lat", "lon", "alt", "eph", "epv", "vel", "cog", "satellites_visible", "alt_ellipsoid", "h_acc", "v_acc", "vel_acc", "hdg_acc", "yaw");
+            IMUdataGridView.Rows[12].SetValues("time_usec", "fix_type", "lat", "lon", "alt", "eph", "epv", "vel", "cog",
+                "satellites_visible", "alt_ellipsoid", "h_acc", "v_acc", "vel_acc", "hdg_acc", "yaw", "dgps_age", "dgps_numch");
             IMUdataGridView.Rows[14].HeaderCell.Value = "VIBRATION";
             IMUdataGridView.Rows[14].SetValues("time_usec", "vibration_x", "vibration_y", "vibration_z", "clipping_0", "clipping_1", "clipping_2");
             for (int i = 0; i < rowsCount; ++i)
@@ -412,10 +407,11 @@ namespace SimpleExample
                 var data = (mavlink_scaled_imu3_t)userData;
                 updateCell(11, 0, data.time_boot_ms); updateCell(11, 1, data.xacc); updateCell(11, 2, data.yacc); updateCell(11, 3, data.zacc); updateCell(11, 4, data.xgyro); updateCell(11, 5, data.ygyro); updateCell(11, 6, data.zgyro); updateCell(11, 7, data.xmag); updateCell(11, 8, data.ymag); updateCell(11, 9, data.zmag);
             }
-            else if (userData.GetType() == typeof(mavlink_gps_raw_int_t))
+            else if (userData.GetType() == typeof(mavlink_gps2_raw_t))
             {
-                //    var data = (mavlink_gps_raw_int_t)userData;
-                //    IMUdataGridView.Rows[13].SetValues(data.time_usec, data.fix_type, data.lat, data.lon, data.alt, data.eph, data.epv, data.vel, data.cog, data.satellites_visible, data.alt_ellipsoid, data.h_acc, data.v_acc, data.vel_acc, data.hdg_acc, data.yaw);
+                var data = (mavlink_gps2_raw_t)userData;
+                updateCell(13, 0, data.time_usec); updateCell(13, 1, data.fix_type); updateCell(13, 2, data.lat); updateCell(13, 3, data.lon); updateCell(13, 4, data.alt); updateCell(13, 5, data.eph); updateCell(13, 6, data.epv); updateCell(13, 7, data.vel); updateCell(13, 8, data.cog); updateCell(13, 9, data.satellites_visible);
+                updateCell(13, 10, data.alt_ellipsoid); updateCell(13, 11, data.h_acc); updateCell(13, 12, data.v_acc); updateCell(13, 13, data.vel_acc); updateCell(13, 14, data.hdg_acc); updateCell(13, 15, data.yaw); updateCell(13, 16, data.dgps_age); updateCell(13, 17, data.dgps_numch);
             }
             else if (userData.GetType() == typeof(mavlink_vibration_t))
             {
