@@ -32,6 +32,9 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.CMB_comport = new System.Windows.Forms.ComboBox();
             this.cmb_baudrate = new System.Windows.Forms.ComboBox();
             this.but_connect = new System.Windows.Forms.Button();
@@ -191,6 +194,8 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.trajectoryChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -204,6 +209,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.diapasonNumericUpDown)).BeginInit();
             this.panel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trajectoryChart)).BeginInit();
             this.SuspendLayout();
             // 
             // CMB_comport
@@ -1050,6 +1057,7 @@
             this.tabControl.Controls.Add(this.tabPage1);
             this.tabControl.Controls.Add(this.tabPage2);
             this.tabControl.Controls.Add(this.tabPage3);
+            this.tabControl.Controls.Add(this.tabPage4);
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl.Location = new System.Drawing.Point(0, 82);
             this.tabControl.Name = "tabControl";
@@ -1817,6 +1825,33 @@
             this.openFileDialog.Filter = "Flying Controler Log files|*.fcl";
             this.openFileDialog.Title = "Відкрити збережені дані з польотного котролера";
             // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.trajectoryChart);
+            this.tabPage4.Location = new System.Drawing.Point(4, 25);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(876, 527);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Траєкторія";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // trajectoryChart
+            // 
+            chartArea2.Name = "ChartArea1";
+            this.trajectoryChart.ChartAreas.Add(chartArea2);
+            this.trajectoryChart.Dock = System.Windows.Forms.DockStyle.Fill;
+            legend2.Name = "Legend1";
+            this.trajectoryChart.Legends.Add(legend2);
+            this.trajectoryChart.Location = new System.Drawing.Point(0, 0);
+            this.trajectoryChart.Name = "trajectoryChart";
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.trajectoryChart.Series.Add(series2);
+            this.trajectoryChart.Size = new System.Drawing.Size(876, 527);
+            this.trajectoryChart.TabIndex = 1;
+            this.trajectoryChart.Text = " ";
+            // 
             // simpleexample
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1846,6 +1881,8 @@
             this.panel1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.trajectoryChart)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2011,6 +2048,8 @@
         private System.Windows.Forms.CheckBox noiseCheckBox;
         private System.Windows.Forms.CheckBox veloCheckBox;
         private System.Windows.Forms.CheckBox rootCheckBox;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.DataVisualization.Charting.Chart trajectoryChart;
     }
 }
 

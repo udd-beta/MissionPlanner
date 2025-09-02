@@ -76,7 +76,8 @@ namespace SimpleExample
             InitializeComponent();
             initializeMainPanel();
             initializeGrid();
-            initializeChart();
+            initializeIMUChart();
+            initializeTrajectoryChart();
         }
 
         private void initializeMainPanel()
@@ -137,7 +138,7 @@ namespace SimpleExample
                 }
         }
 
-        private void initializeChart()
+        private void initializeIMUChart()
         {
             IMUchart.Series.Clear();
             int n = 0;
@@ -173,6 +174,26 @@ namespace SimpleExample
             IMUchart.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
             IMUchart.ChartAreas[0].AxisX.ScaleView.SizeType = DateTimeIntervalType.Number;
             IMUchart.ChartAreas[0].AxisX.ScrollBar.ButtonStyle = ScrollBarButtonStyles.SmallScroll;
+        }
+
+        private void initializeTrajectoryChart()
+        {
+            string name = "GPS";
+            if (trajectoryChart.Series.Count > 0)
+                trajectoryChart.Series[0].Name = name;
+            else
+                trajectoryChart.Series.Add(new Series(name));
+            trajectoryChart.Series[0].ChartType = SeriesChartType.Line;
+            trajectoryChart.ChartAreas[0].CursorX.AutoScroll = true;
+            trajectoryChart.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
+            trajectoryChart.ChartAreas[0].AxisX.ScaleView.SizeType = DateTimeIntervalType.Number;
+            trajectoryChart.ChartAreas[0].AxisX.ScrollBar.ButtonStyle = ScrollBarButtonStyles.SmallScroll;
+            trajectoryChart.ChartAreas[0].AxisX.Interval = 1;
+            trajectoryChart.ChartAreas[0].CursorY.AutoScroll = true;
+            trajectoryChart.ChartAreas[0].AxisY.ScaleView.Zoomable = true;
+            trajectoryChart.ChartAreas[0].AxisY.ScaleView.SizeType = DateTimeIntervalType.Number;
+            trajectoryChart.ChartAreas[0].AxisY.ScrollBar.ButtonStyle = ScrollBarButtonStyles.SmallScroll;
+            trajectoryChart.ChartAreas[0].AxisY.Interval = 1;
         }
 
         private void addPackOfSeries(string name, Color color)
@@ -386,6 +407,18 @@ namespace SimpleExample
                 updateCell(3, 0, data.time_boot_ms); updateCell(3, 1, data.lat); updateCell(3, 2, data.lon); updateCell(3, 3, data.alt); updateCell(3, 4, data.relative_alt); updateCell(3, 5, data.vx); updateCell(3, 6, data.vy); updateCell(3, 7, data.vz); updateCell(3, 8, data.hdg);
                 if (but_mission.Enabled)
                     way.Add(data);
+                double x = data.lon * 0.00001;
+                double y = data.lat * 0.00001;
+                if (trajectoryChart.Series[0].Points.Count == 0)
+                {
+                    var centerX = Math.Round(x / 5) * 5;
+                    var centerY = Math.Round(y / 5) * 5;
+                    trajectoryChart.ChartAreas[0].AxisX.Maximum = centerX + 5;
+                    trajectoryChart.ChartAreas[0].AxisX.Minimum = centerX - 5;
+                    trajectoryChart.ChartAreas[0].AxisY.Maximum = centerY + 5;
+                    trajectoryChart.ChartAreas[0].AxisY.Minimum = centerY - 5;
+                }
+                trajectoryChart.Series[0].Points.AddXY(x, y);
             }
             else if (userData.GetType() == typeof(mavlink_vfr_hud_t))
             {
