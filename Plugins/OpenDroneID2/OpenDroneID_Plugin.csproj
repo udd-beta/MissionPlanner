@@ -45,6 +45,10 @@
     <WarningsAsErrors>$(WarningsAsErrors)</WarningsAsErrors>
 	  <NoWarn>1701;1702;NU1605</NoWarn>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="BSE.Windows.Forms" Version="1.0.0" />
+    <PackageReference Include="GMap.NET.WindowsForms" Version="1.7.5" />
+  </ItemGroup>
 
 
   <ItemGroup>

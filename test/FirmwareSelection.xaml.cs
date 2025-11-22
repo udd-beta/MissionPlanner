@@ -3,6 +3,8 @@ using MissionPlanner.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+//using Microsoft.Maui;
+//using Microsoft.Maui.Controls;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using DeviceInfo = MissionPlanner.ArduPilot.DeviceInfo;
